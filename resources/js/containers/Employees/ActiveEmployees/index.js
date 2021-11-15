@@ -14,7 +14,7 @@ export default function ActiveEmployees() {
     <>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
-          <SVG className={styles.dashboardSvg} src={`${process.env.PUBLIC_URL}/images/holidays.svg`} />
+          <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />
           <span className={styles.breadCrumbsSlash}>/</span>
           <span className={styles.breadCrumbsSpan}>Employees</span>
           <span className={styles.breadCrumbsSlash}>/</span>
@@ -37,7 +37,7 @@ export default function ActiveEmployees() {
                           className={styles.cardImg}
                           height="120px"
                           width="120px"
-                          src={`${process.env.PUBLIC_URL}/images/devbox.png`}
+                          src={`/images/devbox.png`}
                         />
                         <h2>{x.name}</h2>
                         <p>{x.designation}</p>

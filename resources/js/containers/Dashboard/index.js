@@ -62,7 +62,7 @@ export default function Dashboard() {
   const Chevron = () => {
     return (
       <span className={styles.dropDownCustomizeSvg}>
-        <SVG src={`${process.env.PUBLIC_URL}/images/downArrow.svg`} />
+        <SVG src={`/images/downArrow.svg`} />
       </span>
     );
   };
@@ -135,7 +135,7 @@ export default function Dashboard() {
     <div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
-          <SVG className={styles.dashboardSvg} src={`${process.env.PUBLIC_URL}/images/holidays.svg`} />
+          <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />
           <span className={styles.breadCrumbsSlash}>/</span>
           <span className={styles.breadCrumbsSpan}>DASHBOARD</span>
         </div>
@@ -150,11 +150,11 @@ export default function Dashboard() {
               <div className={`${styles.cardLeaves}`}>
                 <div className={styles.cardHeaderText}>
                   On Leave
-                  <SVG className={`${styles.cardSvg}`} src={`${process.env.PUBLIC_URL}/images/leaves.svg`} />
+                  <SVG className={`${styles.cardSvg}`} src={`/images/leaves.svg`} />
                 </div>
                 <div className={` ${styles.cardBody}`}>
                   <span className={styles.cardBodyText}>{onLeave}/15</span>
-                  <SVG className={`${styles.cardSvg}`} src={`${process.env.PUBLIC_URL}/images/rightArrow.svg`} />
+                  <SVG className={`${styles.cardSvg}`} src={`/images/rightArrow.svg`} />
                 </div>
               </div>
             </div>
@@ -166,11 +166,11 @@ export default function Dashboard() {
               <div className={`${styles.cardEmployees}`}>
                 <div className={styles.cardHeaderText}>
                   Present Employees
-                  <SVG className={`${styles.cardSvg}`} src={`${process.env.PUBLIC_URL}/images/people.svg`} />
+                  <SVG className={`${styles.cardSvg}`} src={`/images/people.svg`} />
                 </div>
                 <div className={` ${styles.cardBody}`}>
                   <span className={styles.cardBodyText}>{presentEmp}/15</span>
-                  <SVG className={`${styles.cardSvg}`} src={`${process.env.PUBLIC_URL}/images/rightArrow.svg`} />
+                  <SVG className={`${styles.cardSvg}`} src={`/images/rightArrow.svg`} />
                 </div>
               </div>
             </div>
@@ -180,7 +180,7 @@ export default function Dashboard() {
               <div className={`${styles.cardHolidays}`}>
                 <div className={styles.cardHeaderText}>
                   Up Comming Holiday
-                  <SVG className={`${styles.cardSvg}`} src={`${process.env.PUBLIC_URL}/images/event.svg`} />
+                  <SVG className={`${styles.cardSvg}`} src={`/images/event.svg`} />
                 </div>
                 <div className={` ${styles.cardBody}`}>
                   {noHoliday ?
@@ -191,7 +191,7 @@ export default function Dashboard() {
                       <p className={styles.holidaysInfo}>{holidayDate}</p>
                     </div>
                   }
-                  <SVG className={`${styles.cardSvg}`} src={`${process.env.PUBLIC_URL}/images/rightArrow.svg`} />
+                  <SVG className={`${styles.cardSvg}`} src={`/images/rightArrow.svg`} />
                 </div>
               </div>
             </div>
