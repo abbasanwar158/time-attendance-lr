@@ -61,10 +61,10 @@ export default function Navbar() {
           {/* <img
             className={styles.logo}
             width="150px"
-            src={`${process.env.PUBLIC_URL}/images/logo.png`}
+            src={`/images/logo.png`}
           /> */}
         </div>
-        {/* {localStorage.getItem('username') != null ? <SVG className={styles.userMenuBtn} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} src={`${process.env.PUBLIC_URL}/images/profile.svg`} /> : null} */}
+        {/* {localStorage.getItem('username') != null ? <SVG className={styles.userMenuBtn} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} src={`/images/profile.svg`} /> : null} */}
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
@@ -79,7 +79,7 @@ export default function Navbar() {
               history.push('/users/new')
             }}
           >
-            <SVG className={styles.subMenuIcons} src={`${process.env.PUBLIC_URL}/images/people.svg`} />
+            <SVG className={styles.subMenuIcons} src={`/images/people.svg`} />
             <span className={styles.subMenuSpan}>Manage Users</span>
           </MenuItem>
 
@@ -89,7 +89,7 @@ export default function Navbar() {
               history.push('/employees/review_date')
             }}
           >
-            <SVG className={styles.subMenuIcons} src={`${process.env.PUBLIC_URL}/images/dateRange.svg`} />
+            <SVG className={styles.subMenuIcons} src={`/images/dateRange.svg`} />
             <span className={styles.subMenuSpan}>Employee Review Date</span>
           </MenuItem>
 
@@ -98,7 +98,7 @@ export default function Navbar() {
               handleCloseMenu()
               history.push('/employees/report')
             }}>
-            <SVG className={styles.subMenuIcons} src={`${process.env.PUBLIC_URL}/images/timer.svg`} />
+            <SVG className={styles.subMenuIcons} src={`/images/timer.svg`} />
             <span className={styles.subMenuSpan}>Employee Reports</span>
           </MenuItem>
 
@@ -107,7 +107,7 @@ export default function Navbar() {
               handleCloseMenu()
               history.push('/users/new')
             }}>
-            <SVG className={styles.subMenuIcons} src={`${process.env.PUBLIC_URL}/images/assignment.svg`} />
+            <SVG className={styles.subMenuIcons} src={`/images/assignment.svg`} />
             <span className={styles.subMenuSpan}>Leave Requests</span>
           </MenuItem>
 
@@ -116,7 +116,7 @@ export default function Navbar() {
               handleCloseMenu()
               history.push('/users/new')
             }}>
-            <SVG className={styles.subMenuIcons} src={`${process.env.PUBLIC_URL}/images/assessment.svg`} />
+            <SVG className={styles.subMenuIcons} src={`/images/assessment.svg`} />
             <span className={styles.subMenuSpan}>Employee Performace Form</span>
           </MenuItem>
 
@@ -125,7 +125,7 @@ export default function Navbar() {
               handleCloseMenu()
               history.push('/users/new')
             }}>
-            <SVG className={styles.subMenuIcons} src={`${process.env.PUBLIC_URL}/images/mail.svg`} />
+            <SVG className={styles.subMenuIcons} src={`/images/mail.svg`} />
             <span className={styles.subMenuSpan}>Mail to all employees</span>
           </MenuItem>
 
@@ -136,12 +136,12 @@ export default function Navbar() {
               localStorage.removeItem('isAdmin')
               history.push('/login')
             }}>
-            <SVG className={styles.subMenuIcons} src={`${process.env.PUBLIC_URL}/images/lock.svg`} />
+            <SVG className={styles.subMenuIcons} src={`/images/lock.svg`} />
             <span className={styles.subMenuSpan}>Logout</span>
           </MenuItem>
 
         </Menu>
-        <SVG className={styles.sidebarToggleBtn} onClick={handleClickOpen} src={`${process.env.PUBLIC_URL}/images/sidebartoggle.svg`} />
+        <SVG className={styles.sidebarToggleBtn} onClick={handleClickOpen} src={`/images/sidebartoggle.svg`} />
       </div>
 
       <div>

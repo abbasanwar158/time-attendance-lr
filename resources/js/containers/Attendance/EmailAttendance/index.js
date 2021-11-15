@@ -41,7 +41,7 @@ export default function EmailAttendance() {
   const Chevron = () => {
     return (
       <span className={styles.dropDownCustomizeSvg}>
-        <SVG src={`${process.env.PUBLIC_URL}/images/downArrow.svg`} />
+        <SVG src={`/images/downArrow.svg`} />
       </span>
     );
   };
@@ -50,7 +50,7 @@ export default function EmailAttendance() {
     <>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
-          <SVG className={styles.dashboardSvg} src={`${process.env.PUBLIC_URL}/images/holidays.svg`} />
+          <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />
           <span className={styles.breadCrumbsSlash}>/</span>
           <span className={styles.breadCrumbsSpan}>Attendance</span>
           <span className={styles.breadCrumbsSlash}>/</span>

@@ -158,21 +158,21 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
             setModalOpen(false)
           }}
         >
-          <SVG className={styles.dashboardSvg} src={`${process.env.PUBLIC_URL}/images/dashboard.svg`} />
+          <SVG className={styles.dashboardSvg} src={`/images/dashboard.svg`} />
           <span className={styles.dashboardText}>Dashboard</span>
         </div>
         <div className={styles.dashboardDiv2} onClick={(e)=>collapseFun(e)}>
-          <SVG className={styles.dashboardSvg} src={`${process.env.PUBLIC_URL}/images/attendance.svg`} />
+          <SVG className={styles.dashboardSvg} src={`/images/attendance.svg`} />
           <span className={styles.dashboardText}>Attendance</span>
           {
             colExpAttendance ?
               <SVG
                 className={styles.collapseSvg}
-                src={`${process.env.PUBLIC_URL}/images/minus_circle.svg`}
+                src={`/images/minus_circle.svg`}
               /> :
               <SVG
                 className={styles.collapseSvg}
-                src={`${process.env.PUBLIC_URL}/images/plus_circle.svg`}
+                src={`/images/plus_circle.svg`}
               />
           }
 
@@ -194,7 +194,7 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
                   >
                     <SVG
                       className={styles.dashboardSvgSubMenu}
-                      src={`${process.env.PUBLIC_URL}/images/${attendanceSubMenuSVG[i]}.svg`}
+                      src={`/images/${attendanceSubMenuSVG[i]}.svg`}
                     />
                     <span className={styles.dashboardTextSubMenu}>{x}</span>
                   </div>
@@ -211,18 +211,18 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
           onClick={(e)=>collapseFun(e)}>
           <SVG
             className={styles.dashboardSvg}
-            src={`${process.env.PUBLIC_URL}/images/leaves.svg`}
+            src={`/images/leaves.svg`}
           />
           <span className={styles.dashboardText}>Leaves</span>
           {
             colExpLeaves ?
               <SVG
                 className={styles.collapseSvg}
-                src={`${process.env.PUBLIC_URL}/images/minus_circle.svg`}
+                src={`/images/minus_circle.svg`}
               /> :
               <SVG
                 className={styles.collapseSvg}
-                src={`${process.env.PUBLIC_URL}/images/plus_circle.svg`}
+                src={`/images/plus_circle.svg`}
               />
           }
         </div>
@@ -243,7 +243,7 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
                   >
                     <SVG
                       className={styles.dashboardSvgSubMenu}
-                      src={`${process.env.PUBLIC_URL}/images/${leavesSubMenuSVG[i]}.svg`}
+                      src={`/images/${leavesSubMenuSVG[i]}.svg`}
                     />
                     <span className={styles.dashboardTextSubMenu}>{x}</span>
                   </div>
@@ -258,18 +258,18 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
           onClick={(e)=>collapseFun(e)}>
           <SVG
             className={styles.dashboardSvg}
-            src={`${process.env.PUBLIC_URL}/images/employees.svg`}
+            src={`/images/employees.svg`}
           />
           <span className={styles.dashboardText}>Employees</span>
           {
             colExpEmployees ?
               <SVG
                 className={styles.collapseSvg}
-                src={`${process.env.PUBLIC_URL}/images/minus_circle.svg`}
+                src={`/images/minus_circle.svg`}
               /> :
               <SVG
                 className={styles.collapseSvg}
-                src={`${process.env.PUBLIC_URL}/images/plus_circle.svg`}
+                src={`/images/plus_circle.svg`}
               />
           }
         </div>
@@ -289,7 +289,7 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
                   >
                     <SVG
                       className={styles.dashboardSvgSubMenu}
-                      src={`${process.env.PUBLIC_URL}/images/${employeesSubMenuSVG[i]}.svg`}
+                      src={`/images/${employeesSubMenuSVG[i]}.svg`}
                     />
                     <span className={styles.dashboardTextSubMenu}>{x}</span>
                   </div>
@@ -304,18 +304,18 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
           onClick={(e)=>collapseFun(e)}>
           <SVG
             className={styles.dashboardSvg}
-            src={`${process.env.PUBLIC_URL}/images/holidays.svg`}
+            src={`/images/holidays.svg`}
           />
           <span className={styles.dashboardText}>Holidays</span>
           {
             colExpHolidays ?
               <SVG
                 className={styles.collapseSvg}
-                src={`${process.env.PUBLIC_URL}/images/minus_circle.svg`}
+                src={`/images/minus_circle.svg`}
               /> :
               <SVG
                 className={styles.collapseSvg}
-                src={`${process.env.PUBLIC_URL}/images/plus_circle.svg`}
+                src={`/images/plus_circle.svg`}
               />
           }
         </div>
@@ -335,7 +335,7 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
                   >
                     <SVG
                       className={styles.dashboardSvgSubMenu}
-                      src={`${process.env.PUBLIC_URL}/images/${holidaysSubMenuSVG[i]}.svg`}
+                      src={`/images/${holidaysSubMenuSVG[i]}.svg`}
                     />
                     <span className={styles.dashboardTextSubMenu}>{x}</span>
                   </div>
