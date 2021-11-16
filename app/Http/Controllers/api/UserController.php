@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller
 {
@@ -46,6 +48,18 @@ class UserController extends Controller
             'created_at' => $request->created_at,
             'updated_at' => $request->updated_at
         ]);
+        if ($data){
+            $res=[
+            'status'=>'1',
+            'msg'=>'success'
+          ];
+          }else{
+            $res=[
+            'status'=>'0',
+            'msg'=>'fail'
+          ];
+        }
+          return response()->json($res);
     }
 
     /**
@@ -111,5 +125,32 @@ class UserController extends Controller
           ];
         }
           return response()->json($data);
+    }
+    
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function login($user, $password)
+    {
+        $data = User::where('username','=', $user)->first();
+        if($data){
+            if (Hash::check( $password, $data->password_digest)){
+                return $data;
+            }
+            else{
+                $res=[
+                    'status'=>'0',
+                    'msg'=>'Username or Password is wrong'
+                ];
+                return response()->json($res);
+            }
+        }
+        else{
+            echo "no user";
+        }
     }
 }
