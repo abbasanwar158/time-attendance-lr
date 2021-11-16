@@ -24,6 +24,7 @@ Route::post('/user/new', [App\Http\Controllers\api\UserController::class, 'store
 Route::post('/user/update/{id}', [App\Http\Controllers\api\UserController::class, 'update']);
 Route::delete('/user/delete/{id}', [App\Http\Controllers\api\UserController::class, 'destroy']);
 Route::get('/user/{id}', [App\Http\Controllers\api\UserController::class, 'show']);
+Route::get('/user/login/{user}/{password}', [App\Http\Controllers\api\UserController::class, 'login']);
 
 //////////////////////////////Employees///////////////////////////////////////////////
 Route::get('/employees', [App\Http\Controllers\api\EmployeeController::class, 'index']);

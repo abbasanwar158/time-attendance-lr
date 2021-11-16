@@ -12,7 +12,8 @@ export default ({ children }) => {
   const [usersData, setUsersData] = useState([])
   const [attendanceData, setAttendanceData] = useState([])
   const [holidaysData, setHolidaysData] = useState([]);
-  const [index, setIndex] = useState('')
+  const [index, setIndex] = useState('');
+  const [loginNavbar, setLoginNavbar] = useState(false);
   /*****all root context variables and function ********************/
   const defaultContext = {
     ActiveEmployeeNames,
@@ -30,7 +31,9 @@ export default ({ children }) => {
     attendanceData,
     setAttendanceData,
     holidaysData,
-    setHolidaysData
+    setHolidaysData,
+    loginNavbar,
+    setLoginNavbar
   };
   /*******************************************************************/
 

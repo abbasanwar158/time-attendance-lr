@@ -36,6 +36,7 @@ export default function Navbar() {
   const [modalOpen, setModalOpen] = useState(false)
   const [anchorEl, setMenu] = useState(null);
   const history = useHistory();
+  const { loginNavbar } = useContext(RootContext)
 
   const handleClickOpen = () => {
     setModalOpen(true);
@@ -54,17 +55,20 @@ export default function Navbar() {
     setMenu(null);
   };
 
+  useEffect(() => {
+  }, [loginNavbar])
+
   return (
     <>
       <div className={styles.container}>
         <div>
-          {/* <img
+          <img
             className={styles.logo}
             width="150px"
             src={`/images/logo.png`}
-          /> */}
+          />
         </div>
-        {/* {localStorage.getItem('username') != null ? <SVG className={styles.userMenuBtn} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} src={`/images/profile.svg`} /> : null} */}
+        {localStorage.getItem('username') != null ? <SVG className={styles.userMenuBtn} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} src={`/images/profile.svg`} /> : null}
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}

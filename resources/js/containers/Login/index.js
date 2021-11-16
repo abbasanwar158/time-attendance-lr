@@ -11,6 +11,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Button from '@material-ui/core/Button';
 import { useHistory, withRouter,Link } from "react-router-dom";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { RootContext } from "../../context/RootContext";
 
 export default function Login() {
   const [values, setValues] = useState({
@@ -18,7 +19,9 @@ export default function Login() {
   });
   const [username, setUsername] = useState('')
   const history = useHistory();
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
+  const { setLoginNavbar } = useContext(RootContext);
+
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -42,32 +45,33 @@ export default function Login() {
   };
 
   const loginUser = () => {
-    // fetch(`http://attendance.devbox.co/api/v1/login?username=${username}&password=${values.password}`)
-    //   .then(res => res.json())
-    //   .then(
-    //     (response) => {
-    //       if (response.status == 'Success') {
-    //         setLoader(true)
-    //         localStorage.setItem('username', response.data.username)
-    //         setTimeout(
-    //           () => history.push('/dashboard'),
-    //           1500
-    //         );
+    fetch(`http://127.0.0.1:8000/api/user/login/${username}/${values.password}`)
+      .then(res => res.json())
+      .then(
+        (response) => {
+          if (response.id) {
+            setLoader(true);
+            setLoginNavbar(true);
+            localStorage.setItem('username', response.username)
+            setTimeout(
+              () => history.push('/dashboard'),
+              1500
+            );
 
-    //         if (response.data.is_admin) {
-    //           localStorage.setItem('isAdmin', 'true')
-    //         }
-    //         else {
-    //           localStorage.setItem('isAdmin', 'false')
-    //         }
-    //       }
-    //       else {
-    //       }
-    //     },
-    //     (error) => {
-    //       console.log("error", error)
-    //     }
-    //   )
+            if (response.is_admin) {
+              localStorage.setItem('isAdmin', 'true')
+            }
+            else {
+              localStorage.setItem('isAdmin', 'false')
+            }
+          }
+          else {
+          }
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
   }
 
   return (
@@ -78,7 +82,7 @@ export default function Login() {
             <h4 className={styles.heading}>Login to access your Account</h4>
           </div>
           <div className={styles.mainDiv}>
-            <p> User name </p>
+            <p className={styles.textP}> User name </p>
             <TextField
               className={styles.fieldsWidth}
               id="outlined-basic-email"
@@ -89,7 +93,7 @@ export default function Login() {
               onChange={usenameFun}
               onKeyDown={handleKeypress}
             />
-            <p> Password </p>
+            <p className={styles.textP}> Password </p>
             <FormControl variant="outlined" className={styles.fieldsWidth}>
               <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
               <OutlinedInput
