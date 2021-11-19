@@ -116,6 +116,7 @@ export default function ViewLeaves() {
   };
 
   const handleChange = (event) => {
+    debugger
     setPersonName(event.target.value);
   };
 
@@ -133,13 +134,12 @@ export default function ViewLeaves() {
 
   const leavesFun = () => {
     var leavesArr = [];
-    fetch("http://attendance.devbox.co/api/v1/leaves")
+    fetch("http://127.0.0.1:8000/api/leaves")
       .then(res => res.json())
       .then(
         (response) => {
-          var data = response.data
-          for (var i = 0; i < data.length; i++) {
-            leavesArr.push(data[i])
+          for (var i = 0; i < response.length; i++) {
+            leavesArr.push(response[i])
           }
           setLeavesData(leavesArr)
         },
