@@ -45,33 +45,33 @@ export default function Login() {
   };
 
   const loginUser = () => {
-    // fetch(`http://127.0.0.1:8000/api/user/login/${username}/${values.password}`)
-    //   .then(res => res.json())
-    //   .then(
-    //     (response) => {
-    //       if (response.id) {
-    //         setLoader(true);
-    //         setLoginNavbar(true);
-    //         localStorage.setItem('username', response.username)
-    //         setTimeout(
-    //           () => history.push('/dashboard'),
-    //           1500
-    //         );
+    fetch(`http://127.0.0.1:8000/api/user/login/${username}/${values.password}`)
+      .then(res => res.json())
+      .then(
+        (response) => {
+          if (response.id) {
+            setLoader(true);
+            setLoginNavbar(true);
+            localStorage.setItem('username', response.username)
+            setTimeout(
+              () => history.push('/dashboard'),
+              1500
+            );
 
-    //         if (response.is_admin) {
-    //           localStorage.setItem('isAdmin', 'true')
-    //         }
-    //         else {
-    //           localStorage.setItem('isAdmin', 'false')
-    //         }
-    //       }
-    //       else {
-    //       }
-    //     },
-    //     (error) => {
-    //       console.log("error", error)
-    //     }
-    //   )
+            if (response.is_admin) {
+              localStorage.setItem('isAdmin', 'true')
+            }
+            else {
+              localStorage.setItem('isAdmin', 'false')
+            }
+          }
+          else {
+          }
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
   }
 
   return (

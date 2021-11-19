@@ -66,6 +66,7 @@ export default function Navbar() {
             className={styles.logo}
             width="150px"
             src={`/images/logo.png`}
+            onClick={() => {history.push('/dashboard')}}
           />
         </div>
         {localStorage.getItem('username') != null ? <SVG className={styles.userMenuBtn} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} src={`/images/profile.svg`} /> : null}
