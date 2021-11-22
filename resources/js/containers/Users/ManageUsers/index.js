@@ -400,7 +400,7 @@ export default function ManageUsers() {
                 ).map((row) => (
                   <TableRow key={row.id}>
                     <TableCell className={styles.nameCells}>{row.username}</TableCell>
-                    <TableCell className={styles.subCells}>{row.isAdmin}</TableCell>
+                    <TableCell className={styles.subCells}>{row.is_admin ? 'true' : 'false'}</TableCell>
                     <TableCell className={styles.subCells}>
                       <button
                         value={row.id}

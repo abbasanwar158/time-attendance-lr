@@ -7,13 +7,14 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { RootContext } from "../../../context/RootContext";
-
+import { useHistory } from "react-router-dom";
 
 export default function EditEmployeeStatus() {
 
   const { ActiveEmployeeNames } = useContext(RootContext);
-  const [selected, setSelected] = useState('')
-  const [selectedStatus, setSelectedStatus] = useState('')
+  const [selected, setSelected] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const history = useHistory();
 
   const handleChange = (event) => {
     setSelected(event.target.value);
@@ -43,6 +44,7 @@ export default function EditEmployeeStatus() {
       })
       .then(response => response.json())
       .then(data => {
+        history.push('/employees')
         console.log('Success:', data);
       })
       .catch((error) => {
@@ -125,7 +127,11 @@ export default function EditEmployeeStatus() {
                 <Button onClick={statusUpdate} variant="contained" color="primary" className={styles.saveButton}>
                   Update
                 </Button>
-                <Button variant="contained" color="default">
+                <Button
+                 variant="contained" 
+                 color="default"
+                 onClick={(e) => history.push('/employees')}
+                >
                   Cancel
                 </Button>
               </Grid>

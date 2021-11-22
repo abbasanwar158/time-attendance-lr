@@ -104,6 +104,7 @@ export default function NewEmployee() {
       })
       .then(response => response.json())
       .then(data => {
+        history.push('/employees');
         console.log('Success:', data);
       })
       .catch((error) => {
