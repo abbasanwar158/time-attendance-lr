@@ -36,6 +36,18 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
+        echo $request->EmployeeId;
+        echo "<br>";
+        echo $request->Date;
+        echo "<br>";
+        echo $request->CheckIn;
+        echo "<br>";
+        echo $request->CheckOut;
+        echo "<br>";
+        echo $request->CreatedDate;
+        echo "<br>";
+        echo $request->ModifyDate;
+        echo "<br>";
         $data = Attendance::create([
             'employee_id' => $request->EmployeeId,
             'date' => $request->Date,
