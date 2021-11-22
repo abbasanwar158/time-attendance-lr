@@ -36,7 +36,26 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        echo $request;
+        $data = Attendance::create([
+            'employee_id' => $request->EmployeeId,
+            'date' => $request->Date,
+            'checkin' => $request->CheckIn,
+            'checkout' => $request->CheckOut,
+            'created_at' => $request->created_at,
+            'updated_at' => $request->updated_at
+        ]);
+        if ($data){
+            $res=[
+            'status'=>'1',
+            'msg'=>'success'
+          ];
+          }else{
+            $res=[
+            'status'=>'0',
+            'msg'=>'fail'
+          ];
+        }
+          return response()->json($res);
     }
 
     /**
