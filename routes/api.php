@@ -49,3 +49,7 @@ Route::post('/leave/new', [App\Http\Controllers\api\LeavesController::class, 'st
 Route::get('/leave/delete/{id}', [App\Http\Controllers\api\LeavesController::class, 'destroy']);
 Route::post('/leaves/data/{from}/{to}/{id}', [App\Http\Controllers\api\LeavesController::class, 'leavesData']);
 Route::get('/leaves/wbs/{employee}/{year}', [App\Http\Controllers\api\LeavesController::class, 'leavesWbs']);
+
+///////////////////////////////////Attendances///////////////////////////////////////////////
+Route::get('/attendances', [App\Http\Controllers\api\AttendanceController::class, 'index']);
+Route::post('/attendance/new', [App\Http\Controllers\api\AttendanceController::class, 'store']);
