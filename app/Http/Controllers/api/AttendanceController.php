@@ -41,8 +41,8 @@ class AttendanceController extends Controller
             'date' => $request->Date,
             'checkin' => $request->CheckIn,
             'checkout' => $request->CheckOut,
-            'created_at' => $request->created_at,
-            'updated_at' => $request->updated_at
+            'created_at' => $request->CreatedDate,
+            'updated_at' => $request->ModifyDate
         ]);
         if ($data){
             $res=[
