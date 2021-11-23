@@ -177,7 +177,7 @@ export default function ManageUsers() {
 
   const getUserData = () => {
     var usersArr = [];
-    fetch("http://127.0.0.1:8000/api/users")
+    fetch("https://time-attendance-lr.herokuapp.com/api/users")
       .then(res => res.json())
       .then(
         (response) => {
@@ -195,7 +195,7 @@ export default function ManageUsers() {
 
   const deleteData = (e) => {
     var userId = e.target.value
-    fetch(`http://127.0.0.1:8000/api/user/delete/${userId}`, { method: 'DELETE' })
+    fetch(`https://time-attendance-lr.herokuapp.com/api/user/delete/${userId}`, { method: 'DELETE' })
       .then(() => alert('Delete successful'));
     getUserData();
   }
@@ -209,7 +209,7 @@ export default function ManageUsers() {
     var password = values.password;
     var confirmPass = valuesConfirm.password;
     if(password == confirmPass){
-      fetch('http://127.0.0.1:8000/api/user/new', {
+      fetch('https://time-attendance-lr.herokuapp.com/api/user/new', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

@@ -134,7 +134,7 @@ export default function ViewLeaves() {
 
   const leavesFun = () => {
     var leavesArr = [];
-    fetch("http://127.0.0.1:8000/api/leaves")
+    fetch("https://time-attendance-lr.herokuapp.com/api/leaves")
       .then(res => res.json())
       .then(
         (response) => {

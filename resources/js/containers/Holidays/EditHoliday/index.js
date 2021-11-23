@@ -36,7 +36,7 @@ export default function EditHoliday() {
 
   const holidayUpdate = () => {
     var today = new Date()
-    fetch(`http://127.0.0.1:8000/api/holiday/update/${index}`, {
+    fetch(`https://time-attendance-lr.herokuapp.com/api/holiday/update/${index}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

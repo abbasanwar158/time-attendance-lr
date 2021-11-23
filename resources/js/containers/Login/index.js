@@ -45,7 +45,7 @@ export default function Login() {
   };
 
   const loginUser = () => {
-    fetch(`http://127.0.0.1:8000/api/user/login/${username}/${values.password}`)
+    fetch(`https://time-attendance-lr.herokuapp.com/api/user/login/${username}/${values.password}`)
       .then(res => res.json())
       .then(
         (response) => {

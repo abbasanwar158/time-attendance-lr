@@ -132,7 +132,7 @@ export default function ViewHolidays() {
   const holidayDataFunction = () => {
     var holidaysArr = [];
     var holidaysFilttered = [];
-    fetch("http://127.0.0.1:8000/api/holidays")
+    fetch("https://time-attendance-lr.herokuapp.com/api/holidays")
       .then(res => res.json())
       .then(
         (response) => {
@@ -152,7 +152,7 @@ export default function ViewHolidays() {
 
   const arhiveData = (event) => {
     var id = event.target.value;
-    fetch(`http://127.0.0.1:8000/api/holiday/archive/${id}`, {
+    fetch(`https://time-attendance-lr.herokuapp.com/api/holiday/archive/${id}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -177,7 +177,7 @@ export default function ViewHolidays() {
     var checkbox = allCheckbox;
     var holiday = [];
     if(!checkbox){
-      fetch(`http://127.0.0.1:8000/api/holiday/search/${dateSend}`)
+      fetch(`https://time-attendance-lr.herokuapp.com/api/holiday/search/${dateSend}`)
         .then(res => res.json())
         .then(
           (response) => {

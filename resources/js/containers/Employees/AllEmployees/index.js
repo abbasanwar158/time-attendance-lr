@@ -115,7 +115,7 @@ export default function AllEmployees() {
 
   const employeeNamesFun = () => {
     var employeeNamesArr = [];
-    fetch("http://127.0.0.1:8000/api/employees")
+    fetch("https://time-attendance-lr.herokuapp.com/api/employees")
       .then(res => res.json())
       .then(
         (response) => {
