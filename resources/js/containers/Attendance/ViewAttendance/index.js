@@ -117,17 +117,14 @@ export default function ViewAttendance() {
   const attendanceFun = () => {
     try {
       var attendanceArr = [];
-      fetch("http://attendance.devbox.co/api/v1/attendances")
+      fetch("http://127.0.0.1:8000/api/today/attendance")
         .then(res => res.json())
         .then(
           (response) => {
-            if (response.data != undefined) {
-              var data = response.data
-              for (var i = 0; i < data.length; i++) {
-                attendanceArr.push(data[i])
+              for (var i = 0; i < response.length; i++) {
+                attendanceArr.push(response[i])
               }
               setAttendanceData(attendanceArr)
-            }
           },
           (error) => {
             console.log("error", error)
@@ -167,21 +164,21 @@ export default function ViewAttendance() {
                 ? attendanceData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : attendanceData
               ).map((row) => (
-                <TableRow>
+                <TableRow key={row.id}>
                   <TableCell className={styles.nameCells}>{row.name}</TableCell>
                   <TableCell className={styles.subCells}>{row.checkin}</TableCell>
                   <TableCell className={styles.subCells}>{row.checkout}</TableCell>
                   <TableCell
                     className=
                     {clsx(
-                      row.time_spend >= '08:00'
+                      row.timeSpend >= '08:00'
                         ? styles.time_spend_up
                         :
                         styles.time_spend_down
                     )}
 
                   >
-                    {row.time_spend}
+                    {row.timeSpend}
                   </TableCell>
                 </TableRow>
               ))}

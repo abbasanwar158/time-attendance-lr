@@ -3,7 +3,6 @@ import styles from "./AttendanceReport.module.scss";
 import SVG from "react-inlinesvg";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import TableRow from '@material-ui/core/TableRow';
@@ -25,6 +24,8 @@ import KeyboardArrowLeft from '@material-ui/icons/KeyboardArrowLeft';
 import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import PropTypes from 'prop-types';
+import { useHistory } from "react-router-dom";
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import clsx from "clsx";
 
 
@@ -101,19 +102,47 @@ const useStyles2 = makeStyles({
 });
 
 
-export default function AttendanceReport() {
+export default function ManageAttendance() {
 
-  const { ActiveEmployeeNames, allEmployeesData } = useContext(RootContext);
-  const classes = useStyles2();
-  const [attendanceData, setAttendanceData] = useState([])
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [selected, setSelected] = useState('')
+  const [personName, setPersonName] = useState([]);
+  const { ActiveEmployeeNames, setIndex, attendanceData, setAttendanceData } = useContext(RootContext);
+  const [employeesExId, setEmployeesExID] = useState([])
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
   const [allData, setAllData] = useState('')
   const [saturday, setSaturday] = useState('')
   const [sunday, setSunday] = useState('')
+  const [selected, setSelected] = useState('')
+  const history = useHistory();
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 200,
+      },
+    },
+  };
+
+  const handleChange = (event) => {
+    var values = event.target.value
+    var employeeIdsArr = []
+    for (var i = 0; i < values.length; i++) {
+      for (var j = 0; j < ActiveEmployeeNames.length; j++) {
+        if (values[i] == ActiveEmployeeNames[j].name) {
+          employeeIdsArr.push(ActiveEmployeeNames[j].employee_external_id)
+        }
+      }
+    }
+    setEmployeesExID(employeeIdsArr)
+    setPersonName(event.target.value);
+  };
+
+  const classes = useStyles2();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -122,18 +151,6 @@ export default function AttendanceReport() {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
-  };
-
-  const handleChange = (event) => {
-    setSelected(event.target.value);
-  };
-
-  const Chevron = () => {
-    return (
-      <span className={styles.dropDownCustomizeSvg}>
-        <SVG src={`/images/downArrow.svg`} />
-      </span>
-    );
   };
 
   const startDateFun = (event) => {
@@ -156,19 +173,26 @@ export default function AttendanceReport() {
     setSaturday(event.target.checked)
   }
 
+  const Chevron = () => {
+    return (
+      <span className={styles.dropDownCustomizeSvg}>
+        <SVG src={`/images/downArrow.svg`} />
+      </span>
+    );
+  };
+
   useEffect(() => {
     attendanceFun();
   }, []);
 
   const attendanceFun = () => {
     var attendanceArr = [];
-    fetch(`http://attendance.devbox.co/api/v1/attendance_report?employee_id_eq=${selected}&start_date=${startDate}&end_date=${endDate}&accept=${allData}&sunday=${sunday}&saturday=${saturday}`)
+    fetch("http://127.0.0.1:8000/api/attendances")
       .then(res => res.json())
       .then(
         (response) => {
-          var data = response.data
-          for (var i = 0; i < data.length; i++) {
-            attendanceArr.push(data[i])
+          for (var i = 0; i < response.length; i++) {
+            attendanceArr.push(response[i])
           }
           setAttendanceData(attendanceArr)
         },
@@ -202,7 +226,7 @@ export default function AttendanceReport() {
                   size="small"
                   label="Employee"
                   variant="outlined"
-                  disabled={allData}
+                  // disabled={allData}
                   value={selected}
                   onChange={handleChange}
                   menuprops={{ variant: "menu" }}
@@ -231,7 +255,6 @@ export default function AttendanceReport() {
                   label="From"
                   type="date"
                   variant="outlined"
-                  defaultValue="2021-07-29"
                   size="small"
                   value={startDate}
                   onChange={startDateFun}
@@ -253,7 +276,6 @@ export default function AttendanceReport() {
                   label="To"
                   type="date"
                   variant="outlined"
-                  defaultValue="2021-07-29"
                   size="small"
                   value={endDate}
                   onChange={endDateFun}
@@ -345,7 +367,7 @@ export default function AttendanceReport() {
                   ? attendanceData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   : attendanceData
                 ).map((row, i) => (
-                  <TableRow>
+                  <TableRow key={row.id}>
                     <TableCell className={styles.nameCells}>{row.name}</TableCell>
                     <TableCell className={styles.subCells}>{row.date}</TableCell>
                     <TableCell className={styles.subCells}>{row.day}</TableCell>
@@ -354,14 +376,14 @@ export default function AttendanceReport() {
                     <TableCell
                       className=
                       {clsx(
-                        row.time_spend >= '08:00'
+                        row.timeSpend >= '08:00'
                           ? styles.time_spend_up
                           :
                           styles.time_spend_down
                       )}
 
                     >
-                      {row.time_spend}
+                      {row.timeSpend}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -371,7 +393,7 @@ export default function AttendanceReport() {
                   <TablePagination
                     className={styles.pagginationContainer}
                     rowsPerPageOptions={[5, 10, 25]}
-                    colSpan={7}
+                    colSpan={6}
                     count={attendanceData.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
