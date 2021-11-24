@@ -183,13 +183,12 @@ export default function ManageAttendance() {
 
   const attendanceFun = () => {
     var attendanceArr = [];
-    fetch("http://attendance.devbox.co/api/v1/attendances/new")
+    fetch("http://127.0.0.1:8000/api/attendances")
       .then(res => res.json())
       .then(
         (response) => {
-          var data = response.data
-          for (var i = 0; i < data.length; i++) {
-            attendanceArr.push(data[i])
+          for (var i = 0; i < response.length; i++) {
+            attendanceArr.push(response[i])
           }
           setAttendanceData(attendanceArr)
         },
@@ -347,7 +346,7 @@ export default function ManageAttendance() {
                   ? attendanceData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   : attendanceData
                 ).map((row) => (
-                  <TableRow>
+                  <TableRow key={row.id}>
                     <TableCell className={styles.nameCells}>{row.name}</TableCell>
                     <TableCell className={styles.subCells}>{row.date}</TableCell>
                     <TableCell className={styles.subCells}>{row.checkin}</TableCell>
@@ -355,14 +354,14 @@ export default function ManageAttendance() {
                     <TableCell
                       className=
                       {clsx(
-                        row.time_spend >= '08:00'
+                        row.timeSpend >= '08:00'
                           ? styles.time_spend_up
                           :
                           styles.time_spend_down
                       )}
 
                     >
-                      {row.time_spend}
+                      {row.timeSpend} 
                     </TableCell>
                     <TableCell className={styles.subCells}>
                       <button

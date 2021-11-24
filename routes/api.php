@@ -53,3 +53,4 @@ Route::get('/leaves/wbs/{employee}/{year}', [App\Http\Controllers\api\LeavesCont
 ///////////////////////////////////Attendances///////////////////////////////////////////////
 Route::get('/attendances', [App\Http\Controllers\api\AttendanceController::class, 'index']);
 Route::post('/attendance/new', [App\Http\Controllers\api\AttendanceController::class, 'store']);
+Route::get('/today/attendance', [App\Http\Controllers\api\AttendanceController::class, 'todayAttendance']);
