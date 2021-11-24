@@ -68,26 +68,55 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        $data = Attendance::create([
-            'employee_id' => $request->EmployeeId,
-            'date' => $request->Date,
-            'checkin' => $request->CheckIn,
-            'checkout' => $request->CheckOut,
-            'created_at' => $request->CreatedDate,
-            'updated_at' => $request->ModifyDate
-        ]);
-        if ($data){
-            $res=[
-            'status'=>'1',
-            'msg'=>'success'
-          ];
-          }else{
-            $res=[
-            'status'=>'0',
-            'msg'=>'fail'
-          ];
+        $userAlready = Attendance::where('date', '=', $request->Date)->get();
+        foreach($userAlready as $key => $value ){
+           if( $value->employee_id == $request->EmployeeId){
+            $value->update([
+                'employee_id' => $request->EmployeeId,
+                'date' => $request->Date,
+                'checkin' => $request->CheckIn,
+                'checkout' => $request->CheckOut,
+                'created_at' => $request->CreatedDate,
+                'updated_at' => $request->ModifyDate
+            ]);
+            if ($value){
+                $res=[
+                'status'=>'1',
+                'msg'=>'success'
+              ];
+              }else{
+                $res=[
+                'status'=>'0',
+                'msg'=>'fail'
+              ];
+            }
+              return response()->json($res);
+
+           }
+           else{
+                $data = Attendance::create([
+                    'employee_id' => $request->EmployeeId,
+                    'date' => $request->Date,
+                    'checkin' => $request->CheckIn,
+                    'checkout' => $request->CheckOut,
+                    'created_at' => $request->CreatedDate,
+                    'updated_at' => $request->ModifyDate
+                ]);
+                if ($data){
+                    $res=[
+                    'status'=>'1',
+                    'msg'=>'success'
+                  ];
+                  }else{
+                    $res=[
+                    'status'=>'0',
+                    'msg'=>'fail'
+                  ];
+                }
+                  return response()->json($res);
+           }
         }
-          return response()->json($res);
+
     }
 
     /**
