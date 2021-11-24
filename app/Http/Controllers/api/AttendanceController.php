@@ -54,6 +54,8 @@ class AttendanceController extends Controller
             $diffInHours   = sprintf("%02d", $difference->h);
             $result = $diffInHours . ':' . $diffInMinutes;
             $value->timeSpend = $result;
+            $value->checkin = date("g:i a", strtotime($value->checkin));
+            $value->checkout = date("g:i a", strtotime($value->checkout));
         }
         return $data;
     }
