@@ -68,7 +68,7 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        $userAlready = Attendance::where('date', '=', $request->Date)->get();
+        $userAlready = Attendance::where('created_at', '=', $request->CreatedDate,'AND','employee_id','=',$request->EmployeeId)->get();
         foreach($userAlready as $key => $value ){
            if( $value->employee_id == $request->EmployeeId){
             $value->update([
