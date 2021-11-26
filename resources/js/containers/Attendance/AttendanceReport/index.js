@@ -193,7 +193,7 @@ export default function ManageAttendance() {
 
   const attendanceSearch = () => {
     var attendanceArr = [];
-    fetch(`http://127.0.0.1:8000/api/attendance/report/${selected}/${startDate}/${endDate}/${allData}/fff/sun`)
+    fetch(`https://time-attendance-lr.herokuapp.com/api/attendance/report/${selected}/${startDate}/${endDate}/${allData}/fff/sun`)
       .then(res => res.json())
       .then(
         (response) => {

@@ -36,7 +36,7 @@ export default function ManageAttendance() {
     var checkinFinal = date + ' ' + checkin;
     var checkoutFinal = date + ' ' + checkout;
     var today = new Date()
-    fetch(`http://127.0.0.1:8000/api/attendance/update/${index}`, {
+    fetch(`https://time-attendance-lr.herokuapp.com/api/attendance/update/${index}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -62,7 +62,7 @@ export default function ManageAttendance() {
   }
 
   useEffect(() => {
-    fetch(`http://127.0.0.1:8000/api/attendance/${index}`)
+    fetch(`https://time-attendance-lr.herokuapp.com/api/attendance/${index}`)
       .then(res => res.json())
       .then(
         (response) => {

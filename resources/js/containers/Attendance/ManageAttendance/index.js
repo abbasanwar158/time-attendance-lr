@@ -170,7 +170,7 @@ export default function ManageAttendance() {
     var checkoutFinal = date + ' ' + checkout;
     for (var i = 0; i < epmolyeeExIDArr.length; i++) {
       var today = new Date()
-      fetch('http://127.0.0.1:8000/api/attendance/new', {
+      fetch('https://time-attendance-lr.herokuapp.com/api/attendance/new', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
