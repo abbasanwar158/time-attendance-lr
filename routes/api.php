@@ -54,3 +54,7 @@ Route::get('/leaves/wbs/{employee}/{year}', [App\Http\Controllers\api\LeavesCont
 Route::get('/attendances', [App\Http\Controllers\api\AttendanceController::class, 'index']);
 Route::post('/attendance/new', [App\Http\Controllers\api\AttendanceController::class, 'store']);
 Route::get('/today/attendance', [App\Http\Controllers\api\AttendanceController::class, 'todayAttendance']);
+Route::post('/attendance/update/{id}', [App\Http\Controllers\api\AttendanceController::class, 'update']);
+Route::get('/attendance/{id}', [App\Http\Controllers\api\AttendanceController::class, 'show']);
+Route::get('/attendance/report/{empId}/{from}/{to}/{all}/{sat}/{sun}', [App\Http\Controllers\api\AttendanceController::class, 'attendanceReport']);
+
