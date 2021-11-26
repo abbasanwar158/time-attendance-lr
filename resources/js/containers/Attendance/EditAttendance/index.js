@@ -17,6 +17,7 @@ export default function ManageAttendance() {
   const [attendanceId, setAttendanceId] = useState('')
   const [employeeName, setEmployeeName] = useState('')
   const [employeeId, setEmployeeId] = useState('')
+  const [createdAt, setCreatedAt] = useState('')
   const history = useHistory();
 
   const dateFun = (event) => {
@@ -32,23 +33,51 @@ export default function ManageAttendance() {
   }
 
   const EditAttendance = () => {
-    var requestOptions = {
-      method: "PUT",
-    };
-    fetch(`http://attendance.devbox.co/api/v1/attendances/${attendanceId}?date=${date}&checkin=${checkin}&checkout=${checkout}`, requestOptions)
-      .then((response) => { response.text() })
-      .catch((error) => console.log("error", error));
-    history.push('/attendance/new')
+    var checkinFinal = date + ' ' + checkin;
+    var checkoutFinal = date + ' ' + checkout;
+    var today = new Date()
+    fetch(`http://127.0.0.1:8000/api/attendance/update/${index}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          EmployeeId: employeeId,
+          Date: date,
+          CheckIn: checkinFinal,
+          CheckOut: checkoutFinal,
+          CreatedDate: createdAt,
+          ModifyDate: today
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+        history.push('/attendance/new')
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   useEffect(() => {
-    var attendanceDataForEdit = attendanceData[index]
-    setEmployeeName(attendanceDataForEdit.name)
-    setEmployeeId(attendanceDataForEdit.employee_id)
-    setAttendanceId(attendanceDataForEdit.attendance_id)
-    setDate(attendanceDataForEdit.date)
-    setCheckin(attendanceDataForEdit.checkin)
-    setCheckout(attendanceDataForEdit.checkout)
+    fetch(`http://127.0.0.1:8000/api/attendance/${index}`)
+      .then(res => res.json())
+      .then(
+        (response) => {
+          setEmployeeName(response[0].name)
+          setEmployeeId(response[0].employee_external_id)
+          setAttendanceId(response[0].id)
+          setDate(response[0].date)
+          setCheckin(response[0].checkin.split(' ')[1])
+          setCheckout(response[0].checkout.split(' ')[1])
+          setCreatedAt(response[0].created_at)
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
   }, []);
 
   return (

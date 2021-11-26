@@ -166,13 +166,32 @@ export default function ManageAttendance() {
 
   const addAttendance = () => {
     var epmolyeeExIDArr = employeesExId;
-    var requestOptions = {
-      method: "POST",
-    };
+    var checkinFinal = date + ' ' + checkin;
+    var checkoutFinal = date + ' ' + checkout;
     for (var i = 0; i < epmolyeeExIDArr.length; i++) {
-      fetch(`http://attendance.devbox.co/api/v1/attendances?date=${date}&checkin=${checkin}&checkout=${checkout}&${epmolyeeExIDArr[i]}=true`, requestOptions)
-        .then((response) => { response.text() })
-        .catch((error) => console.log("error", error));
+      var today = new Date()
+      fetch('http://127.0.0.1:8000/api/attendance/new', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          EmployeeId: epmolyeeExIDArr[i],
+          Date: date,
+          CheckIn: checkinFinal,
+          CheckOut: checkoutFinal,
+          CreatedDate: today,
+          ModifyDate: today
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
     }
     attendanceFun();
   }
@@ -365,15 +384,10 @@ export default function ManageAttendance() {
                     </TableCell>
                     <TableCell className={styles.subCells}>
                       <button
-                        value={row.attendance_id}
+                        value={row.id}
                         onClick={(e) => {
                           var attendanceId = e.target.value
-                          for (var i = 0; i < attendanceData.length; i++) {
-                            var tempId = attendanceData[i].attendance_id
-                            if (tempId == attendanceId) {
-                              setIndex(i);
-                            }
-                          }
+                          setIndex(attendanceId);
                           history.push('/attendance/edit')
                         }}
                       >Edit</button>

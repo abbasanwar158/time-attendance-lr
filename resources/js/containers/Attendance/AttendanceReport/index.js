@@ -104,15 +104,13 @@ const useStyles2 = makeStyles({
 
 export default function ManageAttendance() {
 
-  const [personName, setPersonName] = useState([]);
   const { ActiveEmployeeNames, setIndex, attendanceData, setAttendanceData } = useContext(RootContext);
-  const [employeesExId, setEmployeesExID] = useState([])
-  const [startDate, setStartDate] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [allData, setAllData] = useState('')
+  const [startDate, setStartDate] = useState(null)
+  const [endDate, setEndDate] = useState(null)
+  const [allData, setAllData] = useState(false)
   const [saturday, setSaturday] = useState('')
   const [sunday, setSunday] = useState('')
-  const [selected, setSelected] = useState('')
+  const [selected, setSelected] = useState(null)
   const history = useHistory();
 
   const ITEM_HEIGHT = 48;
@@ -128,16 +126,7 @@ export default function ManageAttendance() {
 
   const handleChange = (event) => {
     var values = event.target.value
-    var employeeIdsArr = []
-    for (var i = 0; i < values.length; i++) {
-      for (var j = 0; j < ActiveEmployeeNames.length; j++) {
-        if (values[i] == ActiveEmployeeNames[j].name) {
-          employeeIdsArr.push(ActiveEmployeeNames[j].employee_external_id)
-        }
-      }
-    }
-    setEmployeesExID(employeeIdsArr)
-    setPersonName(event.target.value);
+    setSelected(values);
   };
 
   const classes = useStyles2();
@@ -188,6 +177,23 @@ export default function ManageAttendance() {
   const attendanceFun = () => {
     var attendanceArr = [];
     fetch("https://time-attendance-lr.herokuapp.com/api/attendances")
+      .then(res => res.json())
+      .then(
+        (response) => {
+          for (var i = 0; i < response.length; i++) {
+            attendanceArr.push(response[i])
+          }
+          setAttendanceData(attendanceArr)
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
+  }
+
+  const attendanceSearch = () => {
+    var attendanceArr = [];
+    fetch(`http://127.0.0.1:8000/api/attendance/report/${selected}/${startDate}/${endDate}/${allData}/fff/sun`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -341,7 +347,7 @@ export default function ManageAttendance() {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={attendanceFun}
+                onClick={attendanceSearch}
                 className={styles.saveButton}>
                 Generate Report
               </Button>
