@@ -7,13 +7,18 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { RootContext } from "../../../context/RootContext";
-
+import { useHistory } from "react-router-dom";
+import { WbSunny } from "@material-ui/icons";
 
 export default function NewLeave() {
 
   const { ActiveEmployeeNames } = useContext(RootContext);
   const [selected, setSelected] = useState('')
+  const [selectedDate, setSelectedDate] = useState('')
+  const [selectedNote, setSelectedNote] = useState('')
+  const [selectedTime, setSelectedTime] = useState('00:00:00')
   const [selectedStatus, setSelectedStatus] = useState('')
+  const history = useHistory();
 
   const handleChange = (event) => {
     setSelected(event.target.value);
@@ -23,6 +28,15 @@ export default function NewLeave() {
     setSelectedStatus(event.target.value);
   };
 
+  const handleChangeDate = (event) => {
+    setSelectedDate(event.target.value);
+  };
+
+  const handleChangeNote = (event) => {
+    setSelectedNote(event.target.value);
+  };
+  
+
   const Chevron = () => {
     return (
       <span className={styles.dropDownCustomizeSvg}>
@@ -30,6 +44,71 @@ export default function NewLeave() {
       </span>
     );
   };
+
+  // const newattendance = () => {
+  //   var today = new Date()
+  //   if(selectedStatus == 'half'){
+  //     setTime('04:30:00');
+  //   }
+  //   debugger
+  //   fetch('https://time-attendance-lr.herokuapp.com/api/leave/new', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       },
+  //       body: JSON.stringify({
+  //         employee_id: selected,
+  //         date: date,
+  //         status: selectedStatus,
+  //         note: note,
+  //         time: time,
+  //         created_at: today,
+  //         updated_at: today
+  //       })
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       console.log('Success:', data);
+  //       history.push('/leaves');
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error:', error);
+  //     });
+
+  // }
+
+
+  const newattendance = () => {
+    var today = new Date()
+    fetch('https://time-attendance-lr.herokuapp.com/api/leave/new', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          employee_id: selected,
+          date: selectedDate,
+          status: selectedStatus,
+          created_at: today,
+          updated_at: today,
+          note: selectedNote,
+          time: selectedTime,
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        debugger
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        debugger
+        console.error('Error:', error);
+      });
+      debugger
+  }
+
 
   return (
     <>
@@ -82,8 +161,9 @@ export default function NewLeave() {
                     label="Date"
                     type="date"
                     variant="outlined"
-                    defaultValue="2021-01-01"
                     size="small"
+                    value={selectedDate}
+                    onChange={handleChangeDate}
                     InputLabelProps={{
                       shrink: true,
                     }}
@@ -132,6 +212,8 @@ export default function NewLeave() {
                     label="Note"
                     type="text"
                     variant="outlined"
+                    value={selectedNote}
+                    onChange={handleChangeNote}
                   >
                   </TextField>
                 </FormControl>
@@ -141,10 +223,14 @@ export default function NewLeave() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button variant="contained" color="primary" className={styles.saveButton}>
+                <Button variant="contained" color="primary" onClick={newattendance} className={styles.saveButton}>
                   Save
                 </Button>
-                <Button variant="contained" color="default">
+                <Button
+                  onClick={(e) => history.push('/leaves')} 
+                  variant="contained" 
+                  color="default"
+                  >
                   Cancel
                 </Button>
               </Grid>

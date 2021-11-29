@@ -21,6 +21,7 @@ export default function NewEmployee() {
   const [joiningDate, setJoiningDate] = useState('')
   const [status, setStatus] = useState('')
   const [description, setDescription] = useState('')
+  const [employeeCat, setEmployeeCat] = useState('');
   const history = useHistory();
 
   const handleChangeStatus = (event) => {
@@ -55,6 +56,10 @@ export default function NewEmployee() {
     setDescription(event.target.value);
   };
 
+  const handleChangeEmployeeCat = (event) => {
+    setEmployeeCat(event.target.value);
+  }
+
   const Chevron = () => {
     return (
       <span className={styles.dropDownCustomizeSvg}>
@@ -71,6 +76,7 @@ export default function NewEmployee() {
     setCnic(employeeDataForEdit.cnic)
     setEmail(employeeDataForEdit.email)
     setJoiningDate(employeeDataForEdit.joining_date)
+    setEmployeeCat(employeeDataForEdit.employees_category)
     setDescription(employeeDataForEdit.description)
     var statusValue = employeeDataForEdit.active
     if (statusValue) {
@@ -97,6 +103,7 @@ export default function NewEmployee() {
           updated_at: today,
           cnic: cnic,
           email: email,
+          employee_cat: employeeCat,
           designation: designation,
           joining_date: joiningDate,
           description: description,
@@ -263,6 +270,37 @@ export default function NewEmployee() {
                     value={description}
                     onChange={handleChangeDescription}
                   >
+                  </TextField>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={1} className={styles.gridSubItems} >
+              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                <FormControl fullWidth >
+                  <TextField
+                    className={styles.fieldDiv}
+                    id="questions"
+                    fullWidth
+                    size="small"
+                    label="Category"
+                    variant="outlined"
+                    value={employeeCat}
+                    onChange={handleChangeEmployeeCat}
+                    menuprops={{ variant: "menu" }}
+                    select
+                    SelectProps={{ IconComponent: () => <Chevron /> }}
+                  >
+                    <MenuItem value="Permanent">
+                      Permanent
+                    </MenuItem>
+                    <MenuItem value="Internees">
+                      Internees
+                    </MenuItem>
+                    <MenuItem value="Outside Contact">
+                      Outside Contact
+                    </MenuItem>
                   </TextField>
                 </FormControl>
               </Grid>

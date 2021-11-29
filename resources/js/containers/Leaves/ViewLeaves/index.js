@@ -116,7 +116,6 @@ export default function ViewLeaves() {
   };
 
   const handleChange = (event) => {
-    debugger
     setPersonName(event.target.value);
   };
 
@@ -135,6 +134,24 @@ export default function ViewLeaves() {
   const leavesFun = () => {
     var leavesArr = [];
     fetch("https://time-attendance-lr.herokuapp.com/api/leaves")
+      .then(res => res.json())
+      .then(
+        (response) => {
+          var data = response.filter((x) => x.active)
+          for (var i = 0; i < data.length; i++) {
+            leavesArr.push(data[i])
+          }
+          setLeavesData(leavesArr)
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
+  }
+
+  const searchLeaves = () => {
+    var leavesArr = [];
+    fetch(`https://time-attendance-lr.herokuapp.com/api/leaves/${personName}`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -189,7 +206,11 @@ export default function ViewLeaves() {
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={2} className={styles.buttonGrid}>
-                <Button variant="contained" color="primary" >
+                <Button
+                 onClick={searchLeaves}
+                 variant="contained" 
+                 color="primary" 
+                 >
                   Search
                 </Button>
               </Grid>
@@ -214,8 +235,8 @@ export default function ViewLeaves() {
                   ? leavesData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   : leavesData
                 ).map((row, i) => (
-                  <TableRow>
-                    <TableCell className={styles.nameCells}>{row.employee_id}</TableCell>
+                  <TableRow key={row.id}>
+                    <TableCell className={styles.nameCells}>{row.name}</TableCell>
                     <TableCell className={styles.subCells}>{row.time}</TableCell>
                     <TableCell className={styles.subCells}>{row.date}</TableCell>
                     <TableCell className={styles.subCells}>{row.status}</TableCell>

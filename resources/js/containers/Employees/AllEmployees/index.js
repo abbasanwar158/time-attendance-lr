@@ -154,6 +154,7 @@ export default function AllEmployees() {
                 <TableCell className={styles.TableCell} >Name</TableCell>
                 <TableCell className={styles.TableCell} >Email</TableCell>
                 <TableCell className={styles.TableCell} >Joining Date</TableCell>
+                <TableCell className={styles.TableCell} >Employees Category</TableCell>
                 <TableCell className={styles.TableCell} >Action</TableCell>
               </TableRow>
             </TableHead>
@@ -162,13 +163,14 @@ export default function AllEmployees() {
                 ? employeesData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 : employeesData
               ).map((row, i) => (
-                <TableRow>
+                <TableRow key={row.id}>
                   <TableCell className={styles.nameCells}>{row.id}</TableCell>
                   <TableCell className={styles.nameCells}>{row.employee_external_id}</TableCell>
                   <TableCell className={styles.subCells}>{row.cnic}</TableCell>
                   <TableCell className={styles.subCells}>{row.name}</TableCell>
                   <TableCell className={styles.subCells}>{row.email}</TableCell>
                   <TableCell className={styles.subCells}>{row.joining_date}</TableCell>
+                  <TableCell className={styles.subCells}>{row.employees_category}</TableCell>
                   <TableCell className={styles.subCells}>
                     <button
                       value={row.id}

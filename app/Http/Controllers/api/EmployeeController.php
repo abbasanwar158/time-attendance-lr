@@ -45,6 +45,7 @@ class EmployeeController extends Controller
             'designation' => $request->designation,
             'description' => $request->description,
             'joining_date' => $request->joining_date,
+            'employees_category' => $request->employee_cat,
             'created_at' => $request->created_at,
             'updated_at' => $request->updated_at
         ]);
@@ -103,6 +104,7 @@ class EmployeeController extends Controller
             'designation' => $request->designation,
             'description' => $request->description,
             'joining_date' => $request->joining_date,
+            'employees_category' => $request->employee_cat,
             'created_at' => $request->created_at,
             'updated_at' => $request->updated_at
         ]);
