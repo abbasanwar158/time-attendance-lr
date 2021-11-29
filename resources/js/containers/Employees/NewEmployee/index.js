@@ -6,6 +6,7 @@ import FormControl from "@material-ui/core/FormControl";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import { useHistory } from "react-router-dom";
 
 
 export default function NewEmployee() {
@@ -18,6 +19,8 @@ export default function NewEmployee() {
   const [email, setEmail] = useState('');
   const [joiningDate, setJoiningDate] = useState('');
   const [description, setDescription] = useState('');
+  const [employeeCat, setEmployeeCat] = useState('');
+  const history = useHistory();
 
   const handleChangeStatus = (event) => {
     setSelectedStatus(event.target.value);
@@ -51,6 +54,10 @@ export default function NewEmployee() {
     setDescription(event.target.value);
   };
 
+  const handleChangeEmployeeCat = (event) => {
+    setEmployeeCat(event.target.value);
+  }
+
   const Chevron = () => {
     return (
       <span className={styles.dropDownCustomizeSvg}>
@@ -75,6 +82,7 @@ export default function NewEmployee() {
           updated_at: today,
           cnic: cnic,
           email: email,
+          employee_cat: employeeCat,
           designation: designation,
           joining_date: joiningDate,
           description: description,
@@ -83,6 +91,7 @@ export default function NewEmployee() {
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
+        history.push('/employees');
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -254,6 +263,37 @@ export default function NewEmployee() {
                     id="questions"
                     fullWidth
                     size="small"
+                    label="Category"
+                    variant="outlined"
+                    value={employeeCat}
+                    onChange={handleChangeEmployeeCat}
+                    menuprops={{ variant: "menu" }}
+                    select
+                    SelectProps={{ IconComponent: () => <Chevron /> }}
+                  >
+                    <MenuItem value="Permanent">
+                      Permanent
+                    </MenuItem>
+                    <MenuItem value="Internees">
+                      Internees
+                    </MenuItem>
+                    <MenuItem value="Outside Contact">
+                      Outside Contact
+                    </MenuItem>
+                  </TextField>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12}>
+            <Grid container spacing={1} className={styles.gridSubItems} >
+              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                <FormControl fullWidth >
+                  <TextField
+                    className={styles.fieldDiv}
+                    id="questions"
+                    fullWidth
+                    size="small"
                     label="Status"
                     variant="outlined"
                     value={selectedStatus}
@@ -279,7 +319,7 @@ export default function NewEmployee() {
                 <Button onClick={newEmployee} variant="contained" color="primary" className={styles.saveButton}>
                   Save
                 </Button>
-                <Button variant="contained" color="default">
+                <Button  onClick={(e) => history.push('/employees')} variant="contained" color="default">
                   Cancel
                 </Button>
               </Grid>

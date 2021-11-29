@@ -20,7 +20,7 @@ class AttendanceController extends Controller
     {
         $data = Attendance::join('employees', 'employee_external_id', '=', 'attendances.employee_id')
         ->orderBy('date', 'DESC')
-        ->get(['employees.name', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout', 'attendances.created_at']);
+        ->get(['employees.name', 'employees.active', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout', 'attendances.created_at']);
         foreach($data as $key => $value ){
             $date1 = new DateTime($value->checkin);
             $date2 = new DateTime($value->checkout);
@@ -46,7 +46,7 @@ class AttendanceController extends Controller
     {
         $today = Carbon::today();
         $data = Attendance::where('date', '=', $today)->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
-        ->get(['employees.name', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
+        ->get(['employees.name', 'employees.active', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
         foreach($data as $key => $value ){
             $date1 = new DateTime($value->checkin);
             $date2 = new DateTime($value->checkout);
@@ -103,7 +103,7 @@ class AttendanceController extends Controller
         return DB::table('attendances')
             ->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
             ->where('attendances.id', $id)
-            ->get(['employees.name', 'employees.employee_external_id', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout', 'attendances.created_at']);
+            ->get(['employees.name', 'employees.active', 'employees.employee_external_id', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout', 'attendances.created_at']);
     }
 
     /**
@@ -196,7 +196,7 @@ class AttendanceController extends Controller
               ['date', '>=', $from],
               ['date','<=', $to]
           ])->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
-          ->get(['employees.name', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
+          ->get(['employees.name',  'employees.active', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
           foreach($data as $key => $value ){
               $date1 = new DateTime($value->checkin);
               $date2 = new DateTime($value->checkout);
@@ -209,5 +209,81 @@ class AttendanceController extends Controller
               $value->checkout = date("g:i a", strtotime($value->checkout));
           }
           return $data;
+    }
+
+     /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Attendance  $attendance
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadCSV(Request $request)
+    {   
+        //$wordlist = $request->count();
+        
+        if($request){
+
+             $users = Attendance::select('*')
+
+             ->where('employee_id', '=', $request->EmployeeId)
+
+             ->where('date', '=', $request->Date)
+
+             ->get();
+
+             $length=count($users);
+             
+            if($length >= 1){
+                
+                $data=Attendance::select('*')
+                ->where('employee_id', '=', $request->EmployeeId)
+                ->where('date', '=', $request->Date)
+                ->update([
+                    'employee_id' => $request->EmployeeId,
+                    'date' => $request->Date,
+                    'checkin' => $request->CheckIn,
+                    'checkout' => $request->CheckOut,
+                    'created_at' => $request->CreatedDate,
+                    'updated_at' => $request->ModifyDate,
+                ]);
+                if ($data){
+                    $res=[
+                    'status'=>'1',
+                    'msg'=>'success'
+                  ];
+                  }else{
+                    $res=[
+                    'status'=>'0',
+                    'msg'=>'fail'
+                  ];
+                }
+                  return response()->json($res);
+            }else{
+                 $data = Attendance::create([
+                'employee_id' => $request->EmployeeId,
+                'date' => $request->Date,
+                'checkin' => $request->CheckIn,
+                'checkout' => $request->CheckOut,
+                'created_at' => $request->CreatedDate,
+                'updated_at' => $request->ModifyDate,
+            ]);
+            if ($data){
+                $res=[
+                'status'=>'1',
+                'msg'=>'success'
+              ];
+              }else{
+                $res=[
+                'status'=>'0',
+                'msg'=>'fail'
+              ];
+            }
+              return response()->json($res);
+            }
+           
+          
+        }else{
+            return false;
+        }
     }
 }

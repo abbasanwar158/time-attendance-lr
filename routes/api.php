@@ -43,12 +43,11 @@ Route::get('/holiday/search/{date}', [App\Http\Controllers\api\HolidayController
 
 ///////////////////////////////////Leaves///////////////////////////////////////////////
 Route::get('/leaves', [App\Http\Controllers\api\LeavesController::class, 'index']);
-Route::get('/leave/{id}', [App\Http\Controllers\api\LeavesController::class, 'show']);
-Route::post('/apply/leaves', [App\Http\Controllers\api\LeavesController::class, 'applyLeaves']);
 Route::post('/leave/new', [App\Http\Controllers\api\LeavesController::class, 'store']);
-Route::get('/leave/delete/{id}', [App\Http\Controllers\api\LeavesController::class, 'destroy']);
-Route::post('/leaves/data/{from}/{to}/{id}', [App\Http\Controllers\api\LeavesController::class, 'leavesData']);
-Route::get('/leaves/wbs/{employee}/{year}', [App\Http\Controllers\api\LeavesController::class, 'leavesWbs']);
+Route::post('/leave/new/request', [App\Http\Controllers\api\LeaveRequestsController::class, 'store']);
+Route::get('/leaves/{empId}', [App\Http\Controllers\api\LeavesController::class, 'leavesByEmployee']);
+
+
 
 ///////////////////////////////////Attendances///////////////////////////////////////////////
 Route::get('/attendances', [App\Http\Controllers\api\AttendanceController::class, 'index']);
@@ -57,4 +56,4 @@ Route::get('/today/attendance', [App\Http\Controllers\api\AttendanceController::
 Route::post('/attendance/update/{id}', [App\Http\Controllers\api\AttendanceController::class, 'update']);
 Route::get('/attendance/{id}', [App\Http\Controllers\api\AttendanceController::class, 'show']);
 Route::get('/attendance/report/{empId}/{from}/{to}/{all}/{sat}/{sun}', [App\Http\Controllers\api\AttendanceController::class, 'attendanceReport']);
-
+Route::post('/attendance/upload', [App\Http\Controllers\api\AttendanceController::class, 'uploadCSV']);

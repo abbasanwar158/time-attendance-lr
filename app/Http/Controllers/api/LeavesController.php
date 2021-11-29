@@ -4,6 +4,8 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
+use App\Models\Employees;
+
 use Illuminate\Http\Request;
 
 class LeavesController extends Controller
@@ -15,7 +17,9 @@ class LeavesController extends Controller
      */
     public function index()
     {
-        return Leave::all();
+        $data=Leave::join("employees","employee_external_id","=","leaves.employee_id")
+            ->get(['employees.name',  'employees.active','leaves.time','leaves.status','leaves.date','leaves.note']);
+        return $data;
     }
 
     /**
@@ -23,9 +27,12 @@ class LeavesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function leavesByEmployee($empID)
     {
-        //
+        return DB::table('leaves')
+            ->join('employees', 'employee_external_id', '=', 'leaves.employee_id')
+            ->where('leaves.employee_id', $empID)
+            ->get(['employees.name', 'employees.active', 'employees.employee_external_id', 'leaves.id', 'leaves.date', 'leaves.time',  'leaves.status', 'leaves.note', 'leaves.created_at']);
     }
 
     /**
@@ -36,16 +43,38 @@ class LeavesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+
+        $data =  Leave::create([
+            'employee_id'=>$request->employee_id,
+            'date' => $request->date,
+            'status' => $request->status,
+            'note' => $request->note,
+            'time'=>$request->time,
+            'created_at'=>$request->created_at,
+            'updated_at'=>$request->updated_at
+        ]);
+        if ($data){
+            $res=[
+            'status'=>'1',
+            'msg'=>'success'
+          ];
+          }else{
+            $res=[
+            'status'=>'0',
+            'msg'=>'fail'
+          ];
+        }
+          return response()->json($res);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Leave  $leave
+     * @param  \App\Models\Leaves  $leaves
      * @return \Illuminate\Http\Response
      */
-    public function show(Leave $leave)
+    public function show(Leaves $leaves)
     {
         //
     }
@@ -53,10 +82,10 @@ class LeavesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Leave  $leave
+     * @param  \App\Models\Leaves  $leaves
      * @return \Illuminate\Http\Response
      */
-    public function edit(Leave $leave)
+    public function edit(Leaves $leaves)
     {
         //
     }
@@ -65,10 +94,10 @@ class LeavesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Leave  $leave
+     * @param  \App\Models\Leaves  $leaves
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Leave $leave)
+    public function update(Request $request, Leaves $leaves)
     {
         //
     }
@@ -76,10 +105,10 @@ class LeavesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Leave  $leave
+     * @param  \App\Models\Leaves  $leaves
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Leave $leave)
+    public function destroy(Leaves $leaves)
     {
         //
     }

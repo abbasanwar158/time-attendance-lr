@@ -121,9 +121,10 @@ export default function ViewAttendance() {
         .then(res => res.json())
         .then(
           (response) => {
-              for (var i = 0; i < response.length; i++) {
-                attendanceArr.push(response[i])
-              }
+            var data = response.filter((x) => x.active)
+            for (var i = 0; i < data.length; i++) {
+              attendanceArr.push(data[i])
+            }
               setAttendanceData(attendanceArr)
           },
           (error) => {
