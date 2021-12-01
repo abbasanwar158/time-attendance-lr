@@ -65,4 +65,3 @@ Route::post('/attendance/upload', [App\Http\Controllers\api\AttendanceController
 Route::get('/welcome/leaves', [App\Http\Controllers\api\WelcomeController::class, 'onLeave']);
 Route::get('/welcome/attendances', [App\Http\Controllers\api\WelcomeController::class, 'presentEmployees']);
 Route::get('/welcome/holidays', [App\Http\Controllers\api\WelcomeController::class, 'upComeHolidays']);
->>>>>>> upload-data
