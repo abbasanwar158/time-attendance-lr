@@ -21,7 +21,7 @@ class WelcomeController extends Controller
     public function onLeave()
     {
         $today = date('Y-m-d');
-        $currentDay = date('l', strtotime('2021-12-26'));
+        $currentDay = date('l', strtotime($today));
         if($currentDay == 'Saturday' || $currentDay == 'Sunday'){
             $res=[
                 'activeEmployees'=> 0,
