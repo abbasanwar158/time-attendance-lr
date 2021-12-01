@@ -38,6 +38,7 @@ export default function EditLeave() {
 
 
   useEffect(() => {
+    debugger
     var leaveDataForEdit = leavesData[index]
     setEmployee(leaveDataForEdit.employee_id)
     setDate(leaveDataForEdit.date)

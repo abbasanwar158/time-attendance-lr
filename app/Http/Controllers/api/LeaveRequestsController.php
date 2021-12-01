@@ -15,7 +15,7 @@ class LeaveRequestsController extends Controller
      */
     public function index()
     {
-        //
+        return LeaveRequests::all();
     }
 
     /**
@@ -38,6 +38,7 @@ class LeaveRequestsController extends Controller
     {
         //
         $data = LeaveRequests::create([
+            'user_id' => $request->userId,
             'leave_type' => $request->leave,
             'date_from' => $request->from,
             'date_to' => $request->to,
@@ -46,6 +47,18 @@ class LeaveRequestsController extends Controller
             'created_at'=>$request->created_at,
             'updated_at'=>$request->updated_at
         ]);
+        if ($data){
+            $res=[
+            'status'=>'1',
+            'msg'=>'success'
+          ];
+          }else{
+            $res=[
+            'status'=>'0',
+            'msg'=>'fail'
+          ];
+        }
+          return response()->json($res);
     }
 
     /**

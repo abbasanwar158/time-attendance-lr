@@ -170,4 +170,75 @@ class EmployeeController extends Controller
         }
           return response()->json($res);
     }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Employee  $employee
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadCSV(Request $request)
+    {
+      //$data = Employee::find($request->id);
+      $data = Employee::select('*')
+      ->where('employee_external_id', '=', $request->id)
+      ->get();
+      $length=count($data);
+      
+      if($length >= 1 ){
+        $data=Employee::select('*')
+                ->where('employee_external_id', '=', $request->id)
+                ->update([
+                  'employee_external_id' => $request->id,
+                  'name' => $request->name,
+                  'cnic' => $request->cnic,
+                  'email' => $request->email,
+                  'active' => $request->active,
+                  'designation' => $request->designation,
+                  'description' => $request->description,
+                  'joining_date' => $request->joining_date,
+                  'created_at' => $request->created_at,
+                  'updated_at' => $request->updated_at
+              ]);
+                if ($data){
+                    $res=[
+                    'status'=>'1',
+                    'msg'=>'success'
+                  ];
+                  }else{
+                    $res=[
+                    'status'=>'0',
+                    'msg'=>'fail'
+                  ];
+                }
+                  return response()->json($res);
+        
+      }else{
+         $data =  Employee::create([
+          'employee_external_id' => $request->id,
+          'name' => $request->name,
+          'cnic' => $request->cnic,
+          'email' => $request->email,
+          'active' => $request->active,
+          'designation' => $request->designation,
+          'description' => $request->description,
+          'joining_date' => $request->joining_date,
+          'created_at' => $request->created_at,
+          'updated_at' => $request->updated_at
+        ]);
+        if ($data){
+            $res=[
+            'status'=>'1',
+            'msg'=>'success'
+          ];
+          }else{
+            $res=[
+            'status'=>'0',
+            'msg'=>'fail'
+          ];
+        }
+          return response()->json($res);
+        return "record not found";
+      }
+    }
 }

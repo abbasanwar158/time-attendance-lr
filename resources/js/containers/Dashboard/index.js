@@ -19,15 +19,17 @@ export default function Dashboard() {
   const history = useHistory();
   const [months, setMonths] = useState('');
   const [years, setYears] = useState('');
-  const [onLeave, setOnLeave] = useState('');
-  const [presentEmp, setPresentEmp] = useState('');
+  const [upHoliday, setUpHoliday] = useState(false);
   const [holidayName, setholidayName] = useState('');
   const [holidayDate, setHolidayDate] = useState('');
-  const [noHoliday, setNoHoliday] = useState(false);
   const [leavesInformation, setLeavesInformation] = useState([]);
   const [hoursInformation, setHoursInformation] = useState([]);
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
+  const [noOfEmployees, setNoOfEmployees] = useState('');
+  const [noOfLeaves, setNoOfLeaves] = useState('');
+  const [currentDay, setCurrentDay] = useState('');
+  const [noOfEmplPresent, setNoOfEmplPresent] = useState('');
   const [optionsMonths, setOptionsMonths] = useState([
     'January',
     'February',
@@ -68,23 +70,53 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    welcomeInfo();
     leavesInfo();
     hoursInfo();
+    presetEmployeeInfo();
+    upComingHolidays();
   }, []);
 
 
   const leavesInfo = () => {
-    var leavesInfoArr = [];
-    fetch(`http://attendance.devbox.co/api/v1/leave_information?month=${months}&year=${years}`)
+    fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/leaves`)
       .then(res => res.json())
       .then(
         (response) => {
-          var data = response.data
-          for (var i = 0; i < data.length; i++) {
-            leavesInfoArr.push(data[i])
+          setNoOfLeaves(response.onLeaves);
+          setNoOfEmployees(response.activeEmployees);
+          setCurrentDay(response.currentDay);
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
+  }
+
+  const presetEmployeeInfo = () => {
+    fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/attendances`)
+      .then(res => res.json())
+      .then(
+        (response) => {
+          setNoOfEmplPresent(response.todayAttendances);
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
+  }
+
+  const upComingHolidays = () => {
+    fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/holidays`)
+      .then(res => res.json())
+      .then(
+        (response) => {
+          if(response){
+              setholidayName(response.occasion);
+              setHolidayDate(response.date);
           }
-          setLeavesInformation(leavesInfoArr)
+          else{
+            setUpHoliday(true);
+          }
         },
         (error) => {
           console.log("error", error)
@@ -103,27 +135,6 @@ export default function Dashboard() {
             hoursInfoArr.push(data[i])
           }
           setHoursInformation(hoursInfoArr)
-        },
-        (error) => {
-          console.log("error", error)
-        }
-      )
-  }
-
-  const welcomeInfo = () => {
-    fetch("http://attendance.devbox.co/api/v1/welcome")
-      .then(res => res.json())
-      .then(
-        (response) => {
-          setOnLeave(response.on_leave_employees)
-          setPresentEmp(response.present_employees)
-          if (response.holiday == null) {
-            setNoHoliday(true)
-          }
-          else {
-            setholidayName(response.holiday.occasion)
-            setHolidayDate(response.holiday.date)
-          }
         },
         (error) => {
           console.log("error", error)
@@ -153,14 +164,12 @@ export default function Dashboard() {
                   <SVG className={`${styles.cardSvg}`} src={`/images/leaves.svg`} />
                 </div>
                 <div className={` ${styles.cardBody}`}>
-                  <span className={styles.cardBodyText}>{onLeave}/15</span>
+                  <span className={styles.cardBodyText}>{currentDay == 0 ? <span>{noOfLeaves}/{noOfEmployees}</span> : <span>{currentDay}</span>}</span>
                   <SVG className={`${styles.cardSvg}`} src={`/images/rightArrow.svg`} />
                 </div>
               </div>
             </div>
           </Grid>
-
-
           <Grid item xs={12} sm={12} md={4}>
             <div className={styles.card} onClick={() => history.push('/employees')}>
               <div className={`${styles.cardEmployees}`}>
@@ -169,7 +178,7 @@ export default function Dashboard() {
                   <SVG className={`${styles.cardSvg}`} src={`/images/people.svg`} />
                 </div>
                 <div className={` ${styles.cardBody}`}>
-                  <span className={styles.cardBodyText}>{presentEmp}/15</span>
+                  <span className={styles.cardBodyText}>{currentDay == 0 ? <span>{noOfEmplPresent}/{noOfEmployees}</span> : <span>{currentDay}</span>}</span>
                   <SVG className={`${styles.cardSvg}`} src={`/images/rightArrow.svg`} />
                 </div>
               </div>
@@ -183,7 +192,7 @@ export default function Dashboard() {
                   <SVG className={`${styles.cardSvg}`} src={`/images/event.svg`} />
                 </div>
                 <div className={` ${styles.cardBody}`}>
-                  {noHoliday ?
+                  {upHoliday ?
                     <span className={styles.cardBodyTextHoliday}>No Upcoming Holiday</span>
                     :
                     <div>

@@ -33,6 +33,7 @@ Route::post('/employee/update/{id}', [App\Http\Controllers\api\EmployeeControlle
 Route::delete('/employee/delete/{id}', [App\Http\Controllers\api\EmployeeController::class, 'destroy']);
 Route::get('/employee/{id}', [App\Http\Controllers\api\EmployeeController::class, 'show']);
 Route::post('employee/edit_status/{id}', [App\Http\Controllers\api\EmployeeController::class, 'editStatus']);
+Route::post('/employees/upload',[App\Http\Controllers\api\EmployeeController::class, 'uploadCSV']);
 
 //////////////////////////////////Employees///////////////////////////////////////////////
 Route::get('/holidays', [App\Http\Controllers\api\HolidayController::class, 'index']);
@@ -45,10 +46,9 @@ Route::get('/holiday/search/{date}', [App\Http\Controllers\api\HolidayController
 Route::get('/leaves', [App\Http\Controllers\api\LeavesController::class, 'index']);
 Route::post('/leave/new', [App\Http\Controllers\api\LeavesController::class, 'store']);
 Route::post('/leave/new/request', [App\Http\Controllers\api\LeaveRequestsController::class, 'store']);
+Route::get('/leave/requests', [App\Http\Controllers\api\LeaveRequestsController::class, 'index']);
 Route::get('/leaves/{empId}', [App\Http\Controllers\api\LeavesController::class, 'leavesByEmployee']);
 Route::post('/leaves/upload',[App\Http\Controllers\api\LeavesController::class, 'uploadCSV']);
-
-
 
 ///////////////////////////////////Attendances///////////////////////////////////////////////
 Route::get('/attendances', [App\Http\Controllers\api\AttendanceController::class, 'index']);
@@ -58,3 +58,11 @@ Route::post('/attendance/update/{id}', [App\Http\Controllers\api\AttendanceContr
 Route::get('/attendance/{id}', [App\Http\Controllers\api\AttendanceController::class, 'show']);
 Route::get('/attendance/report/{empId}/{from}/{to}/{all}/{sat}/{sun}', [App\Http\Controllers\api\AttendanceController::class, 'attendanceReport']);
 Route::post('/attendance/upload', [App\Http\Controllers\api\AttendanceController::class, 'uploadCSV']);
+Route::post('/attendance/upload', [App\Http\Controllers\api\AttendanceController::class, 'uploadCSV']);
+
+
+///////////////////////////////////Welcome///////////////////////////////////////////////
+Route::get('/welcome/leaves', [App\Http\Controllers\api\WelcomeController::class, 'onLeave']);
+Route::get('/welcome/attendances', [App\Http\Controllers\api\WelcomeController::class, 'presentEmployees']);
+Route::get('/welcome/holidays', [App\Http\Controllers\api\WelcomeController::class, 'upComeHolidays']);
+>>>>>>> upload-data
