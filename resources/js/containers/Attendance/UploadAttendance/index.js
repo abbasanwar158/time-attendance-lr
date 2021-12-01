@@ -63,6 +63,7 @@ export default function UploadAttendance() {
                     .then((response) => response.json())
                     .then((data) => {
                         console.log("Success:", data);
+                        document.getElementById("hero1").value = "";
                     })
                     .catch((error) => {
                         console.error("Error:", error);
@@ -86,18 +87,13 @@ export default function UploadAttendance() {
                     <span className={styles.breadCrumbsSlash}>/</span>
                     <span className={styles.breadCrumbsSpan}>Upload</span>
                 </div>
-                <h1 className={styles.breadCrumbSpan2}>Upload attendance12</h1>
+                <h1 className={styles.breadCrumbSpan2}>Upload attendance</h1>
             </div>
             <div className={styles.mainCard}>
                 <Grid item xs={12}>
                     <Grid container spacing={1} className={styles.gridSubItems}>
                         <Grid item xs={12} sm={3} className={styles.fieldGrid}>
                             <FormControl fullWidth>
-                                {/* <input
-                                  id="hero1"
-                                  className={styles.heroInput}
-                                  type={"file"}
-                              /> */}
                                 <input
                                     accept={".csv"}
                                     id="hero1"

@@ -46,6 +46,7 @@ Route::get('/leaves', [App\Http\Controllers\api\LeavesController::class, 'index'
 Route::post('/leave/new', [App\Http\Controllers\api\LeavesController::class, 'store']);
 Route::post('/leave/new/request', [App\Http\Controllers\api\LeaveRequestsController::class, 'store']);
 Route::get('/leaves/{empId}', [App\Http\Controllers\api\LeavesController::class, 'leavesByEmployee']);
+Route::post('/leaves/upload',[App\Http\Controllers\api\LeavesController::class, 'uploadCSV']);
 
 
 

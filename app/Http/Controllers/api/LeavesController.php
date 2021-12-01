@@ -112,4 +112,93 @@ class LeavesController extends Controller
     {
         //
     }
+      /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Leaves  $Leaves
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function uploadCSV(Request $request)
+    {   
+        
+        if($request){
+            $users = Leave::select('*')
+
+             ->where('employee_id', '=', $request->employee_id)
+
+             ->where('date', '=',$request->date,)
+
+             ->get();
+             $length=count($users);
+             
+             if($length >=1)
+             {
+                $data = Leave::select('*')
+
+                ->where('employee_id', '=', $request->employee_id)
+   
+                ->where('date', '=',$request->date,)
+   
+                ->update([
+                    'employee_id'=>$request->employee_id,
+                    'date' => $request->date,
+                    'status' => $request->status,
+                    'note' => $request->note,
+                    'time'=>$request->time,
+                    'created_at'=>$request->created_at,
+                    'updated_at'=>$request->updated_at
+                ]);
+                if ($data)
+                {
+                    $res=[
+                    'status'=>'1',
+                    'msg'=>'success'
+                  ];
+                  }
+                  else
+                  {
+                    $res=[
+                    'status'=>'0',
+                    'msg'=>'fail'
+                  ];
+                }
+                return response()->json($res);
+             }
+             else
+             {
+                 
+                $data =  Leave::create([
+                    'employee_id'=>$request->employee_id,
+                    'date' => $request->date,
+                    'status' => $request->status,
+                    'note' => $request->note,
+                    'time'=>$request->time,
+                    'created_at'=>$request->created_at,
+                    'updated_at'=>$request->updated_at
+                ]);
+                if ($data)
+                {
+                    $res=[
+                    'status'=>'1',
+                    'msg'=>'success'
+                  ];
+                  }
+                  else
+                  {
+                    $res=[
+                    'status'=>'0',
+                    'msg'=>'fail'
+                  ];
+                }
+                return response()->json($res);
+            
+             }
+          
+        }else{
+            return "invalid Request please try again";
+        }
+            
+        
+    }
 }
