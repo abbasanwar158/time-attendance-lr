@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
 use App\Models\Employees;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -18,7 +19,7 @@ class LeavesController extends Controller
     public function index()
     {
         $data=Leave::join("employees","employee_external_id","=","leaves.employee_id")
-            ->get(['employees.name',  'employees.active','leaves.time','leaves.status','leaves.date','leaves.note']);
+            ->get(['employees.name',  'employees.active','leaves.time','leaves.status','leaves.date','leaves.note', 'leaves.id']);
         return $data;
     }
 

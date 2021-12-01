@@ -86,7 +86,7 @@ export default function UploadAttendance() {
                     <span className={styles.breadCrumbsSlash}>/</span>
                     <span className={styles.breadCrumbsSpan}>Upload</span>
                 </div>
-                <h1 className={styles.breadCrumbSpan2}>Upload attendance12</h1>
+                <h1 className={styles.breadCrumbSpan2}>Upload attendance</h1>
             </div>
             <div className={styles.mainCard}>
                 <Grid item xs={12}>

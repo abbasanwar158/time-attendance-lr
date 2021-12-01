@@ -52,6 +52,8 @@ export default function Login() {
           if (response.id) {
             setLoader(true);
             setLoginNavbar(true);
+            localStorage.setItem('name', response.name)
+            localStorage.setItem('userId', response.id)
             localStorage.setItem('username', response.username)
             setTimeout(
               () => history.push('/dashboard'),

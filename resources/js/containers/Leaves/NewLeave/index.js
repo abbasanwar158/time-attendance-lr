@@ -45,40 +45,6 @@ export default function NewLeave() {
     );
   };
 
-  // const newattendance = () => {
-  //   var today = new Date()
-  //   if(selectedStatus == 'half'){
-  //     setTime('04:30:00');
-  //   }
-  //   debugger
-  //   fetch('https://time-attendance-lr.herokuapp.com/api/leave/new', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Accept': 'application/json',
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({
-  //         employee_id: selected,
-  //         date: date,
-  //         status: selectedStatus,
-  //         note: note,
-  //         time: time,
-  //         created_at: today,
-  //         updated_at: today
-  //       })
-  //     })
-  //     .then(response => response.json())
-  //     .then(data => {
-  //       console.log('Success:', data);
-  //       history.push('/leaves');
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error:', error);
-  //     });
-
-  // }
-
-
   const newattendance = () => {
     var today = new Date()
     fetch('https://time-attendance-lr.herokuapp.com/api/leave/new', {
