@@ -246,7 +246,6 @@ export default function ViewLeaves() {
                         value={row.id}
                         onClick={(e) => {
                           var leaveId = e.target.value
-                          debugger
                           for (var i = 0; i < leavesData.length; i++) {
                             var tempId = leavesData[i].id
                             if (tempId == leaveId) {
