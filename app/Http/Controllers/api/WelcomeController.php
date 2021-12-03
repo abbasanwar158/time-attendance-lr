@@ -78,9 +78,46 @@ class WelcomeController extends Controller
      * @param  \App\Models\Welcome  $welcome
      * @return \Illuminate\Http\Response
      */
-    public function leavesInformation(Welcome $welcome)
+    public function leavesInformation($month, $year, $employeeExId, $empName)
     {
-        //
+        return $empName;
+        $todayYear = date('Y');
+        $todayMonth = date('m');
+        if ($year == 'null'){
+            $year = $todayYear;
+        }
+        if($month == 'null'){
+            $month = $todayMonth;
+        }
+        $month_number = date('m', strtotime($month . $year));
+        $dataHalf = Leave::join('employees', 'employee_external_id', '=', 'leaves.employee_id')
+            ->where("employee_id",'=', $employeeExId)
+            ->where('status', '=', 'Half')
+            ->whereYear('date', '=', $year)
+            ->whereMonth('date', '=', $month_number)
+            ->get(['employees.name', 'leaves.id', 'leaves.status', 'leaves.employee_id']);
+        $halfLength = count($dataHalf);
+
+        $dataFull = Leave::join('employees', 'employee_external_id', '=', 'leaves.employee_id')
+            ->where("employee_id",'=', $employeeExId)
+            ->where('status', '=', 'Full')
+            ->whereYear('date', '=', $year)
+            ->whereMonth('date', '=', $month_number)
+            ->get(['employees.name', 'leaves.id', 'leaves.status', 'leaves.employee_id']);
+        $fullLenght = count($dataFull);
+        $x = (object) [
+            'EmplName' => $empName,
+            'EmpId' => $employeeExId,
+            'half' => $halfLength,
+            'full' => $fullLenght
+        ];
+        return $x;
+        // $month_number = date('m', strtotime($month . $year));
+        // return Leave::join('employees', 'employee_external_id', '=', 'leaves.employee_id')
+        //     ->where("employee_id",'=', $employeeExId)
+        //     ->whereYear('date', '=', $year)
+        //     ->whereMonth('date', '=', $month_number)
+        //     ->get(['employees.name', 'leaves.id', 'leaves.status', 'leaves.employee_id']);
     }
 
     /**

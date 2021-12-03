@@ -14,11 +14,17 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { useHistory, withRouter } from "react-router-dom";
+import { RootContext } from"../../context/RootContext";
+
+
+var names = [];
+var half = [];
+var full = [];
 
 export default function Dashboard() {
   const history = useHistory();
   const [months, setMonths] = useState('');
-  const [years, setYears] = useState('');
+  const [years, setYears] = useState(null);
   const [upHoliday, setUpHoliday] = useState(false);
   const [holidayName, setholidayName] = useState('');
   const [holidayDate, setHolidayDate] = useState('');
@@ -30,6 +36,7 @@ export default function Dashboard() {
   const [noOfLeaves, setNoOfLeaves] = useState('');
   const [currentDay, setCurrentDay] = useState('');
   const [noOfEmplPresent, setNoOfEmplPresent] = useState('');
+  const { ActiveEmployeeNames } = useContext(RootContext);
   const [optionsMonths, setOptionsMonths] = useState([
     'January',
     'February',
@@ -70,14 +77,41 @@ export default function Dashboard() {
   };
 
   useEffect(() => {
-    leavesInfo();
-    hoursInfo();
+    OnleavesInfo();
+    // leavesInfo();
+    // hoursInfo();
     presetEmployeeInfo();
     upComingHolidays();
   }, []);
 
-
   const leavesInfo = () => {
+    var EmplIdArr = [];
+    var EmplNameArr = [];
+    for(var i = 0; i < ActiveEmployeeNames.length; i++){
+      EmplIdArr.push(ActiveEmployeeNames[i].employee_external_id);
+      EmplNameArr.push(ActiveEmployeeNames[i].name)
+    }
+    debugger
+      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/leaves/info/${months}/${years}/${EmplIdArr}/${EmplNameArr}`)
+        .then(res => res.json())
+        .then(
+          (response) => {
+            // dataArr.push(response);
+          },
+          (error) => {
+            console.log("error", error)
+          }
+          )
+        // setLeavesInformation(dataArr);
+        // console.log(dataArr)
+        // debugger
+        // if (dataArr.length == ActiveEmployeeNames.length){
+        //   debugger
+        //   setLeavesInformation(dataArr);
+        // }
+  }
+
+  const OnleavesInfo = () => {
     fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/leaves`)
       .then(res => res.json())
       .then(
@@ -124,23 +158,23 @@ export default function Dashboard() {
       )
   }
 
-  const hoursInfo = () => {
-    var hoursInfoArr = [];
-    fetch(`http://attendance.devbox.co/api/v1/hour_information?start_date=${startDate}&end_date=${endDate}`)
-      .then(res => res.json())
-      .then(
-        (response) => {
-          var data = response.data
-          for (var i = 0; i < data.length; i++) {
-            hoursInfoArr.push(data[i])
-          }
-          setHoursInformation(hoursInfoArr)
-        },
-        (error) => {
-          console.log("error", error)
-        }
-      )
-  }
+  // const hoursInfo = () => {
+  //   var hoursInfoArr = [];
+  //   fetch(`http://attendance.devbox.co/api/v1/hour_information?start_date=${startDate}&end_date=${endDate}`)
+  //     .then(res => res.json())
+  //     .then(
+  //       (response) => {
+  //         var data = response.data
+  //         for (var i = 0; i < data.length; i++) {
+  //           hoursInfoArr.push(data[i])
+  //         }
+  //         setHoursInformation(hoursInfoArr)
+  //       },
+  //       (error) => {
+  //         console.log("error", error)
+  //       }
+  //     )
+  // }
 
   return (
     <div>
@@ -234,11 +268,9 @@ export default function Dashboard() {
                           SelectProps={{ IconComponent: () => <Chevron /> }}
                         >
                           {optionsMonths.map((option, i) => (
-
-                            <MenuItem key={option} value={i + 1}>
+                            <MenuItem key={option} value={option}>
                               {option}
                             </MenuItem>
-
                           ))}
                         </TextField>
                       </FormControl>
@@ -261,11 +293,9 @@ export default function Dashboard() {
                           SelectProps={{ IconComponent: () => <Chevron /> }}
                         >
                           {optionsYears.map((option) => (
-
                             <MenuItem key={option} value={option}>
                               {option}
                             </MenuItem>
-
                           ))}
                         </TextField>
                       </FormControl>
@@ -293,25 +323,21 @@ export default function Dashboard() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {leavesInformation.map((row) => (
+                    {/* {leavesInformation.map((row, i) => (
                       <TableRow>
                         <TableCell component="th" scope="row" className={styles.nameCells}>
-                          {row.name}
+                          {row.EmplName}
                         </TableCell>
                         <TableCell className={styles.subCells}>{row.full}</TableCell>
                         <TableCell className={styles.subCells}>{row.half}</TableCell>
                       </TableRow>
-                    ))}
+                    ))} */}
                   </TableBody>
                 </Table>
               </TableContainer>
             </div>
           </Grid>
-
           <Grid item xs={12} sm={6}>
-
-
-
             <div className={styles.leaveInfoCard}>
               <div className={`${styles.cardHeader}`}>
                 <h2>Hours Information</h2>
@@ -359,7 +385,7 @@ export default function Dashboard() {
                       variant="contained"
                       color="primary"
                       className={styles.cardButtons}
-                      onClick={hoursInfo}
+                      // onClick={hoursInfo}
                     >
                       Search
                     </Button>
@@ -375,12 +401,12 @@ export default function Dashboard() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {hoursInformation.map((row) => (
+                    {ActiveEmployeeNames.map((row) => (
                       <TableRow>
                         <TableCell component="th" scope="row" className={styles.nameCells}>
                           {row.name}
                         </TableCell>
-                        <TableCell className={styles.subCells}>{row.hour} hours and {row.min} minutes</TableCell>
+                        <TableCell className={styles.subCells}>{row.name} hours and {row.name} minutes</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

@@ -17,6 +17,7 @@ export default function EditLeave() {
   const [date, setDate] = useState('')
   const [status, setStatus] = useState('')
   const [note, setNote] = useState('')
+  const [selectedTime, setSelectedTime] = useState('00:00:00')
   const history = useHistory();
 
 
@@ -28,6 +29,14 @@ export default function EditLeave() {
     setStatus(event.target.value);
   };
 
+  const handleChangeDate = (event) => {
+    setDate(event.target.value);
+  };
+
+  const handleChangeNote = (event) => {
+    setNote(event.target.value);
+  };
+
   const Chevron = () => {
     return (
       <span className={styles.dropDownCustomizeSvg}>
@@ -36,15 +45,42 @@ export default function EditLeave() {
     );
   };
 
-
   useEffect(() => {
-    debugger
     var leaveDataForEdit = leavesData[index]
-    setEmployee(leaveDataForEdit.employee_id)
+    setEmployee(leaveDataForEdit.employee_external_id)
     setDate(leaveDataForEdit.date)
     setStatus(leaveDataForEdit.status)
     setNote(leaveDataForEdit.note)
   }, []);
+
+  const updateLeave = () => {
+    var today = new Date()
+    debugger
+    fetch(`https://time-attendance-lr.herokuapp.com/api/leave/update/${leavesData[index].id}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          employee_id: employee,
+          date: date,
+          status: status,
+          created_at: today,
+          updated_at: today,
+          note: note,
+          time: selectedTime,
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        history.push('/leaves');
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
 
   return (
     <>
@@ -78,8 +114,8 @@ export default function EditLeave() {
                     SelectProps={{ IconComponent: () => <Chevron /> }}
                   >
                     {ActiveEmployeeNames.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
+                      <MenuItem key={option.name} value={option.employee_external_id}>
+                        {option.name}
                       </MenuItem>
                     ))}
                   </TextField>
@@ -98,6 +134,7 @@ export default function EditLeave() {
                     type="date"
                     variant="outlined"
                     value={date}
+                    onChange={handleChangeDate}
                     size="small"
                     InputLabelProps={{
                       shrink: true,
@@ -147,6 +184,7 @@ export default function EditLeave() {
                     label="Note"
                     type="text"
                     variant="outlined"
+                    onChange={handleChangeNote}
                     value={note}
                   >
                   </TextField>
@@ -157,7 +195,7 @@ export default function EditLeave() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button variant="contained" color="primary" className={styles.saveButton}>
+                <Button onClick={updateLeave} variant="contained" color="primary" className={styles.saveButton}>
                   Update
                 </Button>
                 <Button

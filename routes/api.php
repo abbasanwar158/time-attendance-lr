@@ -45,6 +45,7 @@ Route::get('/holiday/search/{date}', [App\Http\Controllers\api\HolidayController
 ///////////////////////////////////Leaves///////////////////////////////////////////////
 Route::get('/leaves', [App\Http\Controllers\api\LeavesController::class, 'index']);
 Route::post('/leave/new', [App\Http\Controllers\api\LeavesController::class, 'store']);
+Route::post('/leave/update/{id}', [App\Http\Controllers\api\LeavesController::class, 'update']);
 Route::post('/leave/new/request', [App\Http\Controllers\api\LeaveRequestsController::class, 'store']);
 Route::get('/leave/requests', [App\Http\Controllers\api\LeaveRequestsController::class, 'index']);
 Route::get('/leaves/{empId}', [App\Http\Controllers\api\LeavesController::class, 'leavesByEmployee']);
@@ -65,3 +66,5 @@ Route::post('/attendance/upload', [App\Http\Controllers\api\AttendanceController
 Route::get('/welcome/leaves', [App\Http\Controllers\api\WelcomeController::class, 'onLeave']);
 Route::get('/welcome/attendances', [App\Http\Controllers\api\WelcomeController::class, 'presentEmployees']);
 Route::get('/welcome/holidays', [App\Http\Controllers\api\WelcomeController::class, 'upComeHolidays']);
+Route::get('/welcome/leaves/info/{month}/{year}/{employeeExId}/{empName}', [App\Http\Controllers\api\WelcomeController::class, 'leavesInformation']);
+Route::get('/welcome/hours/info/{from}/{to}', [App\Http\Controllers\api\WelcomeController::class, 'hoursInformation']);

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Leave;
-use App\Models\Employees;
+use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
@@ -19,7 +19,7 @@ class LeavesController extends Controller
     public function index()
     {
         $data=Leave::join("employees","employee_external_id","=","leaves.employee_id")
-            ->get(['employees.name',  'employees.active','leaves.time','leaves.status','leaves.date','leaves.note', 'leaves.id']);
+            ->get(['employees.name', 'employees.employee_external_id', 'employees.active','leaves.time','leaves.status','leaves.date','leaves.note', 'leaves.id']);
         return $data;
     }
 
@@ -98,9 +98,30 @@ class LeavesController extends Controller
      * @param  \App\Models\Leaves  $leaves
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Leaves $leaves)
+    public function update(Request $request, $id)
     {
-        //
+        $data = Leave::find($id);
+        $data->update([
+            'employee_id'=>$request->employee_id,
+            'date' => $request->date,
+            'status' => $request->status,
+            'note' => $request->note,
+            'time'=>$request->time,
+            'created_at'=>$request->created_at,
+            'updated_at'=>$request->updated_at
+        ]);
+        if ($data){
+            $res=[
+            'status'=>'1',
+            'msg'=>'success'
+          ];
+          }else{
+            $res=[
+            'status'=>'0',
+            'msg'=>'fail'
+          ];
+        }
+          return response()->json($res);
     }
 
     /**
