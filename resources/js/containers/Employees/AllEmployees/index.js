@@ -19,7 +19,8 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import PropTypes from 'prop-types';
 import { RootContext } from "../../../context/RootContext";
 import { useHistory } from "react-router-dom";
-
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -99,6 +100,7 @@ export default function AllEmployees() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const { employeesData, setEmployeesData, setIndex } = useContext(RootContext);
+  const [open, setOpen] = useState(true);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -123,7 +125,8 @@ export default function AllEmployees() {
           for (var i = 0; i < data.length; i++) {
             employeeNamesArr.push(data[i])
           }
-          setEmployeesData(employeeNamesArr)
+          setEmployeesData(employeeNamesArr);
+          setOpen(false);
         },
         (error) => {
           console.log("error", error)
@@ -133,6 +136,14 @@ export default function AllEmployees() {
 
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />

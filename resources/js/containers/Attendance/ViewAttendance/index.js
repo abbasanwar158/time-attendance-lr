@@ -18,6 +18,8 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import PropTypes from 'prop-types';
 import { RootContext } from "../../../context/RootContext";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import clsx from "clsx";
 
 
@@ -97,6 +99,7 @@ export default function ViewAttendance() {
 
   const classes = useStyles2();
   const { ActiveEmployeeNames } = useContext(RootContext);
+  const [open, setOpen] = useState(true);
   const [attendanceData, setAttendanceData] = useState([])
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -125,7 +128,8 @@ export default function ViewAttendance() {
             for (var i = 0; i < data.length; i++) {
               attendanceArr.push(data[i])
             }
-              setAttendanceData(attendanceArr)
+              setAttendanceData(attendanceArr);
+              setOpen(false);
           },
           (error) => {
             console.log("error", error)
@@ -139,6 +143,14 @@ export default function ViewAttendance() {
 
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />

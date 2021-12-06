@@ -30,6 +30,8 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import PropTypes from 'prop-types';
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -113,6 +115,7 @@ export default function ManageAttendance() {
   const [checkout, setCheckout] = useState('')
   const [date, setDate] = useState('')
   const history = useHistory();
+  const [open, setOpen] = useState(true);
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -165,6 +168,7 @@ export default function ManageAttendance() {
   }
 
   const addAttendance = () => {
+    setOpen(true);
     var epmolyeeExIDArr = employeesExId;
     var checkinFinal = date + ' ' + checkin;
     var checkoutFinal = date + ' ' + checkout;
@@ -188,6 +192,7 @@ export default function ManageAttendance() {
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
+        setOpen(false);
       })
       .catch((error) => {
         console.error('Error:', error);
@@ -210,7 +215,8 @@ export default function ManageAttendance() {
           for (var i = 0; i < data.length; i++) {
             attendanceArr.push(data[i])
           }
-          setAttendanceData(attendanceArr)
+          setAttendanceData(attendanceArr);
+          setOpen(false);
         },
         (error) => {
           console.log("error", error)
@@ -220,6 +226,14 @@ export default function ManageAttendance() {
 
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />
