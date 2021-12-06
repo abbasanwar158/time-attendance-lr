@@ -24,7 +24,8 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import PropTypes from 'prop-types';
 import { RootContext } from "../../../context/RootContext";
 import { useHistory } from "react-router-dom";
-
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -105,6 +106,7 @@ export default function ViewLeaves() {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [personName, setPersonName] = useState('');
   const history = useHistory();
+  const [open, setOpen] = useState(true);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -141,7 +143,8 @@ export default function ViewLeaves() {
           for (var i = 0; i < data.length; i++) {
             leavesArr.push(data[i])
           }
-          setLeavesData(leavesArr)
+          setLeavesData(leavesArr);
+          setOpen(false);
         },
         (error) => {
           console.log("error", error)
@@ -150,6 +153,7 @@ export default function ViewLeaves() {
   }
 
   const searchLeaves = () => {
+    setOpen(true);
     var leavesArr = [];
     fetch(`https://time-attendance-lr.herokuapp.com/api/leaves/${personName}`)
       .then(res => res.json())
@@ -158,7 +162,8 @@ export default function ViewLeaves() {
           for (var i = 0; i < response.length; i++) {
             leavesArr.push(response[i])
           }
-          setLeavesData(leavesArr)
+          setLeavesData(leavesArr);
+          setOpen(false);
         },
         (error) => {
           console.log("error", error)
@@ -168,6 +173,14 @@ export default function ViewLeaves() {
 
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />

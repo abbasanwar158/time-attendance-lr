@@ -15,16 +15,13 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { useHistory, withRouter } from "react-router-dom";
 import { RootContext } from"../../context/RootContext";
-
-
-var names = [];
-var half = [];
-var full = [];
+import CircularProgress from '@material-ui/core/CircularProgress';
+import Backdrop from '@material-ui/core/Backdrop';
 
 export default function Dashboard() {
   const history = useHistory();
   const [months, setMonths] = useState('');
-  const [years, setYears] = useState(null);
+  const [years, setYears] = useState('');
   const [upHoliday, setUpHoliday] = useState(false);
   const [holidayName, setholidayName] = useState('');
   const [holidayDate, setHolidayDate] = useState('');
@@ -36,7 +33,10 @@ export default function Dashboard() {
   const [noOfLeaves, setNoOfLeaves] = useState('');
   const [currentDay, setCurrentDay] = useState('');
   const [noOfEmplPresent, setNoOfEmplPresent] = useState('');
+  const [loader, setLoader] = useState(false);
+  const [loaderHours, setLoaderHours] = useState(false);
   const { ActiveEmployeeNames } = useContext(RootContext);
+  const [open, setOpen] = useState(true);
   const [optionsMonths, setOptionsMonths] = useState([
     'January',
     'February',
@@ -52,6 +52,7 @@ export default function Dashboard() {
     'December'
   ])
   const [optionsYears, setOptionsYears] = useState(['2021', '2020', '2019', '2018', '2017'])
+
 
   const handleChangeMonths = (event) => {
     setMonths(event.target.value);
@@ -78,37 +79,36 @@ export default function Dashboard() {
 
   useEffect(() => {
     OnleavesInfo();
-    // leavesInfo();
-    // hoursInfo();
     presetEmployeeInfo();
     upComingHolidays();
-  }, []);
+  }, [leavesInformation]);
 
   const leavesInfo = () => {
-    var EmplIdArr = [];
-    var EmplNameArr = [];
-    for(var i = 0; i < ActiveEmployeeNames.length; i++){
-      EmplIdArr.push(ActiveEmployeeNames[i].employee_external_id);
-      EmplNameArr.push(ActiveEmployeeNames[i].name)
+    var dataArr = []
+    setLoader(true);
+    if(months == ""){
+      setMonths(new Date().getMonth()); 
     }
-    debugger
-      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/leaves/info/${months}/${years}/${EmplIdArr}/${EmplNameArr}`)
-        .then(res => res.json())
-        .then(
-          (response) => {
-            // dataArr.push(response);
-          },
-          (error) => {
-            console.log("error", error)
-          }
-          )
-        // setLeavesInformation(dataArr);
-        // console.log(dataArr)
-        // debugger
-        // if (dataArr.length == ActiveEmployeeNames.length){
-        //   debugger
-        //   setLeavesInformation(dataArr);
-        // }
+    if(years == ""){
+      setYears(new Date().getFullYear());
+    }
+    for(var i = 0; i < ActiveEmployeeNames.length; i++){
+      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/leaves/info/${months}/${years}/${ActiveEmployeeNames[i].employee_external_id}/${ActiveEmployeeNames[i].name}`)
+      .then(res => res.json())
+      .then(
+        (response) => {
+          dataArr.push(response);            
+        },
+        (error) => {
+          console.log("error", error)
+        }
+        )
+        }
+        setTimeout(
+          () => {setLeavesInformation(dataArr); setLoader(false)},
+          30000
+        );
+        
   }
 
   const OnleavesInfo = () => {
@@ -119,6 +119,7 @@ export default function Dashboard() {
           setNoOfLeaves(response.onLeaves);
           setNoOfEmployees(response.activeEmployees);
           setCurrentDay(response.currentDay);
+          setOpen(false);
         },
         (error) => {
           console.log("error", error)
@@ -158,26 +159,40 @@ export default function Dashboard() {
       )
   }
 
-  // const hoursInfo = () => {
-  //   var hoursInfoArr = [];
-  //   fetch(`http://attendance.devbox.co/api/v1/hour_information?start_date=${startDate}&end_date=${endDate}`)
-  //     .then(res => res.json())
-  //     .then(
-  //       (response) => {
-  //         var data = response.data
-  //         for (var i = 0; i < data.length; i++) {
-  //           hoursInfoArr.push(data[i])
-  //         }
-  //         setHoursInformation(hoursInfoArr)
-  //       },
-  //       (error) => {
-  //         console.log("error", error)
-  //       }
-  //     )
-  // }
+  const hoursInfo = () => {
+    var hoursInfoArr = [];
+    setLoaderHours(true);
+    for(var i = 0; i < ActiveEmployeeNames.length; i++){
+      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/hours/info/${startDate}/${endDate}/${ActiveEmployeeNames[i].employee_external_id}/${ActiveEmployeeNames[i].name}`)
+      .then(res => res.json())
+      .then(
+        (response) => {
+          hoursInfoArr.push(response);            
+        },
+        (error) => {
+          console.log("error", error)
+        }
+        )
+        }
+        setTimeout(
+        () => {
+          setHoursInformation(hoursInfoArr);
+          setLoaderHours(false);
+        },
+          30000
+        );
+  }
 
   return (
     <div>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />
@@ -263,6 +278,7 @@ export default function Dashboard() {
                           value={months}
                           className={styles.placeholderColor}
                           onChange={handleChangeMonths}
+                          disabled={loader}
                           menuprops={{ variant: "menu" }}
                           select
                           SelectProps={{ IconComponent: () => <Chevron /> }}
@@ -287,6 +303,7 @@ export default function Dashboard() {
                           variant="outlined"
                           onChange={handleChangeYears}
                           value={years}
+                          disabled={loader}
                           className={styles.placeholderColor}
                           menuprops={{ variant: "menu" }}
                           select
@@ -307,8 +324,9 @@ export default function Dashboard() {
                       color="primary"
                       className={styles.cardButtons}
                       onClick={leavesInfo}
+                      disabled={loader}
                     >
-                      Search
+                      {loader ? <CircularProgress /> : <span>Search</span>}
                     </Button>
                   </Grid>
                 </Grid>
@@ -322,17 +340,31 @@ export default function Dashboard() {
                       <TableCell className={styles.TableCell} >Half Leaves</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
-                    {/* {leavesInformation.map((row, i) => (
-                      <TableRow>
-                        <TableCell component="th" scope="row" className={styles.nameCells}>
-                          {row.EmplName}
-                        </TableCell>
-                        <TableCell className={styles.subCells}>{row.full}</TableCell>
-                        <TableCell className={styles.subCells}>{row.half}</TableCell>
-                      </TableRow>
-                    ))} */}
-                  </TableBody>
+                  {leavesInformation.length < 1 ? 
+                    <TableBody>
+                      {ActiveEmployeeNames.map((row) => (
+                        <TableRow key={row.id}>
+                          <TableCell component="th" scope="row" className={styles.nameCells}>
+                            {row.name}
+                          </TableCell>
+                          <TableCell className={styles.subCells}>0</TableCell>
+                          <TableCell className={styles.subCells}>0</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                    : 
+                    <TableBody>
+                      {leavesInformation.map((row, i) => (
+                        <TableRow key={i}>
+                          <TableCell component="th" scope="row" className={styles.nameCells}>
+                            {row.EmplName}
+                          </TableCell>
+                          <TableCell className={styles.subCells}>{row.full}</TableCell>
+                          <TableCell className={styles.subCells}>{row.half}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  }
                 </Table>
               </TableContainer>
             </div>
@@ -354,6 +386,7 @@ export default function Dashboard() {
                           variant="outlined"
                           size="small"
                           value={startDate}
+                          disabled={loaderHours}
                           onChange={handleChangeStartDate}
                           InputLabelProps={{
                             shrink: true,
@@ -372,6 +405,7 @@ export default function Dashboard() {
                           variant="outlined"
                           size="small"
                           value={endDate}
+                          disabled={loaderHours}
                           onChange={handleChangeEndDate}
                           InputLabelProps={{
                             shrink: true,
@@ -385,9 +419,10 @@ export default function Dashboard() {
                       variant="contained"
                       color="primary"
                       className={styles.cardButtons}
-                      // onClick={hoursInfo}
+                      onClick={hoursInfo}
+                      disabled={loaderHours}
                     >
-                      Search
+                      {loaderHours ? <CircularProgress /> : <span>Search</span>}
                     </Button>
                   </Grid>
                 </Grid>
@@ -400,16 +435,29 @@ export default function Dashboard() {
                       <TableCell className={styles.TableCell} >Time Spend</TableCell>
                     </TableRow>
                   </TableHead>
-                  <TableBody>
-                    {ActiveEmployeeNames.map((row) => (
-                      <TableRow>
-                        <TableCell component="th" scope="row" className={styles.nameCells}>
-                          {row.name}
-                        </TableCell>
-                        <TableCell className={styles.subCells}>{row.name} hours and {row.name} minutes</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
+                  {hoursInformation.length < 1 ? 
+                    <TableBody>
+                      {ActiveEmployeeNames.map((row) => (
+                        <TableRow key={row.id}>
+                          <TableCell component="th" scope="row" className={styles.nameCells}>
+                            {row.name}
+                          </TableCell>
+                          <TableCell className={styles.subCells}>0 hours and 0 minutes</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                    : 
+                    <TableBody>
+                      {hoursInformation.map((row, i) => (
+                        <TableRow key={i}>
+                          <TableCell component="th" scope="row" className={styles.nameCells}>
+                            {row.name}
+                          </TableCell>
+                          <TableCell className={styles.subCells}>{row.hours} hours and {row.minutes} minutes</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  }
                 </Table>
               </TableContainer>
             </div>

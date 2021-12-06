@@ -60,3 +60,14 @@
         margin-top: 20%;
     }
 }
+
+.backDropZindex {
+    position: relative;
+    z-index: 9 !important;
+}
+.loadingText {
+    color: white;
+    font-size: 25px;
+    font-weight: initial;
+    margin-left: 20px;
+}

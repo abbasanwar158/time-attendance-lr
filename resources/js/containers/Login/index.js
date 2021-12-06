@@ -12,6 +12,8 @@ import Button from '@material-ui/core/Button';
 import { useHistory, withRouter,Link } from "react-router-dom";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { RootContext } from "../../context/RootContext";
+import Alert from '@material-ui/lab/Alert';
+import Backdrop from '@material-ui/core/Backdrop';
 
 export default function Login() {
   const [values, setValues] = useState({
@@ -20,6 +22,8 @@ export default function Login() {
   const [username, setUsername] = useState('')
   const history = useHistory();
   const [loader, setLoader] = useState(false);
+  const [alert, setAlert] = useState(false);
+  const [open, setOpen] = useState(false);
   const { setLoginNavbar } = useContext(RootContext);
 
   const handleChange = (prop) => (event) => {
@@ -45,18 +49,19 @@ export default function Login() {
   };
 
   const loginUser = () => {
+    setOpen(true);
     fetch(`https://time-attendance-lr.herokuapp.com/api/user/login/${username}/${values.password}`)
       .then(res => res.json())
       .then(
         (response) => {
           if (response.id) {
-            setLoader(true);
+            setAlert(false);
             setLoginNavbar(true);
             localStorage.setItem('name', response.name)
             localStorage.setItem('userId', response.id)
             localStorage.setItem('username', response.username)
             setTimeout(
-              () => history.push('/dashboard'),
+              () => { setOpen(false); history.push('/dashboard')},
               1500
             );
 
@@ -71,6 +76,8 @@ export default function Login() {
           }
         },
         (error) => {
+          setAlert(true);
+          setOpen(false);
           console.log("error", error)
         }
       )
@@ -78,6 +85,15 @@ export default function Login() {
 
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
+    {alert ? <Alert severity="error" open={alert}>Wrong Password or Username!</Alert> : null }
       <div className={styles.flexContainer}>
         <div className={styles.container}>
           <div className={styles.flex}>

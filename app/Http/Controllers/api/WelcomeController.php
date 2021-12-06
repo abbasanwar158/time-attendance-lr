@@ -10,6 +10,7 @@ use App\Models\Leave;
 use App\Models\Attendance;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use DateTime;
 
 class WelcomeController extends Controller
 {
@@ -80,7 +81,6 @@ class WelcomeController extends Controller
      */
     public function leavesInformation($month, $year, $employeeExId, $empName)
     {
-        return $empName;
         $todayYear = date('Y');
         $todayMonth = date('m');
         if ($year == 'null'){
@@ -112,12 +112,6 @@ class WelcomeController extends Controller
             'full' => $fullLenght
         ];
         return $x;
-        // $month_number = date('m', strtotime($month . $year));
-        // return Leave::join('employees', 'employee_external_id', '=', 'leaves.employee_id')
-        //     ->where("employee_id",'=', $employeeExId)
-        //     ->whereYear('date', '=', $year)
-        //     ->whereMonth('date', '=', $month_number)
-        //     ->get(['employees.name', 'leaves.id', 'leaves.status', 'leaves.employee_id']);
     }
 
     /**
@@ -126,8 +120,48 @@ class WelcomeController extends Controller
      * @param  \App\Models\Welcome  $welcome
      * @return \Illuminate\Http\Response
      */
-    public function hoursInformation(Welcome $welcome)
+    public function hoursInformation($startDate, $endDate, $employeeExId, $emplName)
     {
-        //
+        $totalHoursSpend = 0;
+        $totalMinSpend = 0;
+        $data = Attendance::join('employees', 'employee_external_id', '=', 'attendances.employee_id')
+        ->where("employee_id",'=', $employeeExId)
+        ->whereBetween('date', [$startDate, $endDate])
+        ->get(['employees.name', 'attendances.checkin', 'attendances.checkout',]);
+        foreach($data as $key => $value ){
+            $date1 = new DateTime($value->checkin);
+            $date2 = new DateTime($value->checkout);
+            $difference = $date1->diff($date2);
+            $totalHoursSpend = $totalHoursSpend + sprintf("%02d", $difference->h);
+            $totalMinSpend = $totalMinSpend + sprintf("%02d", $difference->i);
+            $value->hours = $totalHoursSpend;
+            $value->minutes = $totalMinSpend;
+        }
+        if(count($data) > 0){
+            $arrayIndex = count($data) - 1;
+            if($data[$arrayIndex]->minutes > 60){
+                $min = $data[$arrayIndex]->minutes / 60;
+                $hours = $data[$arrayIndex]->hours + $min;
+                $totalHours = explode('.', $hours);
+                if(count($totalHours) > 1){
+                    $data[$arrayIndex]->hours = $totalHours[0];
+                    $data[$arrayIndex]->minutes = $totalHours[1][0];
+                }
+                else{
+                    $data[$arrayIndex]->hours = $totalHours[0];
+                    $data[$arrayIndex]->minutes = 0;
+                }
+            }
+            return $data[$arrayIndex];
+        }
+        else{
+            $x = (object) [
+                'name' => $emplName,
+                'hours' => 0,
+                'minutes' => 0,
+            ];
+            return $x;
+        }
+        return $data;
     }
 }
