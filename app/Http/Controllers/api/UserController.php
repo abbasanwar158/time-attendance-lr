@@ -149,8 +149,5 @@ class UserController extends Controller
                 return response()->json($res);
             }
         }
-        else{
-            echo "no user";
-        }
     }
 }

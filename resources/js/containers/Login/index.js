@@ -73,6 +73,8 @@ export default function Login() {
             }
           }
           else {
+            setOpen(false);
+            setAlert(true);
           }
         },
         (error) => {
