@@ -120,11 +120,11 @@ const useStyles2 = makeStyles({
 
 export default function ViewLeaves() {
     const classes = useStyles2();
-    const { ActiveEmployeeNames, leavesData, setLeavesData, setIndex } =
-        useContext(RootContext);
+    const { ActiveEmployeeNames, leavesData, setLeavesData, setIndex } = useContext(RootContext);
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [personName, setPersonName] = useState("");
+    const [open, setOpen] = useState(true);
     const history = useHistory();
 
     const handleChangePage = (event, newPage) => {
