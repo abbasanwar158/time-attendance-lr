@@ -19,38 +19,23 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
   const { activeRoute, setActiveRoute } = useState(null);
 
   const [attendanceSubMenu, setAttendanceSubMenu] = useState([
-    'View Today Attendance',
-    'Manage Attendance Manually',
     'Attendance Report',
+    'Email Attendances',
+    'Manage Attendance Manually',
     'Upload Attendances',
-    'Email Attendances'
+    'View Today Attendance',
   ])
   const [attendanceUrl, setAttendanceUrl] = useState([
-    '/attendance',
-    '/attendance/new',
     '/attendance/report',
+    '/attendance/email',
+    '/attendance/new',
     '/attendance/upload',
-    '/attendance/email'
+    '/attendance',
   ])
 
-  const [leavesUrl, setLeavesUrl] = useState([
-    '/leaves',
-    '/leaves/apply',
-    '/leaves/new',
-    '/leaves/report',
-    '/leaves/schedule',
-    '/leaves/upload'
-  ])
-  const [employeesUrl, setEmployeesUrl] = useState([
-    '/employees',
-    '/employees/active',
-    '/employees/edit_status',
-    '/employee/new',
-    '/employees/upload'
-  ])
   const [holidaysUrl, setHolidaysUrl] = useState([
+    '/holiday/new',
     '/holidays',
-    '/holiday/new'
   ])
   const [attendanceSubMenuSVG, setAttendanceSubMenuSVG] = useState([
     'visibility',
@@ -59,14 +44,23 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
     'publish',
     'mail'
   ])
-
+  
+  const [leavesUrl, setLeavesUrl] = useState([
+    '/leaves/new',
+    '/leaves/apply',
+    '/leaves/report',
+    '/leaves/schedule',
+    '/leaves/upload',
+    '/leaves',
+  ])
+  
   const [leavesSubMenu, setLeavesSubMenu] = useState([
-    'View Leaves',
-    'Apply Leaves',
     'Add New Leave',
+    'Apply Leaves',
     'Leave Report',
     'Leaves WBS',
-    'Upload Leaves'
+    'Upload Leaves',
+    'View Leaves',
   ])
   const [leavesSubMenuSVG, setLeavesSubMenuSVG] = useState([
     'visibility',
@@ -76,12 +70,20 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
     'storage',
     'publish'
   ])
+  
+  const [employeesUrl, setEmployeesUrl] = useState([
+    '/employees/active',
+    '/employee/new',
+    '/employees',
+    '/employees/edit_status',
+    '/employees/upload'
+  ])
 
   const [employeesSubMenu, setEmployeesSubMenu] = useState([
-    'All Employees',
     'Active Employees',
-    'Edit Employee Status',
     'Add New Employee',
+    'All Employees',
+    'Edit Employee Status',
     "Upload Employees's Data"
   ])
   const [employeesSubMenuSVG, setEmployeesSubMenuSVG] = useState([
@@ -93,8 +95,8 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
   ])
 
   const [holidaysSubMenu, setHolidaysSubMenu] = useState([
+    'Add New Holiday',
     'View Holidays',
-    'Add New Holiday'
   ])
   const [holidaysSubMenuSVG, setHolidaysSubMenuSVG] = useState([
     'visibility',
