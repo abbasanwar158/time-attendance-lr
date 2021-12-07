@@ -111,9 +111,9 @@ export default function LeavesWBS() {
                     <span className={styles.breadCrumbsSlash}>/</span>
                     <span className={styles.breadCrumbsSpan}>Leaves</span>
                     <span className={styles.breadCrumbsSlash}>/</span>
-                    <span className={styles.breadCrumbsSpan}>View</span>
+                    <span className={styles.breadCrumbsSpan}>WBS</span>
                 </div>
-                <h1 className={styles.breadCrumbSpan2}>View All Leaves</h1>
+                <h1 className={styles.breadCrumbSpan2}>Leaves WBS</h1>
             </div>
             <div className={styles.mainCard}>
                 <div className={styles.gridContainer}>
