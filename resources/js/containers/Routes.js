@@ -17,6 +17,9 @@ import LeavesReport from "../containers/Leaves/LeavesReport";
 import LeavesWBS from "../containers/Leaves/LeavesWBS";
 import EditLeave from "../containers/Leaves/EditLeave"
 import UploadLeaves from "../containers/Leaves/UploadLeaves";
+import LeaveRequests from "../containers/Leaves/LeaveRequests";
+import RequestReply from "../containers/Leaves/RequestReply";
+import EditRequest from "../containers/Leaves/EditRequest";
 import ViewEmployees from "../containers/Employees/AllEmployees";
 import ActiveEmployees from "../containers/Employees/ActiveEmployees";
 import EditEmployeeStatus from "../containers/Employees/EditEmployeeStatus";
@@ -24,6 +27,11 @@ import NewEmployee from "../containers/Employees/NewEmployee";
 import EditEmployee from "../containers/Employees/EditEmployee";
 import UploadEmployeeData from "../containers/Employees/UploadEmployeeData";
 import EmployeesReport from "../containers/Employees/EmployeesReport";
+import PerformanceForm from "../containers/Employees/PerformanceForm";
+import PerformanceFormNew from "../containers/Employees/PerformanceFormNew";
+import MailToEmployees from "../containers/Employees/MailToEmployees";
+import ComposeEmail from "../containers/Employees/ComposeEmail";
+import EditMail from "../containers/Employees/EditMail";
 import ReviewDate from "../containers/Employees/ReviewDate";
 import ReviewDateEdit from "../containers/Employees/ReviewDateEdit";
 import ViewHolidays from "../containers/Holidays/ViewHolidays";
@@ -122,6 +130,21 @@ function Routes() {
               <UploadLeaves />
             </Layout>
           </ProtectedRoute>
+          <ProtectedRoute exact path="/leaves/requests">
+            <Layout>
+              <LeaveRequests />
+            </Layout>
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/leaves/requests/reply">
+            <Layout>
+              <RequestReply />
+            </Layout>
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/leaves/requests/edit">
+            <Layout>
+              <EditRequest />
+            </Layout>
+          </ProtectedRoute>
           <ProtectedRoute exact path="/employees">
             <Layout>
               <ViewEmployees />
@@ -145,6 +168,31 @@ function Routes() {
           <ProtectedRoute exact path="/employee/new">
             <Layout>
               <NewEmployee />
+            </Layout>
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/employees/performance_form">
+            <Layout>
+              <PerformanceForm />
+            </Layout>
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/employees/performance_form/new">
+            <Layout>
+              <PerformanceFormNew />
+            </Layout>
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/employees/mail">
+            <Layout>
+              <MailToEmployees />
+            </Layout>
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/employees/mail/new">
+            <Layout>
+              <ComposeEmail />
+            </Layout>
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/employees/mail/edit">
+            <Layout>
+              <EditMail />
             </Layout>
           </ProtectedRoute>
           <ProtectedRoute exact path="/employees/upload">
