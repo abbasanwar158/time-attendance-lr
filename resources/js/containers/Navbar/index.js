@@ -110,7 +110,7 @@ export default function Navbar() {
           <MenuItem
             onClick={() => {
               handleCloseMenu()
-              history.push('/users/new')
+              history.push('/leaves/requests')
             }}>
             <SVG className={styles.subMenuIcons} src={`/images/assignment.svg`} />
             <span className={styles.subMenuSpan}>Leave Requests</span>
@@ -119,7 +119,7 @@ export default function Navbar() {
           <MenuItem
             onClick={() => {
               handleCloseMenu()
-              history.push('/users/new')
+              history.push('/employees/performance_form')
             }}>
             <SVG className={styles.subMenuIcons} src={`/images/assessment.svg`} />
             <span className={styles.subMenuSpan}>Employee Performace Form</span>
@@ -128,7 +128,7 @@ export default function Navbar() {
           <MenuItem
             onClick={() => {
               handleCloseMenu()
-              history.push('/users/new')
+              history.push('/employees/mail')
             }}>
             <SVG className={styles.subMenuIcons} src={`/images/mail.svg`} />
             <span className={styles.subMenuSpan}>Mail to all employees</span>
