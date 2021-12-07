@@ -46,6 +46,8 @@ Route::get('/leaves', [App\Http\Controllers\api\LeavesController::class, 'index'
 Route::post('/leave/new', [App\Http\Controllers\api\LeavesController::class, 'store']);
 Route::post('/leave/new/request', [App\Http\Controllers\api\LeaveRequestsController::class, 'store']);
 Route::get('/leaves/{empId}', [App\Http\Controllers\api\LeavesController::class, 'leavesByEmployee']);
+Route::get('/leaves/report/{id}/{from}/{to}/{allEmployee}', [App\Http\Controllers\api\LeavesController::class, 'leavesReport']);
+Route::get('/leaves/schedule/{empId}/{date}', [App\Http\Controllers\api\LeavesController::class, 'leavesWBS']);
 
 
 
