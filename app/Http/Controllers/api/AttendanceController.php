@@ -7,7 +7,9 @@ use App\Models\Attendance;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use DateTime;
+
 use Illuminate\Support\Facades\DB;
+
 
 class AttendanceController extends Controller
 {
@@ -187,15 +189,20 @@ class AttendanceController extends Controller
       if($all == 'true'){
         $empId = null;
       }
+      if($empId == 'null'){
+        $empId = null;
+      }
       if($from == 'null'){
         $from = '2000-01-01';
       }
-      $data = Attendance::select('*')
+    
+     $data = Attendance::select('*')
           ->where([
               ['employee_id', 'LIKE', $empId],
               ['date', '>=', $from],
-              ['date','<=', $to]
-          ])->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
+              ['date','<=', $to],
+          ])
+          ->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
           ->get(['employees.name',  'employees.active', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
           foreach($data as $key => $value ){
               $date1 = new DateTime($value->checkin);
@@ -205,12 +212,16 @@ class AttendanceController extends Controller
               $diffInHours   = sprintf("%02d", $difference->h);
               $result = $diffInHours . ':' . $diffInMinutes;
               $value->timeSpend = $result;
+              $day = date('l', strtotime($value->date));
+              $value->day = $day;
               $value->checkin = date("g:i a", strtotime($value->checkin));
               $value->checkout = date("g:i a", strtotime($value->checkout));
           }
+        
           return $data;
     }
 
+   
      /**
      * Remove the specified resource from storage.
      *

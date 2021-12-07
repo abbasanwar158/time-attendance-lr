@@ -50,6 +50,10 @@ Route::post('/leave/new/request', [App\Http\Controllers\api\LeaveRequestsControl
 Route::get('/leave/requests', [App\Http\Controllers\api\LeaveRequestsController::class, 'index']);
 Route::get('/leaves/{empId}', [App\Http\Controllers\api\LeavesController::class, 'leavesByEmployee']);
 Route::post('/leaves/upload',[App\Http\Controllers\api\LeavesController::class, 'uploadCSV']);
+Route::get('/leaves/report/{id}/{from}/{to}/{allEmployee}', [App\Http\Controllers\api\LeavesController::class, 'leavesReport']);
+Route::get('/leaves/schedule/{empId}/{date}', [App\Http\Controllers\api\LeavesController::class, 'leavesWBS']);
+
+
 
 ///////////////////////////////////Attendances///////////////////////////////////////////////
 Route::get('/attendances', [App\Http\Controllers\api\AttendanceController::class, 'index']);
@@ -58,7 +62,6 @@ Route::get('/today/attendance', [App\Http\Controllers\api\AttendanceController::
 Route::post('/attendance/update/{id}', [App\Http\Controllers\api\AttendanceController::class, 'update']);
 Route::get('/attendance/{id}', [App\Http\Controllers\api\AttendanceController::class, 'show']);
 Route::get('/attendance/report/{empId}/{from}/{to}/{all}/{sat}/{sun}', [App\Http\Controllers\api\AttendanceController::class, 'attendanceReport']);
-Route::post('/attendance/upload', [App\Http\Controllers\api\AttendanceController::class, 'uploadCSV']);
 Route::post('/attendance/upload', [App\Http\Controllers\api\AttendanceController::class, 'uploadCSV']);
 
 

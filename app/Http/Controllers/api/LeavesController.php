@@ -8,6 +8,7 @@ use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LeavesController extends Controller
 {
@@ -220,7 +221,64 @@ class LeavesController extends Controller
         }else{
             return "invalid Request please try again";
         }
-            
+    } 
         
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Leaves  $leaves
+     * @return \Illuminate\Http\Response
+     */
+    public function leavesWBS($empId , $date)
+    {
+        //
+        return DB::table('leaves')
+            ->join('employees', 'employee_external_id', '=', 'leaves.employee_id')
+
+            ->where('employee_id', '=',$empId)
+
+            ->whereYear('date', '=', $date)
+            ->get(['employees.name', 'employees.active', 'employees.employee_external_id', 'leaves.id', 'leaves.date', 'leaves.time',  'leaves.status', 'leaves.note', 'leaves.created_at']);
+             
+    }
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Leaves  $leaves
+     * @return \Illuminate\Http\Response
+     */
+    public function leavesReport($id,$from,$to,$allEmployee)
+    {
+        //
+        // if($allEmployee){
+        //     return DB::table('leaves')
+        //     ->join('employees', 'employee_external_id', '=', 'leaves.employee_id')
+        //     ->whereBetween('date',[$from,$to])
+        //     ->get(['employees.name',  'employees.active','leaves.time','leaves.status','leaves.date','leaves.note']);
+       
+        // }
+        
+        if ($id == 'null'){
+            $id=null;
+        }
+        
+        $ldate = date('Y-m-d');
+        if($to == 'null'){
+            $to = $ldate;
+        }
+        
+        if($from == 'null'){
+            $from = '2000-01-01';
+        }
+        
+        return DB::table('leaves')
+            ->join('employees', 'employee_external_id', '=', 'leaves.employee_id')
+
+            ->where('employee_id', 'LIKE',$id)
+
+            ->whereBetween('date',[$from,$to])
+            ->get(['employees.name', 'employees.active', 'employees.employee_external_id', 'leaves.id', 'leaves.date', 'leaves.time',  'leaves.status', 'leaves.note', 'leaves.created_at']);
+             
+        // }
     }
 }
