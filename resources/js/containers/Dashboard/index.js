@@ -87,7 +87,9 @@ export default function Dashboard() {
     var dataArr = []
     setLoader(true);
     if(months == ""){
-      setMonths(new Date().getMonth()); 
+      var date = new Date();
+      const month = date.toLocaleString('default', { month: 'long' });
+      setMonths(month); 
     }
     if(years == ""){
       setYears(new Date().getFullYear());

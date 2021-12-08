@@ -6,6 +6,7 @@ import FormControl from "@material-ui/core/FormControl";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import { useHistory } from "react-router-dom";
 
 
 export default function ApplyLeaves() {
@@ -24,6 +25,7 @@ export default function ApplyLeaves() {
   const [endDate, setEndDate] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const history = useHistory();
 
   const handleChange = (event) => {
       setSelected(event.target.value);
@@ -58,7 +60,8 @@ export default function ApplyLeaves() {
           })
               .then((response) => response.json())
               .then((data) => {
-                  console.log("Success:", data);
+                history.push('/leaves');
+                console.log("Success:", data);
               })
               .catch((error) => {
                   console.error("Error:", error);
@@ -239,7 +242,11 @@ export default function ApplyLeaves() {
                               >
                                   Apply
                               </Button>
-                              <Button variant="contained" color="default">
+                              <Button 
+                                variant="contained" 
+                                color="default"
+                                onClick={(e) => history.push('/leaves')}
+                              >
                                   Cancel
                               </Button>
                           </Grid>
