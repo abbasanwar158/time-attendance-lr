@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 
 export default function EditRequest() {
 
+  const { replyLeave, index } = useContext(RootContext);
   const [status, setStatus] = useState('')
   const [note, setNote] = useState('')
   const history = useHistory();
@@ -31,6 +32,38 @@ export default function EditRequest() {
       </span>
     );
   };
+
+
+  useEffect(() => {
+    var data = replyLeave[index];
+    setStatus(data.reply_status)
+    setNote(data.reply)
+  }, []);
+
+  const updateLeave = () => {
+    var today = new Date()
+    fetch(`https://time-attendance-lr.herokuapp.com/api/leave/requests/reply/${replyLeave[index].id}`, {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          reply: note,
+          replyStatus: status,
+          created_at: today,
+          updated_at: today,
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        history.push('/leaves/requests');
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
+  }
 
   return (
     <>
@@ -66,11 +99,11 @@ export default function EditRequest() {
                     select
                     SelectProps={{ IconComponent: () => <Chevron /> }}
                   >
-                    <MenuItem value="Yes">
-                      Yes
+                    <MenuItem value="Approved">
+                      Approved
                     </MenuItem>
-                    <MenuItem value="No">
-                      No
+                    <MenuItem value="Not Approved">
+                      Not Approved
                     </MenuItem>
                   </TextField>
                 </FormControl>
@@ -100,7 +133,7 @@ export default function EditRequest() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button variant="contained" color="primary" className={styles.saveButton}>
+                <Button onClick={updateLeave} variant="contained" color="primary" className={styles.saveButton}>
                   Update
                 </Button>
                 <Button

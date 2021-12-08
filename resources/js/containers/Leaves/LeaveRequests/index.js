@@ -19,9 +19,37 @@ const useStyles2 = makeStyles({
 });
 
 export default function LeavesRequests() {
-    const classes = useStyles2();
-    const { ActiveEmployeeNames } = useContext(RootContext);
-    const history = useHistory();
+  const classes = useStyles2();
+  const { setIndex, newLeave, setNewLeave, replyLeave, setReplyLeave } = useContext(RootContext);
+  const history = useHistory();
+  
+  useEffect(() => {
+    leavesReqFun();
+  }, []);
+  
+  const leavesReqFun = () => {
+  var newLeavesArr = [];
+  var replyLeavesArr = [];
+  fetch("https://time-attendance-lr.herokuapp.com/api/leave/requests")
+  .then(res => res.json())
+  .then(
+    (response) => {
+      for (var i = 0; i < response.length; i++) {
+        if(response[i].reply_status == null){
+          newLeavesArr.push(response[i]);
+        }
+        else{
+          replyLeavesArr.push(response[i]);
+        }
+      }
+      setReplyLeave(replyLeavesArr)
+      setNewLeave(newLeavesArr)
+    },
+    (error) => {
+      console.log("error", error)
+    }
+  )
+  }
 
     return (
         <>
@@ -51,23 +79,37 @@ export default function LeavesRequests() {
                     <TableCell className={styles.TableCell}>Leave Type</TableCell>
                     <TableCell className={styles.TableCell}>Subject</TableCell>
                     <TableCell className={styles.TableCell}>Message</TableCell>
+                    <TableCell className={styles.TableCell}>Date from</TableCell>
+                    <TableCell className={styles.TableCell}>Date to</TableCell>
                     <TableCell className={styles.TableCell}>Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell className={styles.subCells}>Dummy Data</TableCell>
-                    <TableCell className={styles.subCells}>Dummy Data</TableCell>
-                    <TableCell className={styles.subCells}>Dummy Data</TableCell>
-                    <TableCell className={styles.subCells}>Dummy Data</TableCell>
-                    <TableCell className={styles.subCells}>
-                      <button
-                        onClick={(e) => {
-                          history.push('/leaves/requests/reply')
-                        }}
-                      >Reply</button>
-                    </TableCell>
-                  </TableRow>
+                  {newLeave.map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell className={styles.subCells}>{row.name}</TableCell>
+                      <TableCell className={styles.subCells}>{row.leave_type}</TableCell>
+                      <TableCell className={styles.subCells}>{row.subject}</TableCell>
+                      <TableCell className={styles.subCells}>{row.message}</TableCell>
+                      <TableCell className={styles.subCells}>{row.date_from}</TableCell>
+                      <TableCell className={styles.subCells}>{row.date_to}</TableCell>
+                      <TableCell className={styles.subCells}>
+                        <button
+                          value={row.id}
+                          onClick={(e) => {
+                            var leaveId = e.target.value
+                            for (var i = 0; i < newLeave.length; i++) {
+                              var tempId = newLeave[i].id
+                              if (tempId == leaveId) {
+                                setIndex(i);
+                              }
+                            }
+                            history.push('/leaves/requests/reply')
+                          }}
+                        >Reply</button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -84,25 +126,40 @@ export default function LeavesRequests() {
                     <TableCell className={styles.TableCell}>Employee name</TableCell>
                     <TableCell className={styles.TableCell}>Leave Type</TableCell>
                     <TableCell className={styles.TableCell}>Subject</TableCell>
-                    <TableCell className={styles.TableCell}>Message</TableCell>
+                    <TableCell className={styles.TableCell}>Reply Message</TableCell>
                     <TableCell className={styles.TableCell}>Reply Status</TableCell>
+                    <TableCell className={styles.TableCell}>Date from</TableCell>
+                    <TableCell className={styles.TableCell}>Date to</TableCell>
                     <TableCell className={styles.TableCell}>Action</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  <TableRow>
-                    <TableCell className={styles.subCells}>Dummy Data</TableCell>
-                    <TableCell className={styles.subCells}>Dummy Data</TableCell>
-                    <TableCell className={styles.subCells}>Dummy Data</TableCell>
-                    <TableCell className={styles.subCells}>Dummy Data</TableCell>
-                    <TableCell className={styles.subCells}>Dummy Data</TableCell>
-                    <TableCell className={styles.subCells}>
-                      <button
-                        onClick={(e) => {
-                          history.push('/leaves/requests/edit')
-                        }}
-                      >Edit</button></TableCell>
-                  </TableRow>
+                {replyLeave.map((row) => (
+                    <TableRow key={row.id}>
+                      <TableCell className={styles.subCells}>{row.name}</TableCell>
+                      <TableCell className={styles.subCells}>{row.leave_type}</TableCell>
+                      <TableCell className={styles.subCells}>{row.subject}</TableCell>
+                      <TableCell className={styles.subCells}>{row.reply}</TableCell>
+                      <TableCell className={styles.subCells}>{row.reply_status}</TableCell>
+                      <TableCell className={styles.subCells}>{row.date_to}</TableCell>
+                      <TableCell className={styles.subCells}>{row.date_from}</TableCell>
+                      <TableCell className={styles.subCells}>
+                        <button
+                          value={row.id}
+                          onClick={(e) => {
+                            var leaveId = e.target.value
+                            for (var i = 0; i < replyLeave.length; i++) {
+                              var tempId = replyLeave[i].id
+                              if (tempId == leaveId) {
+                                setIndex(i);
+                              }
+                            }
+                            history.push('/leaves/requests/edit')
+                          }}
+                        >Edit</button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
                 </TableBody>
               </Table>
             </TableContainer>

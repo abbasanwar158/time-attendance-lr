@@ -7,6 +7,9 @@ export default ({ children }) => {
 
   const [ActiveEmployeeNames, setActiveEmployeeNames] = useState([])
   const [leavesData, setLeavesData] = useState([])
+  const [leavesReqData, setLeavesReqData] = useState([])
+  const [newLeave, setNewLeave] = useState([]);
+  const [replyLeave, setReplyLeave] = useState([]);
   const [employeesData, setEmployeesData] = useState([])
   const [allEmployeesData, setAllEmployeesData] = useState([])
   const [usersData, setUsersData] = useState([])
@@ -33,7 +36,13 @@ export default ({ children }) => {
     holidaysData,
     setHolidaysData,
     loginNavbar,
-    setLoginNavbar
+    setLoginNavbar,
+    leavesReqData,
+    setLeavesReqData,
+    newLeave,
+    setNewLeave,
+    replyLeave,
+    setReplyLeave
   };
   /*******************************************************************/
 

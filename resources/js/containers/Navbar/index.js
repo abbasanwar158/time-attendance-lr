@@ -116,14 +116,14 @@ export default function Navbar() {
             <span className={styles.subMenuSpan}>Leave Requests</span>
           </MenuItem>
 
-          <MenuItem
+          {/* <MenuItem
             onClick={() => {
               handleCloseMenu()
               history.push('/employees/performance_form')
             }}>
             <SVG className={styles.subMenuIcons} src={`/images/assessment.svg`} />
             <span className={styles.subMenuSpan}>Employee Performace Form</span>
-          </MenuItem>
+          </MenuItem> */}
 
           <MenuItem
             onClick={() => {
