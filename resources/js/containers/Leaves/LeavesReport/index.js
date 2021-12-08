@@ -248,7 +248,7 @@ export default function LeavesReport() {
                         src={`/images/holidays.svg`}
                     />
                     <span className={styles.breadCrumbsSlash}>/</span>
-                    <span className={styles.breadCrumbsSpan}>Employees</span>
+                    <span className={styles.breadCrumbsSpan}>Leave</span>
                     <span className={styles.breadCrumbsSlash}>/</span>
                     <span className={styles.breadCrumbsSpan}>Leave Report</span>
                 </div>

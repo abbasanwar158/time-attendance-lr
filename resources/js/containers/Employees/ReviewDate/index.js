@@ -132,136 +132,227 @@ export default function ReviewDate() {
   }, []);
 
   const employeesFun = () => {
-    var employeesArr = [];
-    fetch("http://attendance.devbox.co/api/v1/employees")
-      .then(res => res.json())
-      .then(
-        (response) => {
-          var data = response.data
-          for (var i = 0; i < data.length; i++) {
-            employeesArr.push(data[i])
-          }
-          setAllEmployeesData(employeesArr)
-        },
-        (error) => {
-          console.log("error", error)
-        }
+      var employeeNamesArr = [];
+      fetch("https://time-attendance-lr.herokuapp.com/api/employees")
+          .then((res) => res.json())
+          .then(
+              (response) => {
+                  var data = response.filter((x) => x.active);
+                  for (var i = 0; i < data.length; i++) {
+                      employeeNamesArr.push(data[i]);
+                  }
+                  setAllEmployeesData(employeeNamesArr);
+              },
+              (error) => {
+                  console.log("error", error);
+              }
+          );
+  };
+  const searchEmployee = () => {
+      //setOpen(true);
+
+      fetch(
+          `https://time-attendance-lr.herokuapp.com/api/employees/review_date/${personName}`
       )
-  }
-
+          .then((res) => res.json())
+          .then(
+              (response) => {
+                  var data = response.filter((x) => x.active);
+                  setAllEmployeesData(data);
+                  //setOpen(false);
+              },
+              (error) => {
+                  console.log("error", error);
+              }
+          );
+  };
   return (
-    <>
-      <div className={styles.breadCrumbsContainer}>
-        <div className={styles.breadCrumbsSubContainer}>
-          <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />
-          <span className={styles.breadCrumbsSlash}>/</span>
-          <span className={styles.breadCrumbsSpan}>Emoployees</span>
-          <span className={styles.breadCrumbsSlash}>/</span>
-          <span className={styles.breadCrumbsSpan}>Review</span>
-        </div>
-        <h1 className={styles.breadCrumbSpan2}>Employee Review Date</h1>
-      </div>
-      <div className={styles.mainCard}>
-        <div className={styles.gridContainer}>
-          <Grid item xs={12}>
-            <Grid container spacing={1} className={styles.gridSubItems} >
-              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <FormControl fullWidth >
-                  <TextField
-                    className={styles.fieldDiv}
-                    value={personName}
-                    id="questions"
-                    fullWidth
-                    size="small"
-                    label="Employee"
-                    variant="outlined"
-                    onChange={handleChange}
-                    menuprops={{ variant: "menu" }}
-                    select
-                    SelectProps={{ IconComponent: () => <Chevron /> }}
-                  >
-                    {ActiveEmployeeNames.map((options) => (
-                      <MenuItem key={options} value={options}>
-                        {options}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={2} className={styles.buttonGrid}>
-                <Button variant="contained" color="primary" >
-                  Search
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </div>
-        <div className={styles.flex}>
-          <TableContainer component={Paper} className={styles.table}>
-            <Table className={classes.table} aria-label="custom pagination table">
-              <TableHead className={styles.tableHeader}>
-                <TableRow>
-                  <TableCell className={styles.TableCell} >ID</TableCell>
-                  <TableCell className={styles.TableCell}>Employee Name</TableCell>
-                  <TableCell className={styles.TableCell} >Designation</TableCell>
-                  <TableCell className={styles.TableCell} >Review Date</TableCell>
-                  <TableCell className={styles.TableCell} >Reminder Review Date</TableCell>
-                  <TableCell className={styles.TableCell} >Action</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {(rowsPerPage > 0
-                  ? allEmployeesData.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  : allEmployeesData
-                ).map((row, i) => (
-                  <TableRow>
-                    <TableCell className={styles.nameCells}>{row.id}</TableCell>
-                    <TableCell className={styles.subCells}>{row.name}</TableCell>
-                    <TableCell className={styles.subCells}>{row.designation}</TableCell>
-                    <TableCell className={styles.subCells}>{row.review_date}</TableCell>
-                    <TableCell className={styles.subCells}>{row.reminder_review_date}</TableCell>
-                    <TableCell className={styles.subCells}>
-                      <button
-                        value={row.id}
-                        onClick={(e) => {
-                          var employeeId = e.target.value
-                          for (var i = 0; i < allEmployeesData.length; i++) {
-                            var tempId = allEmployeesData[i].id
-                            if (tempId == employeeId) {
-                              setIndex(i);
-                            }
-                          }
-                          history.push('/employees/review_date/edit')
-                        }}
-                      >Edit</button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    className={styles.pagginationContainer}
-                    rowsPerPageOptions={[5, 10, 25]}
-                    colSpan={6}
-                    count={allEmployeesData.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    SelectProps={{
-                      inputProps: { 'aria-label': 'rows per page' },
-                      native: true,
-                    }}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                    ActionsComponent={TablePaginationActions}
+      <>
+          <div className={styles.breadCrumbsContainer}>
+              <div className={styles.breadCrumbsSubContainer}>
+                  <SVG
+                      className={styles.dashboardSvg}
+                      src={`/images/holidays.svg`}
                   />
-                </TableRow>
-              </TableFooter>
-            </Table>
-          </TableContainer>
-        </div>
-      </div>
+                  <span className={styles.breadCrumbsSlash}>/</span>
+                  <span className={styles.breadCrumbsSpan}>Emoployees</span>
+                  <span className={styles.breadCrumbsSlash}>/</span>
+                  <span className={styles.breadCrumbsSpan}>Review</span>
+              </div>
+              <h1 className={styles.breadCrumbSpan2}>Employee Review Date</h1>
+          </div>
+          <div className={styles.mainCard}>
+              <div className={styles.gridContainer}>
+                  <Grid item xs={12}>
+                      <Grid
+                          container
+                          spacing={1}
+                          className={styles.gridSubItems}
+                      >
+                          <Grid
+                              item
+                              xs={12}
+                              sm={4}
+                              className={styles.fieldGrid}
+                          >
+                              <FormControl fullWidth>
+                                  <TextField
+                                      className={styles.fieldDiv}
+                                      value={personName}
+                                      id="questions"
+                                      fullWidth
+                                      size="small"
+                                      label="Employee"
+                                      variant="outlined"
+                                      onChange={handleChange}
+                                      menuprops={{ variant: "menu" }}
+                                      select
+                                      SelectProps={{
+                                          IconComponent: () => <Chevron />,
+                                      }}
+                                  >
+                                      {ActiveEmployeeNames.map((option) => (
+                                          <MenuItem
+                                              key={option.name}
+                                              value={
+                                                  option.employee_external_id
+                                              }
+                                          >
+                                              {option.name}
+                                          </MenuItem>
+                                      ))}
+                                  </TextField>
+                              </FormControl>
+                          </Grid>
+                          <Grid
+                              item
+                              xs={12}
+                              sm={2}
+                              className={styles.buttonGrid}
+                          >
+                              <Button
+                                  variant="contained"
+                                  color="primary"
+                                  onClick={searchEmployee}
+                              >
+                                  Search
+                              </Button>
+                          </Grid>
+                      </Grid>
+                  </Grid>
+              </div>
+              <div className={styles.flex}>
+                  <TableContainer component={Paper} className={styles.table}>
+                      <Table
+                          className={classes.table}
+                          aria-label="custom pagination table"
+                      >
+                          <TableHead className={styles.tableHeader}>
+                              <TableRow>
+                                  <TableCell className={styles.TableCell}>
+                                      ID
+                                  </TableCell>
+                                  <TableCell className={styles.TableCell}>
+                                      Employee Name
+                                  </TableCell>
+                                  <TableCell className={styles.TableCell}>
+                                      Designation
+                                  </TableCell>
+                                  <TableCell className={styles.TableCell}>
+                                      Review Date
+                                  </TableCell>
+                                  <TableCell className={styles.TableCell}>
+                                      Reminder Review Date
+                                  </TableCell>
+                                  <TableCell className={styles.TableCell}>
+                                      Action
+                                  </TableCell>
+                              </TableRow>
+                          </TableHead>
+                          <TableBody>
+                              {(rowsPerPage > 0
+                                  ? allEmployeesData.slice(
+                                        page * rowsPerPage,
+                                        page * rowsPerPage + rowsPerPage
+                                    )
+                                  : allEmployeesData
+                              ).map((row, i) => (
+                                  <TableRow>
+                                      <TableCell className={styles.nameCells}>
+                                          {row.id}
+                                      </TableCell>
+                                      <TableCell className={styles.subCells}>
+                                          {row.name}
+                                      </TableCell>
+                                      <TableCell className={styles.subCells}>
+                                          {row.designation}
+                                      </TableCell>
+                                      <TableCell className={styles.subCells}>
+                                          {row.review_date}
+                                      </TableCell>
+                                      <TableCell className={styles.subCells}>
+                                          {row.reminder_review_date}
+                                      </TableCell>
+                                      <TableCell className={styles.subCells}>
+                                          <button
+                                              value={row.id}
+                                              onClick={(e) => {
+                                                  var employeeId =
+                                                      e.target.value;
+                                                  for (
+                                                      var i = 0;
+                                                      i <
+                                                      allEmployeesData.length;
+                                                      i++
+                                                  ) {
+                                                      var tempId =
+                                                          allEmployeesData[i]
+                                                              .id;
+                                                      if (
+                                                          tempId == employeeId
+                                                      ) {
+                                                          setIndex(i);
+                                                      }
+                                                  }
 
-    </>
+                                                  history.push(
+                                                      "/employees/review_date/edit"
+                                                  );
+                                              }}
+                                          >
+                                              Edit
+                                          </button>
+                                      </TableCell>
+                                  </TableRow>
+                              ))}
+                          </TableBody>
+                          <TableFooter>
+                              <TableRow>
+                                  <TablePagination
+                                      className={styles.pagginationContainer}
+                                      rowsPerPageOptions={[5, 10, 25]}
+                                      colSpan={6}
+                                      count={allEmployeesData.length}
+                                      rowsPerPage={rowsPerPage}
+                                      page={page}
+                                      SelectProps={{
+                                          inputProps: {
+                                              "aria-label": "rows per page",
+                                          },
+                                          native: true,
+                                      }}
+                                      onPageChange={handleChangePage}
+                                      onRowsPerPageChange={
+                                          handleChangeRowsPerPage
+                                      }
+                                      ActionsComponent={TablePaginationActions}
+                                  />
+                              </TableRow>
+                          </TableFooter>
+                      </Table>
+                  </TableContainer>
+              </div>
+          </div>
+      </>
   );
 }
