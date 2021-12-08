@@ -229,7 +229,8 @@ class LeavesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function leavesWBS($empId , $date)
-    {
+    {   
+        
         //
         return DB::table('leaves')
             ->join('employees', 'employee_external_id', '=', 'leaves.employee_id')
@@ -237,7 +238,7 @@ class LeavesController extends Controller
             ->where('employee_id', '=',$empId)
 
             ->whereYear('date', '=', $date)
-            ->get(['employees.name', 'employees.active', 'employees.employee_external_id', 'leaves.id', 'leaves.date', 'leaves.time',  'leaves.status', 'leaves.note', 'leaves.created_at']);
+            ->get(['employees.name', 'employees.active', 'employees.employee_external_id', 'leaves.id', 'leaves.date', 'leaves.time',  'leaves.status', 'employees.joining_date', 'leaves.created_at']);
              
     }
     /**

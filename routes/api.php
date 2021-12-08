@@ -34,6 +34,9 @@ Route::delete('/employee/delete/{id}', [App\Http\Controllers\api\EmployeeControl
 Route::get('/employee/{id}', [App\Http\Controllers\api\EmployeeController::class, 'show']);
 Route::post('employee/edit_status/{id}', [App\Http\Controllers\api\EmployeeController::class, 'editStatus']);
 Route::post('/employees/upload',[App\Http\Controllers\api\EmployeeController::class, 'uploadCSV']);
+Route::get('/employees/review_date/{id}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeRecord']);
+Route::post('/employees/review_date/edit/{id}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeEditStatus']);
+Route::get('/employees/report/{id}/{year}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeReport']);
 
 //////////////////////////////////Employees///////////////////////////////////////////////
 Route::get('/holidays', [App\Http\Controllers\api\HolidayController::class, 'index']);
