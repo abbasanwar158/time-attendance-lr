@@ -23,6 +23,21 @@ const useStyles2 = makeStyles({
     },
 });
 var leavesCount = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"];
+var leaveshalfCount = [
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+    "0",
+];
+var TotlaLeaves = 0;
 export default function LeavesWBS() {
     const classes = useStyles2();
     const { ActiveEmployeeNames } = useContext(RootContext);
@@ -53,6 +68,7 @@ export default function LeavesWBS() {
     const [yearsValue, setYearsValue] = useState("");
     const [leavesReport, setLeavesReport] = useState([]);
     const history = useHistory();
+    const [flag, setFlag] = useState(false);
 
     const handleChange = (event) => {
         setSelected(event.target.value);
@@ -71,29 +87,52 @@ export default function LeavesWBS() {
     };
 
     const leavesSearch = () => {
+        setFlag(true);
+        TotlaLeaves = 0;
         var attendanceArr = [];
         if (selected && yearsValue) {
             for (var i = 0; i < 12; i++) {
                 leavesCount[i] = 0;
+                leaveshalfCount[i] = 0;
             }
             fetch(
-                `https://time-attendance-lr.herokuapp.com/api/leaves/schedule/${selected}/${yearsValue}`
+                `http://127.0.0.1:8000/api/leaves/schedule/${selected}/${yearsValue}`
             )
                 .then((res) => res.json())
                 .then(
                     (response) => {
-                        //var data = response.filter((x) => x.active);
                         for (var i = 0; i < response.length; i++) {
                             attendanceArr.push(response[i]);
                             var date = new Date(response[i].date);
                             var month = date.getMonth();
+                            var temphalf = leaveshalfCount[month];
                             var temp = leavesCount[month];
-
-                            leavesCount[month] = parseInt(temp + 1);
+                            if (
+                                response[i].status == "half" ||
+                                response[i].status == "Half"
+                            ) {
+                                leaveshalfCount[month] = parseFloat(
+                                    temphalf + 1
+                                );
+                            } else if (
+                                response[i].status == "full" ||
+                                response[i].status == "Full"
+                            ) {
+                                leavesCount[month] = parseFloat(temp + 1);
+                            } else {
+                                leavesCount[i] = 0;
+                                leaveshalfCount[i] = 0;
+                            }
                         }
-                        setLeavesReport(attendanceArr);
+                        for (var i = 0; i < leavesCount.length; i++) {
+                            TotlaLeaves =
+                                TotlaLeaves +
+                                (leavesCount[i] + leaveshalfCount[i] / 2);
+                        }
+                        setLeavesReport(response);
                     },
                     (error) => {
+                        setFlag(false);
                         console.log("error", error);
                     }
                 );
@@ -218,43 +257,121 @@ export default function LeavesWBS() {
                     </Grid>
                 </div>
             </div>
-            <div className={styles.flex}>
-                <TableContainer component={Paper} className={styles.table}>
-                    <Table
-                        className={classes.table}
-                        aria-label="custom pagination table"
-                    >
-                        <TableHead className={styles.tableHeader}>
-                            <TableRow>
-                                <TableCell className={styles.TableCell}>
-                                    Months
-                                </TableCell>
-                                <TableCell className={styles.TableCell}>
-                                    Leaves
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {leavesReport.length == 0
-                                ? ""
-                                : leavesCount.map((row, i) => (
-                                      <TableRow key={i}>
-                                          <TableCell
-                                              className={styles.nameCells}
-                                          >
-                                              {monthName[i]}
-                                          </TableCell>
-                                          <TableCell
-                                              className={styles.subCells}
-                                          >
-                                              {row}
-                                          </TableCell>
-                                      </TableRow>
-                                  ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-            </div>
+            {!flag ? (
+                ""
+            ) : (
+                <div className={styles.flex}>
+                    <TableContainer component={Paper} className={styles.table}>
+                        <Table
+                            className={classes.table}
+                            aria-label="custom pagination table"
+                        >
+                            <TableHead className={styles.tableHeader}>
+                                <TableRow>
+                                    <TableCell className={styles.TableCell}>
+                                        Months
+                                    </TableCell>
+                                    <TableCell className={styles.TableCell}>
+                                        Half Leaves
+                                    </TableCell>
+                                    <TableCell className={styles.TableCell}>
+                                        Full Leaves
+                                    </TableCell>
+                                    <TableCell className={styles.TableCell}>
+                                        Total Leaves
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {!flag
+                                    ? ""
+                                    : leavesReport.length < 1
+                                    ? leavesCount.map((row, i) => (
+                                          <TableRow key={i}>
+                                              <TableCell
+                                                  className={styles.nameCells}
+                                              >
+                                                  {monthName[i]}
+                                              </TableCell>
+                                              <TableCell
+                                                  className={styles.subCells}
+                                              >
+                                                  {leaveshalfCount[i]}
+                                              </TableCell>
+                                              <TableCell
+                                                  className={styles.subCells}
+                                              >
+                                                  {row}
+                                              </TableCell>
+                                              <TableCell
+                                                  className={styles.subCells}
+                                              >
+                                                  {row + leaveshalfCount[i] / 2}
+                                              </TableCell>
+                                          </TableRow>
+                                      ))
+                                    : leavesCount.map((row, i) => (
+                                          <TableRow key={i}>
+                                              <TableCell
+                                                  className={styles.nameCells}
+                                              >
+                                                  {monthName[i]}
+                                              </TableCell>
+                                              <TableCell
+                                                  className={styles.subCells}
+                                              >
+                                                  {leaveshalfCount[i]}
+                                              </TableCell>
+                                              <TableCell
+                                                  className={styles.subCells}
+                                              >
+                                                  {row}
+                                              </TableCell>
+                                              <TableCell
+                                                  className={styles.subCells}
+                                              >
+                                                  {row + leaveshalfCount[i] / 2}
+                                              </TableCell>
+                                          </TableRow>
+                                      ))}
+                                {!flag ? (
+                                    ""
+                                ) : (
+                                    <>
+                                        <TableRow>
+                                            <TableCell
+                                                className={styles.nameCells}
+                                                colSpan="3"
+                                            >
+                                                <b>Total Leaves</b>
+                                            </TableCell>
+                                            <TableCell
+                                                className={styles.subCells}
+                                            >
+                                                {TotlaLeaves}
+                                            </TableCell>
+                                        </TableRow>
+                                        {/* <TableRow>
+                                            <TableCell
+                                                className={styles.nameCells}
+                                                colSpan="2"
+                                            >
+                                                <b>Reaming Leaves</b>
+                                            </TableCell>
+                                            <TableCell
+                                                className={styles.subCells}
+                                                colSpan="2"
+                                            >
+                                                {15 - TotlaLeaves}
+                                            </TableCell>
+                                        </TableRow>*/}
+                                    </>
+                                )}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </div>
+            )}
         </>
     );
 }
