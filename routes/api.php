@@ -37,6 +37,7 @@ Route::post('/employees/upload',[App\Http\Controllers\api\EmployeeController::cl
 Route::get('/employees/review_date/{id}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeRecord']);
 Route::post('/employees/review_date/edit/{id}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeEditStatus']);
 Route::get('/employees/report/{id}/{year}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeReport']);
+Route::get('/send_Email/{subject}/{message}', [App\Http\Controllers\api\EmployeeController::class, 'mailToAll']);
 
 //////////////////////////////////Employees///////////////////////////////////////////////
 Route::get('/holidays', [App\Http\Controllers\api\HolidayController::class, 'index']);
