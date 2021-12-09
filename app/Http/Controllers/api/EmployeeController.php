@@ -7,6 +7,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DateTime;
+use Mail;
 
 class EmployeeController extends Controller
 {
@@ -301,5 +302,30 @@ class EmployeeController extends Controller
        
       
       
+    }
+
+     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Employee  $employee
+     * @return \Illuminate\Http\Response
+     */
+    public function mailToAll($subject, $message)
+    {  
+      $allEmployees = Employee::where('active', '=', 1)->get();
+      foreach($allEmployees as $key => $value ){
+        $data = ['body' => $message, 'employeeName' => $value->name];
+        $emails = $value->email;
+        Mail::send('mail',$data, function($message)  use ($subject,$emails)
+        {
+          $message->to($emails);   
+          $message->subject($subject); 
+        });   
+      }
+      $res=[
+        'status'=>'200',
+        'msg'=>'success'
+      ];
+      return response()->json($res);
     }
 }

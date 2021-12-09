@@ -6,16 +6,41 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { useHistory } from "react-router-dom";
-
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function ComposeEmail() {
 
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [open, setOpen] = useState(false);
   const history = useHistory();
+
+  const mailToAll = () => {
+    setOpen(true);
+    fetch(`https://time-attendance-lr.herokuapp.com/api/send_Email/${subject}/${message}`)
+      .then(res => res.json())
+      .then(
+        (response) => {
+          history.push('/employees/mail');
+          setOpen(false);
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
+  }
 
   return (
       <>
+        <div className={styles.backDropZindex}>
+          <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+          >
+            <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+          </Backdrop>
+        </div>
         <div className={styles.breadCrumbsContainer}>
           <div className={styles.breadCrumbsSubContainer}>
             <SVG
@@ -70,6 +95,7 @@ export default function ComposeEmail() {
                     variant="contained"
                     color="primary"
                     className={styles.applyButton}
+                    onClick={mailToAll}
                   >
                     Send
                   </Button>
