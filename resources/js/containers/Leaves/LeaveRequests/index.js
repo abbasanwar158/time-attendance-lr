@@ -11,6 +11,9 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 const useStyles2 = makeStyles({
     table: {
@@ -22,12 +25,14 @@ export default function LeavesRequests() {
   const classes = useStyles2();
   const { setIndex, newLeave, setNewLeave, replyLeave, setReplyLeave } = useContext(RootContext);
   const history = useHistory();
+  const [open, setOpen] = useState(false);
   
   useEffect(() => {
     leavesReqFun();
   }, []);
   
   const leavesReqFun = () => {
+    setOpen(true);
   var newLeavesArr = [];
   var replyLeavesArr = [];
   fetch("https://time-attendance-lr.herokuapp.com/api/leave/requests")
@@ -42,8 +47,9 @@ export default function LeavesRequests() {
           replyLeavesArr.push(response[i]);
         }
       }
-      setReplyLeave(replyLeavesArr)
-      setNewLeave(newLeavesArr)
+      setReplyLeave(replyLeavesArr);
+      setNewLeave(newLeavesArr);
+      setOpen(false);
     },
     (error) => {
       console.log("error", error)
@@ -53,6 +59,14 @@ export default function LeavesRequests() {
 
     return (
         <>
+          <div className={styles.backDropZindex}>
+            <Backdrop
+              sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+              open={open}
+            >
+              <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+            </Backdrop>
+          </div>
           <div className={styles.breadCrumbsContainer}>
             <div className={styles.breadCrumbsSubContainer}>
               <SVG

@@ -7,7 +7,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { useHistory } from "react-router-dom";
-
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function ApplyLeaves() {
 
@@ -25,6 +26,7 @@ export default function ApplyLeaves() {
   const [endDate, setEndDate] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [open, setOpen] = useState(false);
   const history = useHistory();
 
   const handleChange = (event) => {
@@ -39,6 +41,7 @@ export default function ApplyLeaves() {
       );
   };
   const applyLeave = () => {
+      setOpen(true);
       var flagdate = new Date();
       try {
           fetch("https://time-attendance-lr.herokuapp.com/api/leave/new/request", {
@@ -60,6 +63,7 @@ export default function ApplyLeaves() {
           })
               .then((response) => response.json())
               .then((data) => {
+                  setOpen(false);
                 history.push('/leaves');
                 console.log("Success:", data);
               })
@@ -72,7 +76,15 @@ export default function ApplyLeaves() {
   };
 
   return (
-      <>
+      <> 
+        <div className={styles.backDropZindex}>
+            <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            >
+            <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+            </Backdrop>
+        </div>
           <div className={styles.breadCrumbsContainer}>
               <div className={styles.breadCrumbsSubContainer}>
                   <SVG

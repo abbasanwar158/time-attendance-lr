@@ -9,6 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import { RootContext } from "../../../context/RootContext";
 import { useHistory } from "react-router-dom";
 import { WbSunny } from "@material-ui/icons";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function NewLeave() {
 
@@ -18,6 +20,7 @@ export default function NewLeave() {
   const [selectedNote, setSelectedNote] = useState('')
   const [selectedTime, setSelectedTime] = useState('00:00:00')
   const [selectedStatus, setSelectedStatus] = useState('')
+  const [open, setOpen] = useState(false);
   const history = useHistory();
 
   const handleChange = (event) => {
@@ -46,6 +49,7 @@ export default function NewLeave() {
   };
 
   const newattendance = () => {
+    setOpen(true);
     var today = new Date()
     fetch('https://time-attendance-lr.herokuapp.com/api/leave/new', {
         method: 'POST',
@@ -65,19 +69,25 @@ export default function NewLeave() {
       })
       .then(response => response.json())
       .then(data => {
-        debugger
+        setOpen(false);
         console.log('Success:', data);
       })
       .catch((error) => {
-        debugger
         console.error('Error:', error);
       });
-      debugger
   }
 
 
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />

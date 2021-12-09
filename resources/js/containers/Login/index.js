@@ -21,7 +21,6 @@ export default function Login() {
   });
   const [username, setUsername] = useState('')
   const history = useHistory();
-  const [loader, setLoader] = useState(false);
   const [alert, setAlert] = useState(false);
   const [open, setOpen] = useState(false);
   const { setLoginNavbar } = useContext(RootContext);
@@ -142,9 +141,8 @@ export default function Login() {
               onClick={loginUser}
               variant="contained"
               color="primary"
-              disabled={loader}
             >
-              {loader ? <CircularProgress /> : <span>Login</span>}
+              Login
             </Button>
 
             <div className={styles.resetAnchor}>

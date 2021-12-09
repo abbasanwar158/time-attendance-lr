@@ -58,3 +58,13 @@
 .holidaysBtn {
     margin-left: 10px !important;
 }
+.backDropZindex {
+    position: relative;
+    z-index: 9 !important;
+}
+.loadingText {
+    color: white;
+    font-size: 25px;
+    font-weight: initial;
+    margin-left: 20px;
+}

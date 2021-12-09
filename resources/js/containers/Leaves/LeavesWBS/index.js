@@ -16,6 +16,8 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles2 = makeStyles({
     table: {
@@ -69,6 +71,7 @@ export default function LeavesWBS() {
     const [leavesReport, setLeavesReport] = useState([]);
     const history = useHistory();
     const [flag, setFlag] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleChange = (event) => {
         setSelected(event.target.value);
@@ -88,6 +91,7 @@ export default function LeavesWBS() {
 
     const leavesSearch = () => {
         setFlag(true);
+        setOpen(true);
         TotlaLeaves = 0;
         var attendanceArr = [];
         if (selected && yearsValue) {
@@ -130,6 +134,7 @@ export default function LeavesWBS() {
                                 (leavesCount[i] + leaveshalfCount[i] / 2);
                         }
                         setLeavesReport(response);
+                        setOpen(false);
                     },
                     (error) => {
                         setFlag(false);
@@ -141,6 +146,14 @@ export default function LeavesWBS() {
 
     return (
         <>
+            <div className={styles.backDropZindex}>
+                <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                >
+                <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+                </Backdrop>
+            </div>
             <div className={styles.breadCrumbsContainer}>
                 <div className={styles.breadCrumbsSubContainer}>
                     <SVG

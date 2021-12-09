@@ -8,7 +8,8 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { RootContext } from "../../../context/RootContext";
 import { useHistory } from "react-router-dom";
-
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function NewEmployee() {
 
@@ -22,6 +23,7 @@ export default function NewEmployee() {
   const [status, setStatus] = useState('')
   const [description, setDescription] = useState('')
   const [employeeCat, setEmployeeCat] = useState('');
+  const [open, setOpen] = useState(false);
   const history = useHistory();
 
   const handleChangeStatus = (event) => {
@@ -88,6 +90,7 @@ export default function NewEmployee() {
   }, []);
 
   const editEmployee = () => {
+    setOpen(true);
     var today = new Date()
     fetch(`https://time-attendance-lr.herokuapp.com/api/employee/update/${employeesData[index].id}`, {
         method: 'POST',
@@ -111,6 +114,7 @@ export default function NewEmployee() {
       })
       .then(response => response.json())
       .then(data => {
+        setOpen(false);
         history.push('/employees');
         console.log('Success:', data);
       })
@@ -121,6 +125,14 @@ export default function NewEmployee() {
 
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />

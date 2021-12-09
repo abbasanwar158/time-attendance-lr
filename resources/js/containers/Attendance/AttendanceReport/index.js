@@ -27,6 +27,8 @@ import PropTypes from 'prop-types';
 import { useHistory } from "react-router-dom";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import clsx from "clsx";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const useStyles1 = makeStyles((theme) => ({
@@ -129,6 +131,7 @@ export default function ManageAttendance() {
     const [saturday, setSaturday] = useState(false);
     const [sunday, setSunday] = useState(false);
     const [selected, setSelected] = useState(null);
+    const [open, setOpen] = useState(false);
     const history = useHistory();
     const [flag, setflag] = useState(false);
 
@@ -189,34 +192,10 @@ export default function ManageAttendance() {
         );
     };
 
-    // useEffect(() => {
-    //   attendanceFun();
-    // }, []);
-
-    // const attendanceFun = () => {
-    //     var attendanceArr = [];
-    //     fetch("https://time-attendance-lr.herokuapp.com/api/attendances")
-    //         .then((res) => res.json())
-    //         .then(
-    //             (response) => {
-    //                 var data = response.filter((x) => x.active);
-    //                 for (var i = 0; i < data.length; i++) {
-    //                     attendanceArr.push(data[i]);
-    //                 }
-    //                 setAttendanceData(attendanceArr);
-    //             },
-    //             (error) => {
-    //                 console.log("error", error);
-    //             }
-    //         );
-    // };
-
     const attendanceSearch = () => {
         setflag(false);
+        setOpen(true);
         var attendanceArr = [];
-
-        //setAttendanceData("");
-        console.log(startDate, endDate, selected, allData, saturday, sunday);
         var id = selected;
         if (allData == true) {
             id = null;
@@ -232,7 +211,6 @@ export default function ManageAttendance() {
 
                     var data = response.filter((x) => x.active);
                     for (var i = 0; i < data.length; i++) {
-                        // attendanceArr.push(data[i]);
                         if (saturday || sunday) {
                             var currentday = new Date(data[i].date);
                             var sunDay = currentday.getDay();
@@ -254,6 +232,7 @@ export default function ManageAttendance() {
                     }
 
                     setAttendanceData(attendanceArr);
+                    setOpen(false);
                 },
                 (error) => {
                     console.log("error", error);
@@ -263,6 +242,14 @@ export default function ManageAttendance() {
 
     return (
         <>
+            <div className={styles.backDropZindex}>
+                <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                >
+                <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+                </Backdrop>
+            </div>
             <div className={styles.breadCrumbsContainer}>
                 <div className={styles.breadCrumbsSubContainer}>
                     <SVG

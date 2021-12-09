@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { RootContext } from "../../../context/RootContext";
 import { useHistory } from "react-router-dom";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function ManageAttendance() {
 
@@ -18,6 +20,7 @@ export default function ManageAttendance() {
   const [employeeName, setEmployeeName] = useState('')
   const [employeeId, setEmployeeId] = useState('')
   const [createdAt, setCreatedAt] = useState('')
+  const [open, setOpen] = useState(false);
   const history = useHistory();
 
   const dateFun = (event) => {
@@ -33,6 +36,7 @@ export default function ManageAttendance() {
   }
 
   const EditAttendance = () => {
+    setOpen(true);
     var checkinFinal = date + ' ' + checkin;
     var checkoutFinal = date + ' ' + checkout;
     var today = new Date()
@@ -54,9 +58,12 @@ export default function ManageAttendance() {
       .then(response => response.json())
       .then(data => {
         console.log('Success:', data);
-        history.push('/attendance/new')
+        history.push('/attendance/new');
+        setOpen(false);
       })
       .catch((error) => {
+        setOpen(false);
+        alert('Error:', error);
         console.error('Error:', error);
       });
   }
@@ -82,6 +89,14 @@ export default function ManageAttendance() {
 
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />
