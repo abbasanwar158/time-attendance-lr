@@ -18,90 +18,53 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
   const [checkedHol, setCheckedHol] = useState(false);
   const { activeRoute, setActiveRoute } = useState(null);
 
-  const [attendanceSubMenu, setAttendanceSubMenu] = useState([
-    'Attendance Report',
-    'Email Attendances',
-    'Manage Attendance Manually',
-    'Upload Attendances',
-    'View Today Attendance',
-  ])
-  const [attendanceUrl, setAttendanceUrl] = useState([
-    '/attendance/report',
-    '/attendance/email',
-    '/attendance/new',
-    '/attendance/upload',
-    '/attendance',
-  ])
 
-  const [holidaysUrl, setHolidaysUrl] = useState([
-    '/holiday/new',
-    '/holidays',
-  ])
-  const [attendanceSubMenuSVG, setAttendanceSubMenuSVG] = useState([
-    'visibility',
-    'settings',
-    'description',
-    'publish',
-    'mail'
-  ])
-  
-  const [leavesUrl, setLeavesUrl] = useState([
-    '/leaves/new',
-    '/leaves/apply',
-    '/leaves/report',
-    '/leaves/schedule',
-    '/leaves/upload',
-    '/leaves',
-  ])
-  
-  const [leavesSubMenu, setLeavesSubMenu] = useState([
-    'Add New Leave',
-    'Apply Leaves',
-    'Leave Report',
-    'Leaves WBS',
-    'Upload Leaves',
-    'View Leaves',
-  ])
-  const [leavesSubMenuSVG, setLeavesSubMenuSVG] = useState([
-    'visibility',
-    'assignment',
-    'add_to_queue',
-    'description',
-    'storage',
-    'publish'
-  ])
-  
-  const [employeesUrl, setEmployeesUrl] = useState([
-    '/employees/active',
-    '/employee/new',
-    '/employees',
-    '/employees/edit_status',
-    '/employees/upload'
-  ])
+  const [attendanceSubMenu, setAttendanceSubMenu] = useState([])
+  const [attendanceUrl, setAttendanceUrl] = useState([])
+  const [holidaysUrl, setHolidaysUrl] = useState([])
+  const [attendanceSubMenuSVG, setAttendanceSubMenuSVG] = useState([])
+  const [leavesUrl, setLeavesUrl] = useState([])
+  const [leavesSubMenu, setLeavesSubMenu] = useState([])
+  const [leavesSubMenuSVG, setLeavesSubMenuSVG] = useState([])
+  const [employeesUrl, setEmployeesUrl] = useState([])
+  const [employeesSubMenu, setEmployeesSubMenu] = useState([])
+  const [employeesSubMenuSVG, setEmployeesSubMenuSVG] = useState([])
+  const [holidaysSubMenu, setHolidaysSubMenu] = useState([])
+  const [holidaysSubMenuSVG, setHolidaysSubMenuSVG] = useState([])
 
-  const [employeesSubMenu, setEmployeesSubMenu] = useState([
-    'Active Employees',
-    'Add New Employee',
-    'All Employees',
-    'Edit Employee Status',
-    "Upload Employees's Data"
-  ])
-  const [employeesSubMenuSVG, setEmployeesSubMenuSVG] = useState([
-    'people',
-    'person',
-    'edit',
-    'person_add',
-    'publish',
-  ])
+  useEffect(() => {
+    if(localStorage.isAdmin == 'true'){
+      setHolidaysSubMenuSVG(['visibility','add_to_queue']);
+      setHolidaysSubMenu(['Add New Holiday','View Holidays']);
+      setEmployeesSubMenuSVG(['people', 'person', 'edit', 'person_add', 'publish']);
+      setEmployeesSubMenu([ 'Active Employees', 'Add New Employee', 'All Employees', 'Edit Employee Status', "Upload Employees's Data"]);
+      setEmployeesUrl(['/employees/active', '/employee/new', '/employees', '/employees/edit_status', '/employees/upload']);
+      setLeavesSubMenuSVG(['visibility', 'assignment', 'add_to_queue', 'description', 'storage', 'publish']);
+      setLeavesSubMenu(['Add New Leave', 'Apply Leaves', 'Leave Report', 'Leaves WBS', 'Upload Leaves', 'View Leaves']);
+      setLeavesUrl(['/leaves/new', '/leaves/apply', '/leaves/report', '/leaves/schedule', '/leaves/upload', '/leaves']);
+      setAttendanceSubMenuSVG(['visibility','settings','description','publish','mail']);
+      setHolidaysUrl(['/holiday/new', '/holidays']);
+      setAttendanceUrl(['/attendance/report', '/attendance/email', '/attendance/new', '/attendance/upload', '/attendance']);
+      setAttendanceSubMenu(['Attendance Report', 'Email Attendances', 'Manage Attendance Manually', 'Upload Attendances', 'View Today Attendance']);
+    }
+    else{
+      setHolidaysSubMenuSVG(['add_to_queue']);
+      setHolidaysSubMenu(['View Holidays']);
+      setHolidaysUrl(['/holidays']);
 
-  const [holidaysSubMenu, setHolidaysSubMenu] = useState([
-    'Add New Holiday',
-    'View Holidays',
-  ])
-  const [holidaysSubMenuSVG, setHolidaysSubMenuSVG] = useState([
-    'visibility',
-    'add_to_queue'
-  ])
+      setEmployeesSubMenuSVG(['people', 'edit']);
+      setEmployeesSubMenu([ 'Active Employees', 'All Employees']);
+      setEmployeesUrl(['/employees/active', '/employees']);
+      
+      setLeavesSubMenuSVG(['assignment', 'add_to_queue', 'description', 'publish']);
+      setLeavesSubMenu(['Apply Leaves', 'Leave Report', 'Leaves WBS', 'View Leaves']);
+      setLeavesUrl(['/leaves/apply', '/leaves/report', '/leaves/schedule', '/leaves']);
+      
+      setAttendanceSubMenuSVG(['visibility','mail']);
+      setAttendanceUrl(['/attendance/report', '/attendance']);
+      setAttendanceSubMenu(['Attendance Report', 'View Today Attendance']);
+    }
+  }, [])
 
   const collapseFun = (e) => {
     var clicked = e.currentTarget.innerText;

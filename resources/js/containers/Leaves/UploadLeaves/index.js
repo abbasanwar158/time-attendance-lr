@@ -4,12 +4,16 @@ import SVG from "react-inlinesvg";
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import FormControl from "@material-ui/core/FormControl";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function UploadLeaves() {
     const [file, setFile] = useState("");
+    const [open, setOpen] = useState(false);
 
     const uploadCSV = () => {
         var reader = new FileReader();
+        setOpen(true);
         reader.onload = function (e) {
             // Use reader.result
             var csv = reader.result;
@@ -51,8 +55,10 @@ export default function UploadLeaves() {
                         .then((data) => {
                             console.log("Success:", data);
                             document.getElementById("hero1").value = "";
+                            setOpen(false);
                         })
                         .catch((error) => {
+                            setOpen(false);
                             console.error("Error:", error);
                         });
                 }
@@ -63,6 +69,14 @@ export default function UploadLeaves() {
 
     return (
         <>
+            <div className={styles.backDropZindex}>
+                <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                >
+                <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+                </Backdrop>
+            </div>
             <div className={styles.breadCrumbsContainer}>
                 <div className={styles.breadCrumbsSubContainer}>
                     <SVG

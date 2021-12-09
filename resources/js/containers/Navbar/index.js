@@ -55,9 +55,6 @@ export default function Navbar() {
     setMenu(null);
   };
 
-  useEffect(() => {
-  }, [loginNavbar])
-
   return (
     <>
       <div className={styles.container}>
@@ -77,44 +74,52 @@ export default function Navbar() {
           open={Boolean(anchorEl)}
           onClose={handleCloseMenu}
           className={styles.menuPosition}
-        >
-          <MenuItem
-            onClick={() => {
-              handleCloseMenu()
-              history.push('/users/new')
-            }}
           >
-            <SVG className={styles.subMenuIcons} src={`/images/people.svg`} />
-            <span className={styles.subMenuSpan}>Manage Users</span>
-          </MenuItem>
+          {localStorage.isAdmin == 'true' ? 
+            <MenuItem
+              onClick={() => {
+                handleCloseMenu()
+                history.push('/users/new')
+              }}
+            >
+              <SVG className={styles.subMenuIcons} src={`/images/people.svg`} />
+              <span className={styles.subMenuSpan}>Manage Users</span>
+            </MenuItem>
+          : null}
 
-          <MenuItem
-            onClick={() => {
-              handleCloseMenu()
-              history.push('/employees/review_date')
-            }}
-          >
-            <SVG className={styles.subMenuIcons} src={`/images/dateRange.svg`} />
-            <span className={styles.subMenuSpan}>Employee Review Date</span>
-          </MenuItem>
+          {localStorage.isAdmin == 'true' ? 
+            <MenuItem
+              onClick={() => {
+                handleCloseMenu()
+                history.push('/employees/review_date')
+              }}
+            >
+              <SVG className={styles.subMenuIcons} src={`/images/dateRange.svg`} />
+              <span className={styles.subMenuSpan}>Employee Review Date</span>
+            </MenuItem>
+          : null}
 
-          <MenuItem
-            onClick={() => {
-              handleCloseMenu()
-              history.push('/employees/report')
-            }}>
-            <SVG className={styles.subMenuIcons} src={`/images/timer.svg`} />
-            <span className={styles.subMenuSpan}>Employee Reports</span>
-          </MenuItem>
+          {localStorage.isAdmin == 'true' ?
+            <MenuItem
+              onClick={() => {
+                handleCloseMenu()
+                history.push('/employees/report')
+              }}>
+              <SVG className={styles.subMenuIcons} src={`/images/timer.svg`} />
+              <span className={styles.subMenuSpan}>Employee Reports</span>
+            </MenuItem>
+          : null}
 
-          <MenuItem
-            onClick={() => {
-              handleCloseMenu()
-              history.push('/leaves/requests')
-            }}>
-            <SVG className={styles.subMenuIcons} src={`/images/assignment.svg`} />
-            <span className={styles.subMenuSpan}>Leave Requests</span>
-          </MenuItem>
+          {localStorage.isAdmin == 'true' ?
+            <MenuItem
+              onClick={() => {
+                handleCloseMenu()
+                history.push('/leaves/requests')
+              }}>
+              <SVG className={styles.subMenuIcons} src={`/images/assignment.svg`} />
+              <span className={styles.subMenuSpan}>Leave Requests</span>
+            </MenuItem>
+          : null}
 
           {/* <MenuItem
             onClick={() => {
@@ -125,14 +130,16 @@ export default function Navbar() {
             <span className={styles.subMenuSpan}>Employee Performace Form</span>
           </MenuItem> */}
 
-          <MenuItem
-            onClick={() => {
-              handleCloseMenu()
-              history.push('/employees/mail')
-            }}>
-            <SVG className={styles.subMenuIcons} src={`/images/mail.svg`} />
-            <span className={styles.subMenuSpan}>Mail to all employees</span>
-          </MenuItem>
+          {localStorage.isAdmin == 'true' ?
+            <MenuItem
+              onClick={() => {
+                handleCloseMenu()
+                history.push('/employees/mail')
+              }}>
+              <SVG className={styles.subMenuIcons} src={`/images/mail.svg`} />
+              <span className={styles.subMenuSpan}>Mail to all employees</span>
+            </MenuItem>
+          : null}
 
           <MenuItem
             onClick={() => {

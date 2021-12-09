@@ -8,13 +8,15 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { RootContext } from "../../../context/RootContext";
 import { useHistory } from "react-router-dom";
-
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function EditRequest() {
 
   const { replyLeave, index } = useContext(RootContext);
   const [status, setStatus] = useState('')
   const [note, setNote] = useState('')
+  const [open, setOpen] = useState(false);
   const history = useHistory();
 
   const handleChangeStatus = (event) => {
@@ -41,6 +43,7 @@ export default function EditRequest() {
   }, []);
 
   const updateLeave = () => {
+    setOpen(true);
     var today = new Date()
     fetch(`https://time-attendance-lr.herokuapp.com/api/leave/requests/reply/${replyLeave[index].id}`, {
         method: 'POST',
@@ -57,16 +60,26 @@ export default function EditRequest() {
       })
       .then(response => response.json())
       .then(data => {
+        setOpen(false);
         history.push('/leaves/requests');
         console.log('Success:', data);
       })
       .catch((error) => {
+        setOpen(false);
         console.error('Error:', error);
       });
   }
 
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />

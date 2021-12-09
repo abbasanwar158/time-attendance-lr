@@ -8,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { RootContext } from "../../../context/RootContext";
 import { useHistory } from "react-router-dom";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 export default function ReviewDateEdit() {
     const { ActiveEmployeeNames, allEmployeesData, index } =
@@ -15,6 +17,7 @@ export default function ReviewDateEdit() {
     const [selected, setSelected] = useState("");
     const [reviewDate, setReviewDate] = useState("");
     const [reminder, setReminder] = useState("");
+    const [open, setOpen] = useState(false);
     const history = useHistory();
 
     const handleChange = (event) => {
@@ -40,6 +43,7 @@ export default function ReviewDateEdit() {
     }, []);
 
     const editEmployee = () => {
+        setOpen(true);
         var today = new Date();
         fetch(
             `https://time-attendance-lr.herokuapp.com/api/employees/review_date/edit/${allEmployeesData[index].id}`,
@@ -59,15 +63,25 @@ export default function ReviewDateEdit() {
         )
             .then((response) => response.json())
             .then((data) => {
+                setOpen(false);
                 history.push("/employees/review_date");
                 console.log("Success:", data);
             })
             .catch((error) => {
+                setOpen(false);
                 console.error("Error:", error);
             });
     };
     return (
         <>
+            <div className={styles.backDropZindex}>
+                <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                >
+                <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+                </Backdrop>
+            </div>
             <div className={styles.breadCrumbsContainer}>
                 <div className={styles.breadCrumbsSubContainer}>
                     <SVG

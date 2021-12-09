@@ -14,8 +14,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import { parseInt } from "lodash";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 var hoursCount = ["0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0"];
 var TotalHours = 0;
@@ -27,6 +28,7 @@ export default function EmployeesReport() {
     const [totalLeaves, setTotalLeaves] = useState("");
     const [currentYear, setCurrentYear] = useState("");
     const [flag, setFlag] = useState(false);
+    const [open, setOpen] = useState(false);
     const history = useHistory();
     const [optionsYears, setOptionsYears] = useState([
         "2021",
@@ -150,8 +152,8 @@ export default function EmployeesReport() {
         }
     };
     const searchEmployee = () => {
+        setOpen(true);
         setFlag(true);
-        debugger;
         for (var i = 0; i < hoursCount.length; i++) {
             hoursCount[i] = 0;
             TotalHours = 0;
@@ -190,6 +192,8 @@ export default function EmployeesReport() {
                     x = x.getFullYear();
 
                     setCurrentYear(year - x);
+                    setOpen(false);
+
                 },
                 (error) => {
                     setFlag(false);
@@ -199,6 +203,14 @@ export default function EmployeesReport() {
     };
     return (
         <>
+            <div className={styles.backDropZindex}>
+                <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                >
+                <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+                </Backdrop>
+            </div>
             <div className={styles.breadCrumbsContainer}>
                 <div className={styles.breadCrumbsSubContainer}>
                     <SVG

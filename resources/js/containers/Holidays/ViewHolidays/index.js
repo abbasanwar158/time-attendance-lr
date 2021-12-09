@@ -25,6 +25,8 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import PropTypes from 'prop-types';
 import { RootContext } from "../../../context/RootContext";
 import { useHistory } from "react-router-dom";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -106,6 +108,7 @@ export default function ViewHolidays() {
   const [allCheckbox, setAllCheckbox] = useState('');
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [open, setOpen] = useState(false);
   const { holidaysData, setHolidaysData, setIndex } = useContext(RootContext);
 
   const handleChangePage = (event, newPage) => {
@@ -130,6 +133,7 @@ export default function ViewHolidays() {
   }, []);
 
   const holidayDataFunction = () => {
+    setOpen(true);
     var holidaysArr = [];
     var holidaysFilttered = [];
     fetch("https://time-attendance-lr.herokuapp.com/api/holidays")
@@ -143,6 +147,7 @@ export default function ViewHolidays() {
             }
           })
           setHolidaysData(holidaysFilttered);
+          setOpen(false);
         },
         (error) => {
           console.log("error", error)
@@ -152,6 +157,7 @@ export default function ViewHolidays() {
 
   const arhiveData = (event) => {
     var id = event.target.value;
+    setOpen(true);
     fetch(`https://time-attendance-lr.herokuapp.com/api/holiday/archive/${id}`, {
         method: 'POST',
         headers: {
@@ -164,6 +170,7 @@ export default function ViewHolidays() {
       })
       .then(response => response.json())
       .then(data => {
+        setOpen(false);
         console.log('Success:', data);
         holidayDataFunction();
       })
@@ -173,6 +180,7 @@ export default function ViewHolidays() {
   }
 
   const searchHoliday = () => {
+    setOpen(true);
     var dateSend = date;
     var checkbox = allCheckbox;
     var holiday = [];
@@ -190,8 +198,10 @@ export default function ViewHolidays() {
                 alert('No record Found!!!!!!!!!!!')
               }
             }
+            setOpen(false);
           },
           (error) => {
+            setOpen(false);
             console.log("error", error)
           }
         )
@@ -201,10 +211,16 @@ export default function ViewHolidays() {
     }
   }
 
-  console.log('fdnasfhuasdfa', )
-
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />
@@ -271,7 +287,9 @@ export default function ViewHolidays() {
                 <TableRow>
                   <TableCell className={styles.TableCell} >Date</TableCell>
                   <TableCell className={styles.TableCell} >Occasion</TableCell>
-                  <TableCell className={styles.TableCell} >Action</TableCell>
+                  {localStorage.isAdmin == 'true' ?
+                    <TableCell className={styles.TableCell} >Action</TableCell>
+                  : null}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -282,22 +300,24 @@ export default function ViewHolidays() {
                   <TableRow key={row.id}>
                     <TableCell className={styles.nameCells}>{row.date}</TableCell>
                     <TableCell className={styles.subCells}>{row.occasion}</TableCell>
-                    <TableCell className={styles.subCells}>
-                    <button
-                      value={row.id}
-                      onClick={(e) => {
-                        setIndex(e.target.value);
-                        history.push('/holiday/edit')
-                      }}
-                    >Edit</button>
-                    |
-                    <button
-                      value={row.id}
-                      className={styles.deleteBtn}
-                      onClick={arhiveData}
-                    >Archive
-                    </button>
-                  </TableCell>
+                    {localStorage.isAdmin == 'true' ?
+                      <TableCell className={styles.subCells}>
+                        <button
+                          value={row.id}
+                          onClick={(e) => {
+                            setIndex(e.target.value);
+                            history.push('/holiday/edit')
+                          }}
+                        >Edit</button>
+                        |
+                        <button
+                          value={row.id}
+                          className={styles.deleteBtn}
+                          onClick={arhiveData}
+                        >Archive
+                        </button>
+                      </TableCell>
+                    : null}
                   </TableRow>
                 ))}
               </TableBody>

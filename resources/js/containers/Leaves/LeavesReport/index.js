@@ -26,6 +26,8 @@ import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
 import LastPageIcon from '@material-ui/icons/LastPage';
 import PropTypes from 'prop-types';
 import { set } from "lodash";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles1 = makeStyles((theme) => ({
     root: {
@@ -129,6 +131,7 @@ export default function LeavesReport() {
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [selected, setSelected] = useState(null);
     const [flag, setflag] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const handleChange = (event) => {
         setSelected(event.target.value);
@@ -195,7 +198,6 @@ export default function LeavesReport() {
     };
 
     const leavesFun = () => {
-        // var json = JSON.parse(leavesData);
         var csv = JSON2CSV(leavesData);
         var downloadLink = document.createElement("a");
         var blob = new Blob(["\ufeff", csv]);
@@ -209,6 +211,7 @@ export default function LeavesReport() {
     };
 
     const generateReport = () => {
+        setOpen(true);
         setflag(false);
         console.log(from, to, selected, empLeaves);
         var id = selected;
@@ -229,6 +232,7 @@ export default function LeavesReport() {
                     }
                     setflag(true);
                     setLeavesData(leavesArr);
+                    setOpen(false);
                 },
                 (error) => {
                     console.log("error", error);
@@ -236,11 +240,16 @@ export default function LeavesReport() {
             );
     };
 
-    // useEffect(() => {
-    //     leavesFun();
-    // }, []);
     return (
         <>
+            <div className={styles.backDropZindex}>
+                <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                >
+                <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+                </Backdrop>
+            </div>
             <div className={styles.breadCrumbsContainer}>
                 <div className={styles.breadCrumbsSubContainer}>
                     <SVG

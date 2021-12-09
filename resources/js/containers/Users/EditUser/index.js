@@ -17,7 +17,8 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { useHistory } from "react-router-dom";
-
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 export default function ManageUsers() {
@@ -29,6 +30,7 @@ export default function ManageUsers() {
   const [name, setName] = useState('')
   const [username, setUsername] = useState('')
   const [isAdmin, setIsAdmin] = useState('');
+  const [open, setOpen] = useState(false);
   const history = useHistory();
 
   const handleChange = (prop) => (event) => {
@@ -75,6 +77,7 @@ export default function ManageUsers() {
   }
 
   const editUser = () =>{
+    setOpen(true);
     var today = new Date()
     var password = values.password;
     var confirmPass = valuesConfirm.password;
@@ -96,19 +99,30 @@ export default function ManageUsers() {
       })
       .then(response => response.json())
       .then(data => {
+        setOpen(false);
         console.log('Success:', data);
       })
       .catch((error) => {
+        setOpen(false);
         console.error('Error:', error);
       });
     }
     else{
+      setOpen(false);
       alert('Passwords must be same');
     }
   }
 
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />

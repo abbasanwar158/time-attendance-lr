@@ -259,7 +259,9 @@ export default function ViewLeaves() {
                   <TableCell className={styles.TableCell} >Date</TableCell>
                   <TableCell className={styles.TableCell} >Leave Type</TableCell>
                   <TableCell className={styles.TableCell} >Note</TableCell>
-                  <TableCell className={styles.TableCell} >Action</TableCell>
+                  {localStorage.isAdmin == 'true' ?
+                    <TableCell className={styles.TableCell} >Action</TableCell>
+                  : null}
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -273,21 +275,23 @@ export default function ViewLeaves() {
                     <TableCell className={styles.subCells}>{row.date}</TableCell>
                     <TableCell className={styles.subCells}>{row.status}</TableCell>
                     <TableCell className={styles.subCells}>{row.note}</TableCell>
-                    <TableCell className={styles.subCells}>
-                      <button
-                        value={row.id}
-                        onClick={(e) => {
-                          var leaveId = e.target.value
-                          for (var i = 0; i < leavesData.length; i++) {
-                            var tempId = leavesData[i].id
-                            if (tempId == leaveId) {
-                              setIndex(i);
+                    {localStorage.isAdmin == 'true' ?
+                      <TableCell className={styles.subCells}>
+                        <button
+                          value={row.id}
+                          onClick={(e) => {
+                            var leaveId = e.target.value
+                            for (var i = 0; i < leavesData.length; i++) {
+                              var tempId = leavesData[i].id
+                              if (tempId == leaveId) {
+                                setIndex(i);
+                              }
                             }
-                          }
-                          history.push('/leaves/edit')
-                        }}
-                      >Edit</button>
-                    </TableCell>
+                            history.push('/leaves/edit')
+                          }}
+                        >Edit</button>
+                      </TableCell>
+                    : null}
                   </TableRow>
                 ))}
               </TableBody>

@@ -24,6 +24,8 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import PropTypes from 'prop-types';
 import { RootContext } from "../../../context/RootContext";
 import { useHistory } from "react-router-dom";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 const useStyles1 = makeStyles((theme) => ({
@@ -104,6 +106,7 @@ export default function ReviewDate() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [personName, setPersonName] = useState('');
+  const [open, setOpen] = useState(false);
   const history = useHistory();
 
   const handleChangePage = (event, newPage) => {
@@ -132,6 +135,7 @@ export default function ReviewDate() {
   }, []);
 
   const employeesFun = () => {
+      setOpen(true);
       var employeeNamesArr = [];
       fetch("https://time-attendance-lr.herokuapp.com/api/employees")
           .then((res) => res.json())
@@ -142,6 +146,7 @@ export default function ReviewDate() {
                       employeeNamesArr.push(data[i]);
                   }
                   setAllEmployeesData(employeeNamesArr);
+                  setOpen(false);
               },
               (error) => {
                   console.log("error", error);
@@ -149,7 +154,7 @@ export default function ReviewDate() {
           );
   };
   const searchEmployee = () => {
-      //setOpen(true);
+      setOpen(true);
 
       fetch(
           `https://time-attendance-lr.herokuapp.com/api/employees/review_date/${personName}`
@@ -159,7 +164,7 @@ export default function ReviewDate() {
               (response) => {
                   var data = response.filter((x) => x.active);
                   setAllEmployeesData(data);
-                  //setOpen(false);
+                  setOpen(false);
               },
               (error) => {
                   console.log("error", error);
@@ -168,6 +173,14 @@ export default function ReviewDate() {
   };
   return (
       <>
+          <div className={styles.backDropZindex}>
+            <Backdrop
+            sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+            open={open}
+            >
+            <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+            </Backdrop>
+          </div>
           <div className={styles.breadCrumbsContainer}>
               <div className={styles.breadCrumbsSubContainer}>
                   <SVG

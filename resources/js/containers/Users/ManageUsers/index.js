@@ -30,6 +30,8 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { useHistory } from "react-router-dom";
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -116,6 +118,7 @@ export default function ManageUsers() {
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [isAdmin, setIsAdmin] = useState('');
+  const [open, setOpen] = useState(false);
   const history = useHistory();
 
   const ITEM_HEIGHT = 48;
@@ -176,6 +179,7 @@ export default function ManageUsers() {
   }, []);
 
   const getUserData = () => {
+    setOpen(true);
     var usersArr = [];
     fetch("https://time-attendance-lr.herokuapp.com/api/users")
       .then(res => res.json())
@@ -185,18 +189,21 @@ export default function ManageUsers() {
           for (var i = 0; i < data.length; i++) {
             usersArr.push(data[i])
           }
-          setUsersData(usersArr)
+          setUsersData(usersArr);
+          setOpen(false);
         },
         (error) => {
+          setOpen(false);
           console.log("error", error)
         }
       )
   }
 
   const deleteData = (e) => {
+    setOpen(true);
     var userId = e.target.value
     fetch(`https://time-attendance-lr.herokuapp.com/api/user/delete/${userId}`, { method: 'DELETE' })
-      .then(() => alert('Delete successful'));
+      .then(() => alert('Delete successful'), setOpen(false));
     getUserData();
   }
 
@@ -205,6 +212,7 @@ export default function ManageUsers() {
   }
 
   const newUser = () => {
+    setOpen(true);
     var today = new Date()
     var password = values.password;
     var confirmPass = valuesConfirm.password;
@@ -226,9 +234,11 @@ export default function ManageUsers() {
       })
       .then(response => response.json())
       .then(data => {
+        setOpen(false);
         console.log('Success:', data);
       })
       .catch((error) => {
+        setOpen(false);
         console.error('Error:', error);
       });
       getUserData();
@@ -242,6 +252,14 @@ export default function ManageUsers() {
 
   return (
     <>
+      <div className={styles.backDropZindex}>
+        <Backdrop
+          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={open}
+        >
+          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
+        </Backdrop>
+      </div>
       <div className={styles.breadCrumbsContainer}>
         <div className={styles.breadCrumbsSubContainer}>
           <SVG className={styles.dashboardSvg} src="" />

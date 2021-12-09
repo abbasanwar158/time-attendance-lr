@@ -166,7 +166,9 @@ export default function AllEmployees() {
                 <TableCell className={styles.TableCell} >Email</TableCell>
                 <TableCell className={styles.TableCell} >Joining Date</TableCell>
                 <TableCell className={styles.TableCell} >Employees Category</TableCell>
-                <TableCell className={styles.TableCell} >Action</TableCell>
+                {localStorage.isAdmin == 'true' ?
+                  <TableCell className={styles.TableCell} >Action</TableCell>
+                : null}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -182,21 +184,23 @@ export default function AllEmployees() {
                   <TableCell className={styles.subCells}>{row.email}</TableCell>
                   <TableCell className={styles.subCells}>{row.joining_date}</TableCell>
                   <TableCell className={styles.subCells}>{row.employees_category}</TableCell>
-                  <TableCell className={styles.subCells}>
-                    <button
-                      value={row.id}
-                      onClick={(e) => {
-                        var employeeId = e.target.value
-                        for (var i = 0; i < employeesData.length; i++) {
-                          var tempId = employeesData[i].id
-                          if (tempId == employeeId) {
-                            setIndex(i);
+                  {localStorage.isAdmin == 'true' ?
+                    <TableCell className={styles.subCells}>
+                      <button
+                        value={row.id}
+                        onClick={(e) => {
+                          var employeeId = e.target.value
+                          for (var i = 0; i < employeesData.length; i++) {
+                            var tempId = employeesData[i].id
+                            if (tempId == employeeId) {
+                              setIndex(i);
+                            }
                           }
-                        }
-                        history.push('/employees/edit')
-                      }}
-                    >Edit</button>
-                  </TableCell>
+                          history.push('/employees/edit')
+                        }}
+                      >Edit</button>
+                    </TableCell>
+                  : null}
                 </TableRow>
               ))}
             </TableBody>
