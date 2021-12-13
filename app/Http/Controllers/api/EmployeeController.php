@@ -311,21 +311,29 @@ class EmployeeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function mailToAll($subject, $message)
-    {  
-      $allEmployees = Employee::where('active', '=', 1)->get();
-      foreach($allEmployees as $key => $value ){
-        $data = ['body' => $message, 'employeeName' => $value->name];
-        $emails = $value->email;
-        Mail::send('mail',$data, function($message)  use ($subject,$emails)
-        {
-          $message->to($emails);   
-          $message->subject($subject); 
-        });   
-      }
-      $res=[
-        'status'=>'200',
-        'msg'=>'success'
-      ];
-      return response()->json($res);
-    }
+    {
+      // $allEmployees = Employee::where('active', '=', 1)->get();
+    //   foreach($allEmployees as $key => $value ){
+    //     $data = ['body' => $message, 'employeeName' => $value->name];
+    //     $emails = $value->email;
+    //     Mail::send('mail',$data, function($message)  use ($subject,$emails)
+    //     {
+    //       $message->to($emails);   
+    //       $message->subject($subject); 
+    //     });   
+    //   }
+    //   $res=[
+    //     'status'=>'200',
+    //     'msg'=>'success'
+    //   ];
+    //   return response()->json($res);
+    // }
+    $data = ['body' => $message, 'employeeName' => 'abbas'];
+    $emails = 'abbasanwar158@gmail.com';
+    Mail::send('mail',$data, function($message)  use ($subject,$emails)
+    {
+      $message->to($emails);   
+      $message->subject($subject); 
+    });   
+  }
 }
