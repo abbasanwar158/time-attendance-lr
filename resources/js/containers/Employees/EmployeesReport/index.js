@@ -107,8 +107,6 @@ export default function EmployeesReport() {
                 .then((res) => res.json())
                 .then(
                     (response) => {
-                        console.log(response);
-
                         for (var i = 0; i < response.length; i++) {
                             attendanceArr.push(response[i]);
                             var date = new Date(response[i].date);
@@ -137,7 +135,6 @@ export default function EmployeesReport() {
                                 TotalLeaves +
                                 (leavesCount[i] + leaveshalfCount[i] / 2);
 
-                            console.log("TotlaLeaves", TotalLeaves);
                             setTotalLeaves(TotalLeaves);
                         }
                         // setLeavesReport(response);
@@ -151,7 +148,7 @@ export default function EmployeesReport() {
     };
     const searchEmployee = () => {
         setFlag(true);
-        debugger;
+    
         for (var i = 0; i < hoursCount.length; i++) {
             hoursCount[i] = 0;
             TotalHours = 0;

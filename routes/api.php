@@ -38,6 +38,7 @@ Route::get('/employees/review_date/{id}',[App\Http\Controllers\api\EmployeeContr
 Route::post('/employees/review_date/edit/{id}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeEditStatus']);
 Route::get('/employees/report/{id}/{year}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeReport']);
 
+
 //////////////////////////////////Employees///////////////////////////////////////////////
 Route::get('/holidays', [App\Http\Controllers\api\HolidayController::class, 'index']);
 Route::post('/holiday/new', [App\Http\Controllers\api\HolidayController::class, 'store']);
@@ -66,6 +67,7 @@ Route::post('/attendance/update/{id}', [App\Http\Controllers\api\AttendanceContr
 Route::get('/attendance/{id}', [App\Http\Controllers\api\AttendanceController::class, 'show']);
 Route::get('/attendance/report/{empId}/{from}/{to}/{all}/{sat}/{sun}', [App\Http\Controllers\api\AttendanceController::class, 'attendanceReport']);
 Route::post('/attendance/upload', [App\Http\Controllers\api\AttendanceController::class, 'uploadCSV']);
+Route::post('/attendance/email', [App\Http\Controllers\api\AttendanceController::class, 'emailAttendance']);
 
 
 ///////////////////////////////////Welcome///////////////////////////////////////////////
