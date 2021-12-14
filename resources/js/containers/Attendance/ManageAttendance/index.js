@@ -274,7 +274,7 @@ export default function ManageAttendance() {
               <FormControl fullWidth>
                 <TextField
                   className={styles.fieldDiv}
-                  id="date"
+                  id="checkin"
                   label="CHECKIN"
                   type="time"
                   variant="outlined"
@@ -296,7 +296,7 @@ export default function ManageAttendance() {
               <FormControl fullWidth>
                 <TextField
                   className={styles.fieldDiv}
-                  id="date"
+                  id="checkout"
                   label="CHECKOUT"
                   type="time"
                   variant="outlined"
@@ -349,6 +349,7 @@ export default function ManageAttendance() {
           <Grid container spacing={1} className={styles.gridSubItems} >
             <Grid item xs={12} sm={4} className={styles.fieldGrid}>
               <Button
+                id="add"
                 variant="contained"
                 color="primary"
                 className={styles.saveButton}
@@ -356,7 +357,7 @@ export default function ManageAttendance() {
               >
                 Add
               </Button>
-              <Button variant="contained" color="default">
+              <Button id="cancel" variant="contained" color="default">
                 Cancel
               </Button>
             </Grid>

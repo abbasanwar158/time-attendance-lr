@@ -151,7 +151,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="external"
                     fullWidth
                     size="small"
                     label="Employee external"
@@ -171,7 +171,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="name"
                     fullWidth
                     size="small"
                     label="Name"
@@ -191,7 +191,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="designation"
                     fullWidth
                     size="small"
                     label="Designation"
@@ -211,7 +211,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="cnic"
                     fullWidth
                     size="small"
                     label="CNIC"
@@ -231,7 +231,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="email"
                     fullWidth
                     size="small"
                     label="Email"
@@ -251,7 +251,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth>
                   <TextField
                     className={styles.fieldDiv}
-                    id="date"
+                    id="jDate"
                     label="Joining Date"
                     type="date"
                     variant="outlined"
@@ -273,7 +273,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="description"
                     fullWidth
                     size="small"
                     label="Description"
@@ -293,7 +293,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="category"
                     fullWidth
                     size="small"
                     label="Category"
@@ -324,7 +324,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="status"
                     fullWidth
                     size="small"
                     label="Status"
@@ -349,10 +349,11 @@ export default function NewEmployee() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button onClick={editEmployee} variant="contained" color="primary" className={styles.saveButton}>
+                <Button id="update" onClick={editEmployee} variant="contained" color="primary" className={styles.saveButton}>
                   Update
                 </Button>
                 <Button
+                  id="cancel"
                   variant="contained"
                   color="default"
                   onClick={(e) => history.push('/employees')}

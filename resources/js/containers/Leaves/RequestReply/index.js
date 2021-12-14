@@ -94,7 +94,7 @@ export default function RequestReply() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="status"
                     fullWidth
                     size="small"
                     label="Status"
@@ -122,7 +122,7 @@ export default function RequestReply() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="message"
                     fullWidth
                     size="small"
                     label="Message"
@@ -139,10 +139,11 @@ export default function RequestReply() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button onClick={updateLeave} variant="contained" color="primary" className={styles.saveButton}>
+                <Button id="save" onClick={updateLeave} variant="contained" color="primary" className={styles.saveButton}>
                   Save
                 </Button>
                 <Button
+                  id="cancel"
                   variant="contained"
                   color="default"
                   onClick={(e) => history.push('/leaves/requests')}

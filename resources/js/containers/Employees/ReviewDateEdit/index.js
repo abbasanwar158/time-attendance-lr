@@ -104,7 +104,7 @@ export default function ReviewDateEdit() {
                             <FormControl fullWidth>
                                 <TextField
                                     className={styles.fieldDiv}
-                                    id="questions"
+                                    id="employees"
                                     fullWidth
                                     size="small"
                                     label="Employee"
@@ -133,7 +133,7 @@ export default function ReviewDateEdit() {
                             <FormControl fullWidth>
                                 <TextField
                                     className={styles.fieldDiv}
-                                    id="date"
+                                    id="reviewDate"
                                     label="Review Date"
                                     type="date"
                                     variant="outlined"
@@ -156,7 +156,7 @@ export default function ReviewDateEdit() {
                             <FormControl fullWidth>
                                 <TextField
                                     className={styles.fieldDiv}
-                                    id="date"
+                                    id="reminderDate"
                                     label="Reminder Review Date"
                                     type="date"
                                     variant="outlined"
@@ -177,6 +177,7 @@ export default function ReviewDateEdit() {
                     <Grid container spacing={1} className={styles.gridSubItems}>
                         <Grid item xs={12} sm={4} className={styles.fieldGrid}>
                             <Button
+                                id="update"
                                 variant="contained"
                                 color="primary"
                                 className={styles.saveButton}
@@ -185,6 +186,7 @@ export default function ReviewDateEdit() {
                                 Update
                             </Button>
                             <Button
+                                id="cancel"
                                 variant="contained"
                                 color="default"
                                 onClick={(e) =>

@@ -137,6 +137,7 @@ export default function Login() {
               />
             </FormControl>
             <Button
+              id="login"
               className={styles.loginButton}
               onClick={loginUser}
               variant="contained"

@@ -41,6 +41,7 @@ export default function MailToEmployees() {
             <h1 className={styles.breadCrumbSpan2}>Sent Emails</h1>
             <div className={styles.mt1}>
               <Button
+                id="compose"
                 variant="contained"
                 color="primary"
                 onClick= {() => { history.push('/employees/mail/new')}}              

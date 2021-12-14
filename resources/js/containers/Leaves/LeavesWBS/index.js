@@ -184,7 +184,7 @@ export default function LeavesWBS() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv}
-                                        id="questions"
+                                        id="employees"
                                         fullWidth
                                         size="small"
                                         label="Employee"
@@ -219,7 +219,7 @@ export default function LeavesWBS() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv}
-                                        id="questions"
+                                        id="years"
                                         fullWidth
                                         size="small"
                                         label="Years"
@@ -258,6 +258,7 @@ export default function LeavesWBS() {
                                 className={styles.fieldGrid}
                             >
                                 <Button
+                                    id="populate"
                                     variant="contained"
                                     color="primary"
                                     className={styles.saveButton}

@@ -67,13 +67,14 @@ export default function EditMail() {
                 </Grid>
                 <Grid item xs={12} sm={12} className={styles.fieldGrid} >
                   <Button
+                    id="save"
                     variant="contained"
                     color="primary"
                     className={styles.applyButton}
                   >
                     Send
                   </Button>
-                  <Button onClick={() => {history.push('/employees/mail')}} variant="contained" color="default">
+                  <Button id="cancel" onClick={() => {history.push('/employees/mail')}} variant="contained" color="default">
                     Cancel
                   </Button>
                 </Grid>

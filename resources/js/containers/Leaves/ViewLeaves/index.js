@@ -219,7 +219,7 @@ export default function ViewLeaves() {
                   <TextField
                     className={styles.fieldDiv}
                     value={personName}
-                    id="questions"
+                    id="employees"
                     fullWidth
                     size="small"
                     label="Employee"
@@ -239,6 +239,7 @@ export default function ViewLeaves() {
               </Grid>
               <Grid item xs={12} sm={2} className={styles.buttonGrid}>
                 <Button
+                 id="search"
                  onClick={searchLeaves}
                  variant="contained" 
                  color="primary" 

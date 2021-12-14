@@ -106,7 +106,7 @@ export default function NewLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="employees"
                     fullWidth
                     size="small"
                     label="Employee"
@@ -154,7 +154,7 @@ export default function NewLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="status"
                     fullWidth
                     size="small"
                     label="Status"
@@ -182,7 +182,7 @@ export default function NewLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="note"
                     fullWidth
                     size="small"
                     label="Note"
@@ -199,10 +199,11 @@ export default function NewLeave() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button variant="contained" color="primary" onClick={newattendance} className={styles.saveButton}>
+                <Button id="save" variant="contained" color="primary" onClick={newattendance} className={styles.saveButton}>
                   Save
                 </Button>
                 <Button
+                  id="cancel"
                   onClick={(e) => history.push('/leaves')} 
                   variant="contained" 
                   color="default"

@@ -113,6 +113,7 @@ export default function UploadAttendance() {
                     <Grid container spacing={1} className={styles.gridSubItems}>
                         <Grid item xs={12} sm={3} className={styles.fieldGrid}>
                             <Button
+                                id="upload"
                                 size="small"
                                 variant="contained"
                                 color="primary"
@@ -122,6 +123,7 @@ export default function UploadAttendance() {
                                 Upload
                             </Button>
                             <Button
+                                id="cancel"
                                 size="small"
                                 variant="contained"
                                 color="default"
@@ -140,7 +142,7 @@ export default function UploadAttendance() {
                             <FormControl fullWidth>
                                 <TextField
                                     className={styles.fieldDiv}
-                                    id="questions"
+                                    id="employees"
                                     fullWidth
                                     size="small"
                                     label="Employee"
@@ -172,6 +174,7 @@ export default function UploadAttendance() {
                         <Grid item xs={12} sm={4} className={styles.fieldGrid}>
                             <FormControl>
                                 <FormControlLabel
+                                    id="all"
                                     className={styles.allCheckbox}
                                     value="start"
                                     control={<Checkbox color="primary" />}
@@ -180,6 +183,7 @@ export default function UploadAttendance() {
                                 />
                             </FormControl>
                             <Button
+                                id="delete"
                                 size="small"
                                 variant="contained"
                                 color="secondary"

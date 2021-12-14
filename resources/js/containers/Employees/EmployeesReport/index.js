@@ -241,7 +241,7 @@ export default function EmployeesReport() {
                                     <TextField
                                         className={styles.fieldDiv}
                                         value={personName}
-                                        id="questions"
+                                        id="employee"
                                         fullWidth
                                         size="small"
                                         label="Employee"
@@ -270,7 +270,7 @@ export default function EmployeesReport() {
                                 <div>
                                     <FormControl fullWidth>
                                         <TextField
-                                            id="questions"
+                                            id="years"
                                             fullWidth
                                             size="small"
                                             label="Years"
@@ -305,6 +305,7 @@ export default function EmployeesReport() {
                                 className={styles.buttonDiv}
                             >
                                 <Button
+                                    id="populate"
                                     variant="contained"
                                     color="primary"
                                     className={styles.cardButtons}
@@ -335,7 +336,7 @@ export default function EmployeesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv2}
-                                        id="questions"
+                                        id="name"
                                         fullWidth
                                         size="small"
                                         label="Name"
@@ -367,7 +368,7 @@ export default function EmployeesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv2}
-                                        id="questions"
+                                        id="jDate"
                                         fullWidth
                                         size="small"
                                         label="Joining Date"
@@ -400,7 +401,7 @@ export default function EmployeesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv2}
-                                        id="questions"
+                                        id="yearsSpent"
                                         fullWidth
                                         size="small"
                                         label="Spent Year in devbox"
@@ -428,7 +429,7 @@ export default function EmployeesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv2}
-                                        id="questions"
+                                        id="leavesInyear"
                                         fullWidth
                                         size="small"
                                         label="Leaves in Year"
@@ -456,7 +457,7 @@ export default function EmployeesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv2}
-                                        id="questions"
+                                        id="hoursInYear"
                                         fullWidth
                                         size="small"
                                         label="Hours in Year"

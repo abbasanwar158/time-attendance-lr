@@ -150,7 +150,7 @@ export default function ManageAttendance() {
               <FormControl fullWidth>
                 <TextField
                   className={styles.fieldDiv}
-                  id="date"
+                  id="checkin"
                   label="CHECKIN"
                   type="time"
                   variant="outlined"
@@ -172,7 +172,7 @@ export default function ManageAttendance() {
               <FormControl fullWidth>
                 <TextField
                   className={styles.fieldDiv}
-                  id="date"
+                  id="checkout"
                   label="CHECKOUT"
                   type="time"
                   variant="outlined"
@@ -192,6 +192,7 @@ export default function ManageAttendance() {
           <Grid container spacing={1} className={styles.gridSubItems} >
             <Grid item xs={12} sm={4} className={styles.fieldGrid}>
               <Button
+                id="update"
                 variant="contained"
                 color="primary"
                 className={styles.saveButton}
@@ -200,6 +201,7 @@ export default function ManageAttendance() {
                 Update
               </Button>
               <Button
+                id="cancel"
                 variant="contained"
                 color="default"
                 onClick={() => history.push('/attendance/new')}
