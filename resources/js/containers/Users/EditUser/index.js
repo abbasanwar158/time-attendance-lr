@@ -4,8 +4,6 @@ import SVG from "react-inlinesvg";
 import FormControl from "@material-ui/core/FormControl";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
@@ -99,6 +97,7 @@ export default function ManageUsers() {
       })
       .then(response => response.json())
       .then(data => {
+        history.push('/users/new')
         setOpen(false);
         console.log('Success:', data);
       })

@@ -100,7 +100,9 @@ class UserController extends Controller
             'username' => $request->username,
             'password_digest' => $encrypted,
             'name' => $request->name,
-            'is_admin' => $request->is_admin        
+            'is_admin' => $request->is_admin,
+            'created_at' => $request->created_at,
+            'updated_at' => $request->updated_at        
         ]);
     }
 

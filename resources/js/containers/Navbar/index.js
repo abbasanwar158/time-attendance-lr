@@ -141,6 +141,16 @@ export default function Navbar() {
             </MenuItem>
           : null}
 
+            <MenuItem
+              onClick={() => {
+                handleCloseMenu()
+                history.push('/change_password')
+              }}
+            >
+              <SVG className={styles.subMenuIcons} src={`/images/change-password.svg`} />
+              <span className={styles.subMenuSpan}>Change Password</span>
+            </MenuItem>
+
           <MenuItem
             onClick={() => {
               handleCloseMenu()

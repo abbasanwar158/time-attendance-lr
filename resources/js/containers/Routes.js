@@ -44,7 +44,7 @@ import RootContext from "../context/RootContext";
 import ProtectedRoute from "../hoc/ProtectedRoute";
 import UnProtectedRoute from "../hoc/UnProtectedRoute";
 import Restpassword  from "./ResetPassword";
-
+import ChangePassword from "../containers/ChangePassword";
 
 import { Route, Redirect, BrowserRouter, Switch } from 'react-router-dom';
 
@@ -238,6 +238,11 @@ function Routes() {
           <ProtectedRoute exact path="/user/edit">
             <Layout>
               <EditUser />
+            </Layout>
+          </ProtectedRoute>
+          <ProtectedRoute exact path="/change_password">
+            <Layout>
+              <ChangePassword />
             </Layout>
           </ProtectedRoute>
           <Redirect from="/" exact to="/login" />
