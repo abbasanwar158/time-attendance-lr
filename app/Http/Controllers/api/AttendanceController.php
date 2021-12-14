@@ -342,8 +342,8 @@ class AttendanceController extends Controller
                          }
 
               rewind($file);
-
-              Mail::send('mail', [], function($message) use($file, $filename,$request)
+            
+              Mail::send('mail', [], function($message) use($file, $filename,$request,$employee)
               {
                   $message->to($employee->email)
                           ->subject($request->Month.' Attendance Sheet');
@@ -431,7 +431,7 @@ class AttendanceController extends Controller
                               }
                         rewind($file);
                                       
-                        Mail::send('mail', [], function($message) use($file, $filename,$request)
+                        Mail::send('mail', [], function($message) use($file, $filename,$request,$admin)
                         {
                             $message->to($admin->username)
                                     ->subject($request->Month.' Attendance Sheet');

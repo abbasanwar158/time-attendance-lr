@@ -109,7 +109,7 @@ export default function EmailAttendance() {
                     <span className={styles.breadCrumbsSlash}>/</span>
                     <span className={styles.breadCrumbsSpan}>Email</span>
                 </div>
-                <h1 className={styles.breadCrumbSpan2}>Email Attendance123</h1>
+                <h1 className={styles.breadCrumbSpan2}>Email Attendance</h1>
             </div>
             <div className={styles.mainCard}>
                 <div className={styles.gridContainer}>
