@@ -59,13 +59,13 @@ export default function EmailAttendance() {
 
     const EmailAttendance = () => {
         setOpen(true);
-        console.log(ActiveEmployeeNames);
-
         fetch(`https://time-attendance-lr.herokuapp.com/api/attendance/email`, {
             method: "POST",
+            mode: "no-cors",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Origin": "*",
             },
             body: JSON.stringify({
                 Month: selectedMonth,
