@@ -212,7 +212,7 @@ export default function ReviewDate() {
                                   <TextField
                                       className={styles.fieldDiv}
                                       value={personName}
-                                      id="questions"
+                                      id="employees"
                                       fullWidth
                                       size="small"
                                       label="Employee"
@@ -244,6 +244,7 @@ export default function ReviewDate() {
                               className={styles.buttonGrid}
                           >
                               <Button
+                                  id="search"
                                   variant="contained"
                                   color="primary"
                                   onClick={searchEmployee}

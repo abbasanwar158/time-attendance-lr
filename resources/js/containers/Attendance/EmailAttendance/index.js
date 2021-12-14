@@ -123,7 +123,7 @@ export default function EmailAttendance() {
                                 <div>
                                     <FormControl fullWidth>
                                         <TextField
-                                            id="questions"
+                                            id="months"
                                             fullWidth
                                             size="small"
                                             label="Months"
@@ -155,7 +155,7 @@ export default function EmailAttendance() {
                                 <div>
                                     <FormControl fullWidth>
                                         <TextField
-                                            id="questions"
+                                            id="years"
                                             fullWidth
                                             size="small"
                                             label="Years"
@@ -187,6 +187,7 @@ export default function EmailAttendance() {
                                 <div className={styles.allCheckboxContainer}>
                                     <FormControl>
                                         <FormControlLabel
+                                            id="allCheckbox"
                                             className={styles.allCheckbox}
                                             value={toAdmin}
                                             onChange={() =>
@@ -203,6 +204,7 @@ export default function EmailAttendance() {
                             </Grid>
                             <Grid item xs={12} sm={2}>
                                 <Button
+                                    id="sendMail"
                                     variant="contained"
                                     color="primary"
                                     className={styles.cardButtons}

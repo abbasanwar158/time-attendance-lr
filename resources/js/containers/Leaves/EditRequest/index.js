@@ -101,7 +101,7 @@ export default function EditRequest() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="status"
                     fullWidth
                     size="small"
                     label="Status"
@@ -129,7 +129,7 @@ export default function EditRequest() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="message"
                     fullWidth
                     size="small"
                     label="Message"
@@ -146,10 +146,11 @@ export default function EditRequest() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button onClick={updateLeave} variant="contained" color="primary" className={styles.saveButton}>
+                <Button id="update" onClick={updateLeave} variant="contained" color="primary" className={styles.saveButton}>
                   Update
                 </Button>
                 <Button
+                  id="cancel"
                   variant="contained"
                   color="default"
                   onClick={(e) => history.push('/leaves/requests')}

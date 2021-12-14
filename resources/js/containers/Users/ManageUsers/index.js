@@ -279,7 +279,7 @@ export default function ManageUsers() {
               <FormControl fullWidth >
                 <TextField
                   className={styles.fieldDiv}
-                  id="subject"
+                  id="email"
                   label="User Name"
                   type="email"
                   variant="outlined"
@@ -299,7 +299,7 @@ export default function ManageUsers() {
               <FormControl fullWidth >
                 <TextField
                   className={styles.fieldDiv}
-                  id="subject"
+                  id="name"
                   label="Name"
                   type="email"
                   variant="outlined"
@@ -318,10 +318,10 @@ export default function ManageUsers() {
             <Grid item xs={12} sm={4} className={styles.fieldGrid}>
 
               <FormControl variant="outlined" fullWidth>
-                <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+                <InputLabel htmlFor="password">Password</InputLabel>
                 <OutlinedInput
                   className={styles.fieldDiv}
-                  id="outlined-adornment-password"
+                  id="password"
                   type={values.showPassword ? 'text' : 'password'}
                   value={values.password}
                   onChange={handleChange('password')}
@@ -349,10 +349,10 @@ export default function ManageUsers() {
           <Grid container spacing={1} className={styles.gridSubItems} >
             <Grid item xs={12} sm={4} className={styles.fieldGrid}>
               <FormControl variant="outlined" fullWidth>
-                <InputLabel htmlFor="outlined-adornment-password">Confirm Password</InputLabel>
+                <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
                 <OutlinedInput
                   className={styles.fieldDiv}
-                  id="outlined-adornment-password"
+                  id="confirmPassword"
                   type={valuesConfirm.showPasswordConfirm ? 'text' : 'password'}
                   value={valuesConfirm.password}
                   onChange={handleChangeConfirm('password')}
@@ -380,6 +380,7 @@ export default function ManageUsers() {
             <Grid item xs={12} sm={4} className={styles.fieldGrid}>
               <FormControl >
                 <FormControlLabel
+                  id="ifAdmin"
                   className={styles.satSunCheckbox}
                   value="start"
                   control={<Checkbox color="primary" />}
@@ -395,7 +396,7 @@ export default function ManageUsers() {
         <Grid item xs={12}>
           <Grid container spacing={1} className={styles.gridSubItems} >
             <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-              <Button onClick={newUser} variant="contained" color="primary" className={styles.saveButton}>
+              <Button id="register" onClick={newUser} variant="contained" color="primary" className={styles.saveButton}>
                 Register
               </Button>
             </Grid>

@@ -280,7 +280,7 @@ export default function LeavesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv}
-                                        id="questions"
+                                        id="employees"
                                         fullWidth
                                         size="small"
                                         label="Employee"
@@ -324,7 +324,7 @@ export default function LeavesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv}
-                                        id="date"
+                                        id="fDate"
                                         label="From"
                                         type="date"
                                         variant="outlined"
@@ -357,7 +357,7 @@ export default function LeavesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv}
-                                        id="date"
+                                        id="tDate"
                                         label="To"
                                         type="date"
                                         variant="outlined"
@@ -389,6 +389,7 @@ export default function LeavesReport() {
                             >
                                 <FormControl>
                                     <FormControlLabel
+                                        id="all"
                                         className={styles.allCheckbox}
                                         value={empLeaves}
                                         onChange={(event) =>
@@ -415,6 +416,7 @@ export default function LeavesReport() {
                                 className={styles.fieldGrid}
                             >
                                 <Button
+                                    id="report"
                                     variant="contained"
                                     color="primary"
                                     className={styles.saveButton}
@@ -424,6 +426,7 @@ export default function LeavesReport() {
                                     Generate Report
                                 </Button>
                                 <Button
+                                    id="download"
                                     variant="contained"
                                     color="secondary"
                                     onClick={leavesFun}

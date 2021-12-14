@@ -272,7 +272,7 @@ export default function Dashboard() {
                     <div>
                       <FormControl fullWidth>
                         <TextField
-                          id="questions"
+                          id="months"
                           fullWidth
                           size="small"
                           label="Months"
@@ -298,7 +298,7 @@ export default function Dashboard() {
                     <div>
                       <FormControl fullWidth>
                         <TextField
-                          id="questions"
+                          id="years"
                           fullWidth
                           size="small"
                           label="Years"
@@ -322,6 +322,7 @@ export default function Dashboard() {
                   </Grid>
                   <Grid item xs={12} sm={2}>
                     <Button
+                      id="leavesInfoBtn"
                       variant="contained"
                       color="primary"
                       className={styles.cardButtons}
@@ -382,7 +383,7 @@ export default function Dashboard() {
                     <div>
                       <FormControl fullWidth>
                         <TextField
-                          id="date"
+                          id="sDate"
                           label="Start Date"
                           type="date"
                           variant="outlined"
@@ -401,7 +402,7 @@ export default function Dashboard() {
                     <div>
                       <FormControl fullWidth>
                         <TextField
-                          id="date"
+                          id="eDate"
                           label="End Date"
                           type="date"
                           variant="outlined"
@@ -418,6 +419,7 @@ export default function Dashboard() {
                   </Grid>
                   <Grid item xs={12} sm={2}>
                     <Button
+                      id="hoursInfoBtn"
                       variant="contained"
                       color="primary"
                       className={styles.cardButtons}

@@ -114,7 +114,7 @@ export default function EditLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="employees"
                     fullWidth
                     size="small"
                     label="Employee"
@@ -162,7 +162,7 @@ export default function EditLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="status"
                     fullWidth
                     size="small"
                     label="Status"
@@ -190,7 +190,7 @@ export default function EditLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="questions"
+                    id="note"
                     fullWidth
                     size="small"
                     label="Note"
@@ -207,10 +207,11 @@ export default function EditLeave() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button onClick={updateLeave} variant="contained" color="primary" className={styles.saveButton}>
+                <Button id="update" onClick={updateLeave} variant="contained" color="primary" className={styles.saveButton}>
                   Update
                 </Button>
                 <Button
+                  id="cancel"
                   variant="contained"
                   color="default"
                   onClick={(e) => history.push('/leaves')}

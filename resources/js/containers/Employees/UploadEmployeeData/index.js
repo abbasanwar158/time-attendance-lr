@@ -117,6 +117,7 @@ export default function UploadEmployeeData() {
                   <Grid container spacing={1} className={styles.gridSubItems}>
                       <Grid item xs={12} sm={3} className={styles.fieldGrid}>
                           <Button
+                              id="upload"
                               size="small"
                               variant="contained"
                               color="primary"
@@ -126,6 +127,7 @@ export default function UploadEmployeeData() {
                               Upload
                           </Button>
                           <Button
+                              id="cancel"
                               size="small"
                               variant="contained"
                               color="default"

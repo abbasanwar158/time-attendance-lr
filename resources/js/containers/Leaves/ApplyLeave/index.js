@@ -117,7 +117,7 @@ export default function ApplyLeaves() {
                           >
                               <FormControl fullWidth>
                                   <TextField
-                                      id="questions"
+                                      id="leaveType"
                                       fullWidth
                                       size="small"
                                       label="Select Leave Type"
@@ -154,7 +154,7 @@ export default function ApplyLeaves() {
                                       <Grid item xs={12} sm={5}>
                                           <FormControl fullWidth>
                                               <TextField
-                                                  id="date"
+                                                  id="fDate"
                                                   label="From"
                                                   type="date"
                                                   variant="outlined"
@@ -180,7 +180,7 @@ export default function ApplyLeaves() {
                                       >
                                           <FormControl fullWidth>
                                               <TextField
-                                                  id="date"
+                                                  id="tDate"
                                                   label="To"
                                                   type="date"
                                                   variant="outlined"
@@ -247,14 +247,16 @@ export default function ApplyLeaves() {
                               className={styles.fieldGrid}
                           >
                               <Button
-                                  variant="contained"
-                                  color="primary"
-                                  className={styles.applyButton}
-                                  onClick={applyLeave}
+                                id="apply"  
+                                variant="contained"
+                                color="primary"
+                                className={styles.applyButton}
+                                onClick={applyLeave}
                               >
                                   Apply
                               </Button>
                               <Button 
+                                id="cancel"
                                 variant="contained" 
                                 color="default"
                                 onClick={(e) => history.push('/leaves')}
