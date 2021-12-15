@@ -407,6 +407,9 @@ export default function Dashboard() {
                           type="date"
                           variant="outlined"
                           size="small"
+                          inputProps={{
+                            min:startDate ? startDate :"0000-00-00" ,
+                          }}
                           value={endDate}
                           disabled={loaderHours}
                           onChange={handleChangeEndDate}

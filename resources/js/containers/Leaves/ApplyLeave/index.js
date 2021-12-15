@@ -185,6 +185,9 @@ export default function ApplyLeaves() {
                                                   type="date"
                                                   variant="outlined"
                                                   value={endDate}
+                                                  inputProps={{
+                                                    min:startDate ? startDate :"0000-00-00" ,
+                                                  }}
                                                   onChange={(e) =>
                                                       setEndDate(e.target.value)
                                                   }

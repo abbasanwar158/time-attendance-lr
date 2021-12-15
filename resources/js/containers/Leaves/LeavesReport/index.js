@@ -362,6 +362,9 @@ export default function LeavesReport() {
                                         type="date"
                                         variant="outlined"
                                         value={to}
+                                        inputProps={{
+                                            min:from ? from :"0000-00-00" ,
+                                        }}
                                         onChange={(event) =>
                                             setTo(event.target.value)
                                         }

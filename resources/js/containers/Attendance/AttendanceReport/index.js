@@ -332,6 +332,9 @@ export default function ManageAttendance() {
                                     variant="outlined"
                                     size="small"
                                     value={endDate}
+                                    inputProps={{
+                                        min:startDate ? startDate :"0000-00-00" ,
+                                    }}
                                     onChange={endDateFun}
                                     InputLabelProps={{
                                         shrink: true,
