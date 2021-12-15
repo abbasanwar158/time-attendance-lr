@@ -135,7 +135,7 @@ export default function UploadAttendance() {
                 </Grid>
             </div>
 
-            <div className={styles.mainCard2}>
+            {/* <div className={styles.mainCard2}>
                 <Grid item xs={12}>
                     <Grid container spacing={1} className={styles.gridSubItems}>
                         <Grid item xs={12} sm={4} className={styles.fieldGrid}>
@@ -194,7 +194,7 @@ export default function UploadAttendance() {
                         </Grid>
                     </Grid>
                 </Grid>
-            </div>
+            </div> */}
         </>
     );
 }
