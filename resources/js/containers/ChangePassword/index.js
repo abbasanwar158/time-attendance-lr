@@ -85,10 +85,11 @@ export default function ChangePassword() {
       .then(response => response.json())
       .then(data => {
         setOpen(false);
-        history.push('/dashboard')
+        history.push('/dashboard');
         console.log('Success:', data);
       })
       .catch((error) => {
+        history.push('/dashboard');
         setOpen(false);
         console.error('Error:', error);
       });

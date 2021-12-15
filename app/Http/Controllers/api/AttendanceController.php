@@ -345,8 +345,9 @@ class AttendanceController extends Controller
             
               Mail::send('mail', [], function($message) use($file, $filename,$request,$employee)
               {
-                $message->to('asad91876@gmail.com')
-                          ->subject($request->Month.' Attendance Sheet');
+                  $message->to($employee->email)
+                    ->cc('aamir.mughal@devbox.co')
+                    ->subject($request->Month.' Attendance Sheet');
                   $message->attachData(stream_get_contents($file), $filename);
               });
 
@@ -433,8 +434,9 @@ class AttendanceController extends Controller
                                       
                         Mail::send('mail', [], function($message) use($file, $filename,$request,$admin)
                         {
-                            $message->to('asad91876@gmail.com')
-                                    ->subject($request->Month.' Attendance Sheet');
+                            $message->to($admin->email)
+                              ->cc('aamir.mughal@devbox.co')
+                              ->subject($request->Month.' Attendance Sheet');
                             $message->attachData(stream_get_contents($file), $filename);
                         });
 

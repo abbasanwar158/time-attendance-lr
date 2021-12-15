@@ -164,6 +164,7 @@ export default function EmployeesReport() {
             .then((res) => res.json())
             .then(
                 (response) => {
+                    setOpen(false);
                     for (var i = 0; i < response.length; i++) {
                         attendanceArr.push(response[i]);
                         var date = new Date(response[i].checkin);
@@ -189,10 +190,10 @@ export default function EmployeesReport() {
                     x = x.getFullYear();
 
                     setCurrentYear(year - x);
-                    setOpen(false);
 
                 },
                 (error) => {
+                    setOpen(false);
                     setFlag(false);
                     console.log("error", error);
                 }
