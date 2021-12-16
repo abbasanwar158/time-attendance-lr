@@ -192,6 +192,30 @@ export default function ManageAttendance() {
         );
     };
 
+    useEffect(() => {
+        if(localStorage.isAdmin == 'true'){
+        }
+        else{
+            setOpen(true);
+            var attendanceArr = [];
+            fetch("https://time-attendance-lr.herokuapp.com/api/attendances")
+                .then(res => res.json())
+                .then(
+                (response) => {
+                    var data = response.filter((x) => x.name == localStorage.name)
+                    for (var i = 0; i < data.length; i++) {
+                    attendanceArr.push(data[i])
+                    }
+                    setAttendanceData(attendanceArr);
+                    setOpen(false);
+                },
+                (error) => {
+                    console.log("error", error)
+                }
+                )
+        }
+      }, [])
+
     const attendanceSearch = () => {
         setflag(false);
         setOpen(true);
@@ -266,150 +290,154 @@ export default function ManageAttendance() {
                 </h1>
             </div>
             <div className={styles.mainCard}>
-                <Grid item xs={12}>
-                    <Grid container spacing={1} className={styles.gridSubItems}>
-                        <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                            <FormControl fullWidth>
-                                <TextField
-                                    className={styles.fieldDiv}
-                                    id="employees"
-                                    fullWidth
-                                    size="small"
-                                    label="Employee"
-                                    variant="outlined"
-                                    disabled={allData}
-                                    value={selected}
-                                    onChange={handleChange}
-                                    menuprops={{ variant: "menu" }}
-                                    select
-                                    SelectProps={{
-                                        IconComponent: () => <Chevron />,
-                                    }}
-                                >
-                                    {ActiveEmployeeNames.map((option) => (
-                                        <MenuItem
-                                            key={option.name}
-                                            value={option.employee_external_id}
+                {localStorage.isAdmin == 'true' ?
+                    <div>
+                        <Grid item xs={12}>
+                            <Grid container spacing={1} className={styles.gridSubItems}>
+                                <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                                    <FormControl fullWidth>
+                                        <TextField
+                                            className={styles.fieldDiv}
+                                            id="employees"
+                                            fullWidth
+                                            size="small"
+                                            label="Employee"
+                                            variant="outlined"
+                                            disabled={allData}
+                                            value={selected}
+                                            onChange={handleChange}
+                                            menuprops={{ variant: "menu" }}
+                                            select
+                                            SelectProps={{
+                                                IconComponent: () => <Chevron />,
+                                            }}
                                         >
-                                            {option.name}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </FormControl>
+                                            {ActiveEmployeeNames.map((option) => (
+                                                <MenuItem
+                                                    key={option.name}
+                                                    value={option.employee_external_id}
+                                                >
+                                                    {option.name}
+                                                </MenuItem>
+                                            ))}
+                                        </TextField>
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid container spacing={1} className={styles.gridSubItems}>
-                        <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                            <FormControl fullWidth>
-                                <TextField
-                                    className={styles.fieldDiv}
-                                    id="fDate"
-                                    label="From"
-                                    type="date"
-                                    variant="outlined"
-                                    size="small"
-                                    value={startDate}
-                                    onChange={startDateFun}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
-                            </FormControl>
+                        <Grid item xs={12}>
+                            <Grid container spacing={1} className={styles.gridSubItems}>
+                                <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                                    <FormControl fullWidth>
+                                        <TextField
+                                            className={styles.fieldDiv}
+                                            id="fDate"
+                                            label="From"
+                                            type="date"
+                                            variant="outlined"
+                                            size="small"
+                                            value={startDate}
+                                            onChange={startDateFun}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid container spacing={1} className={styles.gridSubItems}>
-                        <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                            <FormControl fullWidth>
-                                <TextField
-                                    className={styles.fieldDiv}
-                                    id="tDate"
-                                    label="To"
-                                    type="date"
-                                    variant="outlined"
-                                    size="small"
-                                    value={endDate}
-                                    inputProps={{
-                                        min:startDate ? startDate :"0000-00-00" ,
-                                    }}
-                                    onChange={endDateFun}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
-                            </FormControl>
+                        <Grid item xs={12}>
+                            <Grid container spacing={1} className={styles.gridSubItems}>
+                                <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                                    <FormControl fullWidth>
+                                        <TextField
+                                            className={styles.fieldDiv}
+                                            id="tDate"
+                                            label="To"
+                                            type="date"
+                                            variant="outlined"
+                                            size="small"
+                                            value={endDate}
+                                            inputProps={{
+                                                min:startDate ? startDate :"0000-00-00" ,
+                                            }}
+                                            onChange={endDateFun}
+                                            InputLabelProps={{
+                                                shrink: true,
+                                            }}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid container spacing={1} className={styles.gridSubItems}>
-                        <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                            <FormControl>
-                                <FormControlLabel
-                                    id="allCheckbox"
-                                    className={styles.allCheckbox}
-                                    value="start"
-                                    onChange={allCheckboxFun}
-                                    control={<Checkbox color="primary" />}
-                                    label="ALL"
-                                    labelPlacement="end"
-                                />
-                            </FormControl>
+                        <Grid item xs={12}>
+                            <Grid container spacing={1} className={styles.gridSubItems}>
+                                <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                                    <FormControl>
+                                        <FormControlLabel
+                                            id="allCheckbox"
+                                            className={styles.allCheckbox}
+                                            value="start"
+                                            onChange={allCheckboxFun}
+                                            control={<Checkbox color="primary" />}
+                                            label="ALL"
+                                            labelPlacement="end"
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid container spacing={1} className={styles.gridSubItems}>
-                        <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                            <FormControl>
-                                <FormControlLabel
-                                    id="saturday"
-                                    className={styles.satSunCheckbox}
-                                    value="start"
-                                    onChange={saturdayFun}
-                                    control={<Checkbox color="primary" />}
-                                    label="SATURDAY"
-                                    labelPlacement="end"
-                                />
-                            </FormControl>
+                        <Grid item xs={12}>
+                            <Grid container spacing={1} className={styles.gridSubItems}>
+                                <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                                    <FormControl>
+                                        <FormControlLabel
+                                            id="saturday"
+                                            className={styles.satSunCheckbox}
+                                            value="start"
+                                            onChange={saturdayFun}
+                                            control={<Checkbox color="primary" />}
+                                            label="SATURDAY"
+                                            labelPlacement="end"
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid container spacing={1} className={styles.gridSubItems}>
-                        <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                            <FormControl>
-                                <FormControlLabel
-                                    id="sunday"
-                                    className={styles.satSunCheckbox}
-                                    value="start"
-                                    onChange={sundayFun}
-                                    control={<Checkbox color="primary" />}
-                                    label="SUNDAY"
-                                    labelPlacement="end"
-                                />
-                            </FormControl>
+                        <Grid item xs={12}>
+                            <Grid container spacing={1} className={styles.gridSubItems}>
+                                <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                                    <FormControl>
+                                        <FormControlLabel
+                                            id="sunday"
+                                            className={styles.satSunCheckbox}
+                                            value="start"
+                                            onChange={sundayFun}
+                                            control={<Checkbox color="primary" />}
+                                            label="SUNDAY"
+                                            labelPlacement="end"
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
-                <Grid item xs={12}>
-                    <Grid container spacing={1} className={styles.gridSubItems}>
-                        <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                            <Button
-                                id="search"
-                                variant="contained"
-                                color="primary"
-                                onClick={attendanceSearch}
-                                className={styles.saveButton}
-                            >
-                                Generate Report
-                            </Button>
+                        <Grid item xs={12}>
+                            <Grid container spacing={1} className={styles.gridSubItems}>
+                                <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                                    <Button
+                                        id="search"
+                                        variant="contained"
+                                        color="primary"
+                                        onClick={attendanceSearch}
+                                        className={styles.saveButton}
+                                    >
+                                        Generate Report
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
+                    </div>
+                : null}
 
                 <div className={styles.flex}>
                     <TableContainer component={Paper} className={styles.table}>

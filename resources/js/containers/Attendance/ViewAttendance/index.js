@@ -118,7 +118,9 @@ export default function ViewAttendance() {
   }, []);
 
   const attendanceFun = () => {
-    try {
+
+    setOpen(true);
+    if(localStorage.isAdmin == 'true'){
       var attendanceArr = [];
       fetch("https://time-attendance-lr.herokuapp.com/api/today/attendance")
         .then(res => res.json())
@@ -136,9 +138,25 @@ export default function ViewAttendance() {
           }
         )
     }
-    catch (e) {
-      console.log("Error", e);
+    else{
+      var attendanceArr = [];
+      fetch("https://time-attendance-lr.herokuapp.com/api/today/attendance")
+        .then(res => res.json())
+        .then(
+          (response) => {
+            var data = response.filter((x) => x.name == localStorage.name)
+            for (var i = 0; i < data.length; i++) {
+              attendanceArr.push(data[i])
+            }
+              setAttendanceData(attendanceArr);
+              setOpen(false);
+          },
+          (error) => {
+            console.log("error", error)
+          }
+        )
     }
+
   }
 
   return (
