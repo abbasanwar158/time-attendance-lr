@@ -52,13 +52,13 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
       setHolidaysSubMenu(['View Holidays']);
       setHolidaysUrl(['/holidays']);
 
-      setEmployeesSubMenuSVG(['people', 'edit']);
-      setEmployeesSubMenu([ 'Active Employees', 'All Employees']);
-      setEmployeesUrl(['/employees/active', '/employees']);
+      setEmployeesSubMenuSVG(['people',]);
+      setEmployeesSubMenu([ 'Active Employees',]);
+      setEmployeesUrl(['/employees/active',]);
       
-      setLeavesSubMenuSVG(['assignment', 'add_to_queue', 'description', 'publish']);
-      setLeavesSubMenu(['Apply Leaves', 'Leave Report', 'Leaves WBS', 'View Leaves']);
-      setLeavesUrl(['/leaves/apply', '/leaves/report', '/leaves/schedule', '/leaves']);
+      setLeavesSubMenuSVG(['assignment', 'publish']);
+      setLeavesSubMenu(['Apply Leaves', 'View Leaves']);
+      setLeavesUrl(['/leaves/apply', '/leaves']);
       
       setAttendanceSubMenuSVG(['visibility','mail']);
       setAttendanceUrl(['/attendance/report', '/attendance']);

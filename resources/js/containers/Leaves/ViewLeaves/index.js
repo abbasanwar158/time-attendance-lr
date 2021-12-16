@@ -153,8 +153,10 @@ export default function ViewLeaves() {
     }, []);
 
   const leavesFun = () => {
-    var leavesArr = [];
-    fetch("https://time-attendance-lr.herokuapp.com/api/leaves")
+    setOpen(true);
+    if(localStorage.isAdmin == 'true'){
+      var leavesArr = [];
+      fetch("https://time-attendance-lr.herokuapp.com/api/leaves")
       .then(res => res.json())
       .then(
         (response) => {
@@ -169,6 +171,26 @@ export default function ViewLeaves() {
           console.log("error", error)
         }
       )
+    }
+    else{
+      var leavesArr = [];
+      fetch("https://time-attendance-lr.herokuapp.com/api/leaves")
+      .then(res => res.json())
+      .then(
+        (response) => {
+          var data = response.filter((x) => x.name == localStorage.name)
+          for (var i = 0; i < data.length; i++) {
+            leavesArr.push(data[i])
+          }
+          setLeavesData(leavesArr);
+          setOpen(false);
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
+    }
+    
   }
 
   const searchLeaves = () => {
@@ -211,45 +233,47 @@ export default function ViewLeaves() {
         <h1 className={styles.breadCrumbSpan2}>View All Leaves</h1>
       </div>
       <div className={styles.mainCard}>
-        <div className={styles.gridContainer}>
-          <Grid item xs={12}>
-            <Grid container spacing={1} className={styles.gridSubItems} >
-              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <FormControl fullWidth >
-                  <TextField
-                    className={styles.fieldDiv}
-                    value={personName}
-                    id="employees"
-                    fullWidth
-                    size="small"
-                    label="Employee"
-                    variant="outlined"
-                    onChange={handleChange}
-                    menuprops={{ variant: "menu" }}
-                    select
-                    SelectProps={{ IconComponent: () => <Chevron /> }}
+        {localStorage.isAdmin == 'true' ?
+          <div className={styles.gridContainer}>
+            <Grid item xs={12}>
+              <Grid container spacing={1} className={styles.gridSubItems} >
+                <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                  <FormControl fullWidth >
+                    <TextField
+                      className={styles.fieldDiv}
+                      value={personName}
+                      id="employees"
+                      fullWidth
+                      size="small"
+                      label="Employee"
+                      variant="outlined"
+                      onChange={handleChange}
+                      menuprops={{ variant: "menu" }}
+                      select
+                      SelectProps={{ IconComponent: () => <Chevron /> }}
+                    >
+                      {ActiveEmployeeNames.map((option) => (
+                        <MenuItem key={option.name} value={option.employee_external_id}>
+                          {option.name}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </FormControl>
+                </Grid>
+                <Grid item xs={12} sm={2} className={styles.buttonGrid}>
+                  <Button
+                  id="search"
+                  onClick={searchLeaves}
+                  variant="contained" 
+                  color="primary" 
                   >
-                    {ActiveEmployeeNames.map((option) => (
-                      <MenuItem key={option.name} value={option.employee_external_id}>
-                        {option.name}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </FormControl>
-              </Grid>
-              <Grid item xs={12} sm={2} className={styles.buttonGrid}>
-                <Button
-                 id="search"
-                 onClick={searchLeaves}
-                 variant="contained" 
-                 color="primary" 
-                 >
-                  Search
-                </Button>
+                    Search
+                  </Button>
+                </Grid>
               </Grid>
             </Grid>
-          </Grid>
-        </div>
+          </div>
+        : null}
         <div className={styles.flex}>
           <TableContainer component={Paper} className={styles.table}>
             <Table className={classes.table} aria-label="custom pagination table">
