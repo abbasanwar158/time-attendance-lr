@@ -4,6 +4,11 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Models\Attendance;
+use Illuminate\Support\Facades\DB;
+use DateTime;
+use Carbon\Carbon;
+
 
 class Kernel extends ConsoleKernel
 {
@@ -25,6 +30,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        
+       
+        $schedule->call('App\Http\Controllers\api\AttendanceController@AttendanceAlert')->dailyAt('23:50')->timezone('Asia/Karachi');
     }
 
     /**

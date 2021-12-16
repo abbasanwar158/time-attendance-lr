@@ -39,6 +39,7 @@ Route::post('/employees/review_date/edit/{id}',[App\Http\Controllers\api\Employe
 Route::get('/employees/report/{id}/{year}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeReport']);
 Route::get('/send_Email/{subject}/{message}', [App\Http\Controllers\api\EmployeeController::class, 'mailToAll']);
 
+Route::get('/attendance/alert', [App\Http\Controllers\api\AttendanceController::class, 'AttendanceAlert']);
 
 //////////////////////////////////Employees///////////////////////////////////////////////
 Route::get('/holidays', [App\Http\Controllers\api\HolidayController::class, 'index']);
@@ -71,6 +72,7 @@ Route::get('/attendance/{id}', [App\Http\Controllers\api\AttendanceController::c
 Route::get('/attendance/report/{empId}/{from}/{to}/{all}/{sat}/{sun}', [App\Http\Controllers\api\AttendanceController::class, 'attendanceReport']);
 Route::post('/attendance/upload', [App\Http\Controllers\api\AttendanceController::class, 'uploadCSV']);
 Route::post('/attendance/email', [App\Http\Controllers\api\AttendanceController::class, 'emailAttendance']);
+
 
 
 ///////////////////////////////////Welcome///////////////////////////////////////////////
