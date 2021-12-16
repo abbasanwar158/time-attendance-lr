@@ -45,7 +45,7 @@ export default function UploadAttendance() {
             }
             for (var i = 0; i < result.length; i++) {
               if(result[i].EmployeeId){
-                fetch(`https://time-attendance-lr.herokuapp.com/api/attendance/upload`, {
+                fetch(`https://devbox-attendance.herokuapp.com/api/attendance/upload`, {
                     method: "POST",
                     headers: {
                         Accept: "application/json",

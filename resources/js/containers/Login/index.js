@@ -49,7 +49,7 @@ export default function Login() {
 
   const loginUser = () => {
     setOpen(true);
-    fetch(`https://time-attendance-lr.herokuapp.com/api/user/login/${username}/${values.password}`)
+    fetch(`https://devbox-attendance.herokuapp.com/api/user/login/${username}/${values.password}`)
       .then(res => res.json())
       .then(
         (response) => {

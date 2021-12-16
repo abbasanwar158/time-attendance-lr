@@ -18,7 +18,7 @@ export default function ComposeEmail() {
 
   const mailToAll = () => {
     setOpen(true);
-    fetch(`https://time-attendance-lr.herokuapp.com/api/send_Email/${subject}/${message}`)
+    fetch(`https://devbox-attendance.herokuapp.com/api/send_Email/${subject}/${message}`)
       .then(res => res.json())
       .then(
         (response) => {

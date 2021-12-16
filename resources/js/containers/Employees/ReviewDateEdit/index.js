@@ -46,7 +46,7 @@ export default function ReviewDateEdit() {
         setOpen(true);
         var today = new Date();
         fetch(
-            `https://time-attendance-lr.herokuapp.com/api/employees/review_date/edit/${allEmployeesData[index].id}`,
+            `https://devbox-attendance.herokuapp.com/api/employees/review_date/edit/${allEmployeesData[index].id}`,
             {
                 method: "POST",
                 headers: {

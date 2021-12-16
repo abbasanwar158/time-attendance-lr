@@ -137,7 +137,7 @@ export default function ReviewDate() {
   const employeesFun = () => {
       setOpen(true);
       var employeeNamesArr = [];
-      fetch("https://time-attendance-lr.herokuapp.com/api/employees")
+      fetch("https://devbox-attendance.herokuapp.com/api/employees")
           .then((res) => res.json())
           .then(
               (response) => {
@@ -157,7 +157,7 @@ export default function ReviewDate() {
       setOpen(true);
 
       fetch(
-          `https://time-attendance-lr.herokuapp.com/api/employees/review_date/${personName}`
+          `https://devbox-attendance.herokuapp.com/api/employees/review_date/${personName}`
       )
           .then((res) => res.json())
           .then(

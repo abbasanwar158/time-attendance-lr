@@ -36,7 +36,7 @@ export default function EditEmployeeStatus() {
 
   const statusUpdate = () => {
     setOpen(true);
-    fetch(`https://time-attendance-lr.herokuapp.com/api/employee/edit_status/${selected}`, {
+    fetch(`https://devbox-attendance.herokuapp.com/api/employee/edit_status/${selected}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

@@ -156,7 +156,7 @@ export default function ViewLeaves() {
     setOpen(true);
     if(localStorage.isAdmin == 'true'){
       var leavesArr = [];
-      fetch("https://time-attendance-lr.herokuapp.com/api/leaves")
+      fetch("https://devbox-attendance.herokuapp.com/api/leaves")
       .then(res => res.json())
       .then(
         (response) => {
@@ -174,7 +174,7 @@ export default function ViewLeaves() {
     }
     else{
       var leavesArr = [];
-      fetch("https://time-attendance-lr.herokuapp.com/api/leaves")
+      fetch("https://devbox-attendance.herokuapp.com/api/leaves")
       .then(res => res.json())
       .then(
         (response) => {
@@ -196,7 +196,7 @@ export default function ViewLeaves() {
   const searchLeaves = () => {
     setOpen(true);
     var leavesArr = [];
-    fetch(`https://time-attendance-lr.herokuapp.com/api/leaves/${personName}`)
+    fetch(`https://devbox-attendance.herokuapp.com/api/leaves/${personName}`)
       .then(res => res.json())
       .then(
         (response) => {

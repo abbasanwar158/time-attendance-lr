@@ -95,7 +95,7 @@ export default function Dashboard() {
       setYears(new Date().getFullYear());
     }
     for(var i = 0; i < ActiveEmployeeNames.length; i++){
-      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/leaves/info/${months}/${years}/${ActiveEmployeeNames[i].employee_external_id}/${ActiveEmployeeNames[i].name}`)
+      fetch(`https://devbox-attendance.herokuapp.com/api/welcome/leaves/info/${months}/${years}/${ActiveEmployeeNames[i].employee_external_id}/${ActiveEmployeeNames[i].name}`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -114,7 +114,7 @@ export default function Dashboard() {
   }
 
   const OnleavesInfo = () => {
-    fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/leaves`)
+    fetch(`https://devbox-attendance.herokuapp.com/api/welcome/leaves`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -130,7 +130,7 @@ export default function Dashboard() {
   }
 
   const presetEmployeeInfo = () => {
-    fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/attendances`)
+    fetch(`https://devbox-attendance.herokuapp.com/api/welcome/attendances`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -143,7 +143,7 @@ export default function Dashboard() {
   }
 
   const upComingHolidays = () => {
-    fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/holidays`)
+    fetch(`https://devbox-attendance.herokuapp.com/api/welcome/holidays`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -165,7 +165,7 @@ export default function Dashboard() {
     var hoursInfoArr = [];
     setLoaderHours(true);
     for(var i = 0; i < ActiveEmployeeNames.length; i++){
-      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/hours/info/${startDate}/${endDate}/${ActiveEmployeeNames[i].employee_external_id}/${ActiveEmployeeNames[i].name}`)
+      fetch(`https://devbox-attendance.herokuapp.com/api/welcome/hours/info/${startDate}/${endDate}/${ActiveEmployeeNames[i].employee_external_id}/${ActiveEmployeeNames[i].name}`)
       .then(res => res.json())
       .then(
         (response) => {

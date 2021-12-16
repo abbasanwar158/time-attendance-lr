@@ -80,7 +80,7 @@ export default function ManageUsers() {
     var password = values.password;
     var confirmPass = valuesConfirm.password;
     if(password == confirmPass){
-      fetch(`https://time-attendance-lr.herokuapp.com/api/user/update/${usersData[index].id}`, {
+      fetch(`https://devbox-attendance.herokuapp.com/api/user/update/${usersData[index].id}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

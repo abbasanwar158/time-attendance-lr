@@ -59,7 +59,7 @@ export default function EmailAttendance() {
 
     const EmailAttendance = () => {
         setOpen(true);
-        fetch(`https://time-attendance-lr.herokuapp.com/api/attendance/email`, {
+        fetch(`https://devbox-attendance.herokuapp.com/api/attendance/email`, {
             method: "POST",
            // mode: "no-cors",
             headers: {

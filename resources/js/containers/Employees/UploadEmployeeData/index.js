@@ -34,7 +34,7 @@ export default function UploadEmployeeData() {
               // console.log(result[i].joining_date);
 
               if (result[i].id != "") {
-                  fetch(`https://time-attendance-lr.herokuapp.com/api/employees/upload`, {
+                  fetch(`https://devbox-attendance.herokuapp.com/api/employees/upload`, {
                       method: "POST",
                       headers: {
                           Accept: "application/json",

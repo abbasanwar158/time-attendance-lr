@@ -198,7 +198,7 @@ export default function ManageAttendance() {
         else{
             setOpen(true);
             var attendanceArr = [];
-            fetch("https://time-attendance-lr.herokuapp.com/api/attendances")
+            fetch("https://devbox-attendance.herokuapp.com/api/attendances")
                 .then(res => res.json())
                 .then(
                 (response) => {
@@ -226,7 +226,7 @@ export default function ManageAttendance() {
             setSelected(null);
         }
         fetch(
-            `https://time-attendance-lr.herokuapp.com/api/attendance/report/${id}/${startDate}/${endDate}/${allData}/fff/sun`
+            `https://devbox-attendance.herokuapp.com/api/attendance/report/${id}/${startDate}/${endDate}/${allData}/fff/sun`
         )
             .then((res) => res.json())
             .then(

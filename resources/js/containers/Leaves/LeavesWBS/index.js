@@ -100,7 +100,7 @@ export default function LeavesWBS() {
                 leaveshalfCount[i] = 0;
             }
             fetch(
-                `https://time-attendance-lr.herokuapp.com/api/leaves/schedule/${selected}/${yearsValue}`
+                `https://devbox-attendance.herokuapp.com/api/leaves/schedule/${selected}/${yearsValue}`
             )
                 .then((res) => res.json())
                 .then(
