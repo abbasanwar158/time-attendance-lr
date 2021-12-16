@@ -446,4 +446,70 @@ class AttendanceController extends Controller
                       }
                     }
         }
+
+        /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Attendance  $attendance
+     * @return \Illuminate\Http\Response
+     */
+    public function AttendanceAlert()
+    {
+        $Employee= DB :: table('employees')
+          ->Where('active','=','1')
+          ->get(['email','employee_external_id','name']);
+        
+          $presentEmployee=[];
+          $EmployeeName=[];
+          foreach($Employee as $employee){
+            array_push($EmployeeName,$employee->email);
+          }
+        $today = Carbon::today();
+        $data = Attendance::where('date', '=', $today)->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
+        ->get(['employees.name', 'employees.active', 'employees.email','employees.employee_external_id', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
+        foreach($data as $key => $value ){
+            $date1 = new DateTime($value->checkin);
+            $date2 = new DateTime($value->checkout);
+            $difference = $date1->diff($date2);
+            $diffInMinutes = sprintf("%02d", $difference->i);
+            $diffInHours   = sprintf("%02d", $difference->h);
+            $result = $diffInHours . ':' . $diffInMinutes;
+            $value->timeSpend = $result;
+            $value->checkin = date("g:i a", strtotime($value->checkin));
+            $value->checkout = date("g:i a", strtotime($value->checkout));
+
+            foreach($Employee as $employee){
+            
+              if($employee->employee_external_id == $value->employee_external_id ) {
+              
+                array_push($presentEmployee,$value->email);
+                  if($value->timeSpend < '08:00:00'){
+                    
+                    $data = ['employeeName' => $value->name,"Time" => $value->timeSpend];
+                    $emails = $value->email;
+                    Mail::send('attendanceAlert',$data, function($message)  use ($emails)
+                    {
+                      $message->to($emails)
+                          ->cc('aamir.mughal@devbox.co');
+                      $message->subject(' Test Attendance Short' );
+                    });  
+                    
+                  }
+              }
+            }
+        }
+    
+      $result = array_diff($EmployeeName, $presentEmployee);
+
+      foreach($result as $value){
+
+        $emails = $value;
+        Mail::send('Absent',[], function($message)  use ($emails)
+        {
+          $message->to($emails)
+              ->cc('aamir.mughal@devbox.co');
+          $message->subject(' Test Absent' );
+        });  
+      }
+    }
 }
