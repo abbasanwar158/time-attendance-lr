@@ -101,7 +101,7 @@ export default function UploadEmployeeData() {
                           <FormControl fullWidth>
                               <input
                                   accept={".csv"}
-                                  id="hero1"
+                                  id="Upload_data_hero1"
                                   className={styles.heroInput}
                                   type={"file"}
                                   name={"upload-file"}
@@ -117,7 +117,7 @@ export default function UploadEmployeeData() {
                   <Grid container spacing={1} className={styles.gridSubItems}>
                       <Grid item xs={12} sm={3} className={styles.fieldGrid}>
                           <Button
-                              id="upload"
+                              id="Upload_data_upload"
                               size="small"
                               variant="contained"
                               color="primary"
@@ -127,7 +127,7 @@ export default function UploadEmployeeData() {
                               Upload
                           </Button>
                           <Button
-                              id="cancel"
+                              id="Upload_data_cancel"
                               size="small"
                               variant="contained"
                               color="default"

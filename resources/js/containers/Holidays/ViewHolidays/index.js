@@ -239,7 +239,7 @@ export default function ViewHolidays() {
                 <FormControl fullWidth>
                   <TextField
                     className={styles.fieldDiv}
-                    id="date"
+                    id="View_holidate_date"
                     label="Date"
                     type="date"
                     variant="outlined"
@@ -259,7 +259,7 @@ export default function ViewHolidays() {
               <Grid item xs={12} sm={4} className={styles.fieldGrid2}>
                 <FormControl >
                   <FormControlLabel
-                    id="all"
+                    id="View_holidate_all"
                     className={styles.allCheckbox}
                     value="All"
                     control={<Checkbox color="primary" />}
@@ -274,7 +274,7 @@ export default function ViewHolidays() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid2}>
-                <Button id="search" onClick={searchHoliday} variant="contained" color="default" className={styles.searchBtn}>
+                <Button id="View_holidate_search" onClick={searchHoliday} variant="contained" color="default" className={styles.searchBtn}>
                   Search
                 </Button>
               </Grid>

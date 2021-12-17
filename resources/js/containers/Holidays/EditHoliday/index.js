@@ -93,7 +93,7 @@ export default function EditHoliday() {
                 <FormControl fullWidth>
                   <TextField
                     className={styles.fieldDiv}
-                    id="date"
+                    id="Edit_Holiday_date"
                     label="Date"
                     type="date"
                     variant="outlined"
@@ -114,7 +114,7 @@ export default function EditHoliday() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="occassion"
+                    id="Edit_Holiday_occassion"
                     fullWidth
                     size="small"
                     label="Occasion"
@@ -131,10 +131,10 @@ export default function EditHoliday() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button id="update" onClick={holidayUpdate} size="small" variant="contained" color="primary" className={styles.uploadButton}>
+                <Button id="Edit_Holiday_update" onClick={holidayUpdate} size="small" variant="contained" color="primary" className={styles.uploadButton}>
                   Update
                 </Button>
-                <Button id="cancel" onClick={() => {history.push('/holidays')}} size="small" variant="contained" color="default">
+                <Button id="Edit_Holiday_cancel" onClick={() => {history.push('/holidays')}} size="small" variant="contained" color="default">
                   Cancel
                 </Button>
               </Grid>

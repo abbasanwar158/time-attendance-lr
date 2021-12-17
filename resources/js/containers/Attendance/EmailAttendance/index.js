@@ -123,7 +123,7 @@ export default function EmailAttendance() {
                                 <div>
                                     <FormControl fullWidth>
                                         <TextField
-                                            id="months"
+                                            id="email_attendance_months"
                                             fullWidth
                                             size="small"
                                             label="Months"
@@ -155,7 +155,7 @@ export default function EmailAttendance() {
                                 <div>
                                     <FormControl fullWidth>
                                         <TextField
-                                            id="years"
+                                            id="email_attendance_years"
                                             fullWidth
                                             size="small"
                                             label="Years"
@@ -187,7 +187,7 @@ export default function EmailAttendance() {
                                 <div className={styles.allCheckboxContainer}>
                                     <FormControl>
                                         <FormControlLabel
-                                            id="allCheckbox"
+                                            id="email_attendance_allCheckbox"
                                             className={styles.allCheckbox}
                                             value={toAdmin}
                                             onChange={() =>
@@ -204,7 +204,7 @@ export default function EmailAttendance() {
                             </Grid>
                             <Grid item xs={12} sm={2}>
                                 <Button
-                                    id="sendMail"
+                                    id="email_attendance_sendMail"
                                     variant="contained"
                                     color="primary"
                                     className={styles.cardButtons}

@@ -143,7 +143,7 @@ export default function ManageUsers() {
               <FormControl fullWidth >
                 <TextField
                   className={styles.fieldDiv}
-                  id="email"
+                  id="EditUserInformation_email"
                   label="User Name"
                   type="email"
                   variant="outlined"
@@ -163,7 +163,7 @@ export default function ManageUsers() {
               <FormControl fullWidth >
                 <TextField
                   className={styles.fieldDiv}
-                  id="name"
+                  id="EditUserInformation_name"
                   label="Name"
                   type="email"
                   variant="outlined"
@@ -185,7 +185,7 @@ export default function ManageUsers() {
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <OutlinedInput
                   className={styles.fieldDiv}
-                  id="password"
+                  id="EditUserInformation_password"
                   type={values.showPassword ? 'text' : 'password'}
                   value={values.password}
                   onChange={handleChange('password')}
@@ -216,7 +216,7 @@ export default function ManageUsers() {
                 <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
                 <OutlinedInput
                   className={styles.fieldDiv}
-                  id="confirmPassword"
+                  id="EditUserInformation_confirmPassword"
                   type={valuesConfirm.showPasswordConfirm ? 'text' : 'password'}
                   value={valuesConfirm.password}
                   onChange={handleChangeConfirm('password')}
@@ -244,7 +244,7 @@ export default function ManageUsers() {
             <Grid item xs={12} sm={4} className={styles.fieldGrid}>
               <FormControl >
                 <FormControlLabel
-                  id="ifAdmin"
+                  id="EditUserInformation_ifAdmin"
                   className={styles.satSunCheckbox}
                   value="start"
                   control={<Checkbox color="primary" />}
@@ -260,10 +260,10 @@ export default function ManageUsers() {
         <Grid item xs={12}>
           <Grid container spacing={1} className={styles.gridSubItems} >
             <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-              <Button id="update" onClick={editUser} variant="contained" color="primary" className={styles.saveButton}>
+              <Button id="EditUserInformation_update" onClick={editUser} variant="contained" color="primary" className={styles.saveButton}>
                 Update
               </Button>
-              <Button id="cancel" onClick={() => {history.push('/users/new')}} size="small" variant="contained" color="default">
+              <Button id="EditUserInformation_cancel" onClick={() => {history.push('/users/new')}} size="small" variant="contained" color="default">
                 Cancel
               </Button>
             </Grid>

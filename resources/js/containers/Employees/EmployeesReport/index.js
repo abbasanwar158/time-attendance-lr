@@ -242,7 +242,7 @@ export default function EmployeesReport() {
                                     <TextField
                                         className={styles.fieldDiv}
                                         value={personName}
-                                        id="employee"
+                                        id="Employee_report_employee"
                                         fullWidth
                                         size="small"
                                         label="Employee"
@@ -271,7 +271,7 @@ export default function EmployeesReport() {
                                 <div>
                                     <FormControl fullWidth>
                                         <TextField
-                                            id="years"
+                                            id="Employee_report_years"
                                             fullWidth
                                             size="small"
                                             label="Years"
@@ -306,7 +306,7 @@ export default function EmployeesReport() {
                                 className={styles.buttonDiv}
                             >
                                 <Button
-                                    id="populate"
+                                    id="Employee_report_populate"
                                     variant="contained"
                                     color="primary"
                                     className={styles.cardButtons}
@@ -337,7 +337,7 @@ export default function EmployeesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv2}
-                                        id="name"
+                                        id="Employee_report_name"
                                         fullWidth
                                         size="small"
                                         label="Name"
@@ -369,7 +369,7 @@ export default function EmployeesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv2}
-                                        id="jDate"
+                                        id="Employee_report_jDate"
                                         fullWidth
                                         size="small"
                                         label="Joining Date"
@@ -402,7 +402,7 @@ export default function EmployeesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv2}
-                                        id="yearsSpent"
+                                        id="Employee_report_yearsSpent"
                                         fullWidth
                                         size="small"
                                         label="Spent Year in devbox"
@@ -430,7 +430,7 @@ export default function EmployeesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv2}
-                                        id="leavesInyear"
+                                        id="Employee_report_leavesInyear"
                                         fullWidth
                                         size="small"
                                         label="Leaves in Year"
@@ -458,7 +458,7 @@ export default function EmployeesReport() {
                                 <FormControl fullWidth>
                                     <TextField
                                         className={styles.fieldDiv2}
-                                        id="hoursInYear"
+                                        id="Employee_report_hoursInYear"
                                         fullWidth
                                         size="small"
                                         label="Hours in Year"

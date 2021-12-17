@@ -67,21 +67,21 @@ console.log("",)
     <div className={styles.signupContainer}>
       <h1 className={styles.heading}>Sign Up</h1>
       <TextField
-        id='outlined-basic'
+        id='Sign_Up_name'
         label='Full Name'
         onChange={(e) => setFullname(e.target.value)}               /*setting name of the user*/
         variant='outlined'
         type='text'
       />
       <TextField
-        id='outlined-basic'
+        id='Sign_Up_email'
         label='Email'
         onChange={(e) => setEmail(e.target.value)}                /*setting username of the user*/
         variant='outlined'
         type='text'
       />
       <TextField
-        id='outlined-basic'
+        id='Sign_Up_passw'
         label='Create Password'
         onChange={(e) => setPassword(e.target.value)}             /*setting password of the user*/
         variant='outlined'

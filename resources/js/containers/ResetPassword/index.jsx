@@ -21,7 +21,7 @@ export default function Restpassword() {
     <h1 className={styles.heading}>Reset Password</h1>
     <p className={styles.des}>Enter you new password below</p>
     <TextField
-      id='outlined-basic'
+      id='ResetPassword_outlined-basic'
       label='Password'
       variant='outlined'
       type={passwordShown ? 'text' : 'password'}

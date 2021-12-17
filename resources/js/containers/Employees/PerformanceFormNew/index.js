@@ -57,7 +57,7 @@ export default function PerformanceFormNew() {
                     <FormControl fullWidth >
                       <TextField
                         className={styles.fieldDiv}
-                        id="questions"
+                        id="Employee_Performace_questions"
                         fullWidth
                         size="small"
                         label="Employee"
@@ -80,7 +80,7 @@ export default function PerformanceFormNew() {
                     <FormControl fullWidth >
                       <TextField
                         className={styles.fieldDiv}
-                        id="questions"
+                        id="Employee_Performace_questions"
                         fullWidth
                         size="small"
                         label="Email"
@@ -100,7 +100,7 @@ export default function PerformanceFormNew() {
                     <FormControl fullWidth >
                       <TextField
                         className={styles.fieldDiv}
-                        id="questions"
+                        id="Employee_Performace_questions"
                         fullWidth
                         size="small"
                         label="Join Date"
@@ -122,7 +122,7 @@ export default function PerformanceFormNew() {
                       <Grid item xs={12} sm={5}>
                         <FormControl fullWidth>
                           <TextField
-                            id="date"
+                            id="Employee_Performace_date"
                             label="From"
                             type="date"
                             variant="outlined"
@@ -142,7 +142,7 @@ export default function PerformanceFormNew() {
                       <Grid item xs={12} sm={5} className={styles.toGrid} >
                         <FormControl fullWidth>
                           <TextField
-                            id="date"
+                            id="Performace_date"
                             label="To"
                             type="date"
                             variant="outlined"

@@ -96,7 +96,7 @@ export default function UploadAttendance() {
                             <FormControl fullWidth>
                                 <input
                                     accept={".csv"}
-                                    id="hero1"
+                                    id="upload_atten_hero1"
                                     ref={fileRef}
                                     className={styles.heroInput}
                                     type={"file"}
@@ -113,7 +113,7 @@ export default function UploadAttendance() {
                     <Grid container spacing={1} className={styles.gridSubItems}>
                         <Grid item xs={12} sm={3} className={styles.fieldGrid}>
                             <Button
-                                id="upload"
+                                id="upload_atten_upload"
                                 size="small"
                                 variant="contained"
                                 color="primary"
@@ -123,7 +123,7 @@ export default function UploadAttendance() {
                                 Upload
                             </Button>
                             <Button
-                                id="cancel"
+                                id="upload_atten_cancel"
                                 size="small"
                                 variant="contained"
                                 color="default"
@@ -142,7 +142,7 @@ export default function UploadAttendance() {
                             <FormControl fullWidth>
                                 <TextField
                                     className={styles.fieldDiv}
-                                    id="employees"
+                                    id="del_employees"
                                     fullWidth
                                     size="small"
                                     label="Employee"
@@ -174,7 +174,7 @@ export default function UploadAttendance() {
                         <Grid item xs={12} sm={4} className={styles.fieldGrid}>
                             <FormControl>
                                 <FormControlLabel
-                                    id="all"
+                                    id="del_all"
                                     className={styles.allCheckbox}
                                     value="start"
                                     control={<Checkbox color="primary" />}
@@ -183,7 +183,7 @@ export default function UploadAttendance() {
                                 />
                             </FormControl>
                             <Button
-                                id="delete"
+                                id="del_delete"
                                 size="small"
                                 variant="contained"
                                 color="secondary"
