@@ -33,7 +33,7 @@ export default function Dashboard() {
   const [noOfLeaves, setNoOfLeaves] = useState('');
   const [currentDay, setCurrentDay] = useState('');
   const [noOfEmplPresent, setNoOfEmplPresent] = useState('');
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
   const [loaderHours, setLoaderHours] = useState(false);
   const { ActiveEmployeeNames } = useContext(RootContext);
   const [open, setOpen] = useState(false);
