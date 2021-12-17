@@ -33,10 +33,8 @@ export default function Dashboard() {
   const [noOfLeaves, setNoOfLeaves] = useState('');
   const [currentDay, setCurrentDay] = useState('');
   const [noOfEmplPresent, setNoOfEmplPresent] = useState('');
-  const [loader, setLoader] = useState(true);
-  const [loaderHours, setLoaderHours] = useState(false);
   const { ActiveEmployeeNames } = useContext(RootContext);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [optionsMonths, setOptionsMonths] = useState([
     'January',
     'February',
@@ -277,7 +275,6 @@ export default function Dashboard() {
                           value={months}
                           className={styles.placeholderColor}
                           onChange={handleChangeMonths}
-                          disabled={loader}
                           menuprops={{ variant: "menu" }}
                           select
                           SelectProps={{ IconComponent: () => <Chevron /> }}
@@ -302,7 +299,6 @@ export default function Dashboard() {
                           variant="outlined"
                           onChange={handleChangeYears}
                           value={years}
-                          disabled={loader}
                           className={styles.placeholderColor}
                           menuprops={{ variant: "menu" }}
                           select
@@ -324,9 +320,8 @@ export default function Dashboard() {
                       color="primary"
                       className={styles.cardButtons}
                       onClick={leavesInfo}
-                      disabled={loader}
                     >
-                      {loader ? <CircularProgress /> : <span>Search</span>}
+                      Search
                     </Button>
                   </Grid>
                 </Grid>
@@ -386,7 +381,6 @@ export default function Dashboard() {
                           variant="outlined"
                           size="small"
                           value={startDate}
-                          disabled={loaderHours}
                           onChange={handleChangeStartDate}
                           InputLabelProps={{
                             shrink: true,
@@ -408,7 +402,6 @@ export default function Dashboard() {
                             min:startDate ? startDate :"0000-00-00" ,
                           }}
                           value={endDate}
-                          disabled={loaderHours}
                           onChange={handleChangeEndDate}
                           InputLabelProps={{
                             shrink: true,
@@ -424,9 +417,8 @@ export default function Dashboard() {
                       color="primary"
                       className={styles.cardButtons}
                       onClick={hoursInfo}
-                      disabled={loaderHours}
                     >
-                      {loaderHours ? <CircularProgress /> : <span>Search</span>}
+                      Search
                     </Button>
                   </Grid>
                 </Grid>
