@@ -36,7 +36,7 @@ export default function Dashboard() {
   const [loader, setLoader] = useState(false);
   const [loaderHours, setLoaderHours] = useState(false);
   const { ActiveEmployeeNames } = useContext(RootContext);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const [optionsMonths, setOptionsMonths] = useState([
     'January',
     'February',
@@ -81,36 +81,37 @@ export default function Dashboard() {
     OnleavesInfo();
     presetEmployeeInfo();
     upComingHolidays();
-  }, [leavesInformation]);
+  }, []);
 
   const leavesInfo = () => {
     var dataArr = []
-    setLoader(true);
+    var monthSend = months;
+    var yearSend = years;
+    setOpen(true);
     if(months == ""){
       var date = new Date();
-      const month = date.toLocaleString('default', { month: 'long' });
-      setMonths(month); 
+      monthSend = date.toLocaleString('default', { month: 'long' });
+      setMonths(monthSend);
     }
     if(years == ""){
-      setYears(new Date().getFullYear());
+      yearSend = new Date().getFullYear();
+      setYears(yearSend);
     }
-    for(var i = 0; i < ActiveEmployeeNames.length; i++){
-      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/leaves/info/${months}/${years}/${ActiveEmployeeNames[i].employee_external_id}/${ActiveEmployeeNames[i].name}`)
+      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/leaves/info/${monthSend}/${yearSend}`)
       .then(res => res.json())
       .then(
         (response) => {
-          dataArr.push(response);            
+          for (var i = 0; i < response.length; i++) {
+            dataArr.push(response[i])
+          }
+          setLeavesInformation(dataArr);  
+          setOpen(false);
         },
         (error) => {
+          setOpen(false);
           console.log("error", error)
         }
         )
-        }
-        setTimeout(
-          () => {setLeavesInformation(dataArr); setLoader(false)},
-          30000
-        );
-        
   }
 
   const OnleavesInfo = () => {
@@ -163,26 +164,22 @@ export default function Dashboard() {
 
   const hoursInfo = () => {
     var hoursInfoArr = [];
-    setLoaderHours(true);
-    for(var i = 0; i < ActiveEmployeeNames.length; i++){
-      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/hours/info/${startDate}/${endDate}/${ActiveEmployeeNames[i].employee_external_id}/${ActiveEmployeeNames[i].name}`)
+    setOpen(true);
+      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/hours/info/${startDate}/${endDate}`)
       .then(res => res.json())
       .then(
         (response) => {
-          hoursInfoArr.push(response);            
+          for (var i = 0; i < response.length; i++) {
+            hoursInfoArr.push(response[i])
+          }
+          setHoursInformation(hoursInfoArr);  
+          setOpen(false);
         },
         (error) => {
-          console.log("error", error)
+          setOpen(false);
+          console.log("error", error);
         }
         )
-        }
-        setTimeout(
-        () => {
-          setHoursInformation(hoursInfoArr);
-          setLoaderHours(false);
-        },
-          30000
-        );
   }
 
   return (
@@ -222,7 +219,7 @@ export default function Dashboard() {
             </div>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
-            <div className={styles.card} onClick={() => history.push('/employees')}>
+            <div className={styles.card} onClick={() => history.push('/attendance/report')}>
               <div className={`${styles.cardEmployees}`}>
                 <div className={styles.cardHeaderText}>
                   Present Employees

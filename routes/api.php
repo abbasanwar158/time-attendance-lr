@@ -79,5 +79,5 @@ Route::post('/attendance/email', [App\Http\Controllers\api\AttendanceController:
 Route::get('/welcome/leaves', [App\Http\Controllers\api\WelcomeController::class, 'onLeave']);
 Route::get('/welcome/attendances', [App\Http\Controllers\api\WelcomeController::class, 'presentEmployees']);
 Route::get('/welcome/holidays', [App\Http\Controllers\api\WelcomeController::class, 'upComeHolidays']);
-Route::get('/welcome/leaves/info/{month}/{year}/{employeeExId}/{empName}', [App\Http\Controllers\api\WelcomeController::class, 'leavesInformation']);
-Route::get('/welcome/hours/info/{from}/{to}/{employeeExId}/{emplName}', [App\Http\Controllers\api\WelcomeController::class, 'hoursInformation']);
+Route::get('/welcome/leaves/info/{month}/{year}', [App\Http\Controllers\api\WelcomeController::class, 'leavesInformation']);
+Route::get('/welcome/hours/info/{from}/{to}', [App\Http\Controllers\api\WelcomeController::class, 'hoursInformation']);
