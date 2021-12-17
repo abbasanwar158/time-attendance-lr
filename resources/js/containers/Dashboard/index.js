@@ -269,7 +269,7 @@ export default function Dashboard() {
                     <div>
                       <FormControl fullWidth>
                         <TextField
-                          id="months"
+                          id="dashboard-months"
                           fullWidth
                           size="small"
                           label="Months"
@@ -295,7 +295,7 @@ export default function Dashboard() {
                     <div>
                       <FormControl fullWidth>
                         <TextField
-                          id="years"
+                          id="dashboard-years"
                           fullWidth
                           size="small"
                           label="Years"
@@ -319,7 +319,7 @@ export default function Dashboard() {
                   </Grid>
                   <Grid item xs={12} sm={2}>
                     <Button
-                      id="leavesInfoBtn"
+                      id="dashboard-leavesInfoBtn"
                       variant="contained"
                       color="primary"
                       className={styles.cardButtons}
@@ -380,7 +380,7 @@ export default function Dashboard() {
                     <div>
                       <FormControl fullWidth>
                         <TextField
-                          id="sDate"
+                          id="dashboard-sDate"
                           label="Start Date"
                           type="date"
                           variant="outlined"
@@ -399,7 +399,7 @@ export default function Dashboard() {
                     <div>
                       <FormControl fullWidth>
                         <TextField
-                          id="eDate"
+                          id="dashboard-eDate"
                           label="End Date"
                           type="date"
                           variant="outlined"
