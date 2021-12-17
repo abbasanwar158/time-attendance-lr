@@ -79,8 +79,12 @@ class WelcomeController extends Controller
      * @param  \App\Models\Welcome  $welcome
      * @return \Illuminate\Http\Response
      */
-    public function leavesInformation($month, $year, $employeeExId, $empName)
+    public function leavesInformation($month, $year)
     {
+        $Employee= DB :: table('employees')
+          ->Where('active','=','1')
+          ->get();
+        $finalData = array();
         $todayYear = date('Y');
         $todayMonth = date('m');
         if ($year == 'null'){
@@ -90,28 +94,30 @@ class WelcomeController extends Controller
             $month = $todayMonth;
         }
         $month_number = date('m', strtotime($month . $year));
-        $dataHalf = Leave::join('employees', 'employee_external_id', '=', 'leaves.employee_id')
-            ->where("employee_id",'=', $employeeExId)
-            ->where('status', '=', 'Half')
-            ->whereYear('date', '=', $year)
-            ->whereMonth('date', '=', $month_number)
-            ->get(['employees.name', 'leaves.id', 'leaves.status', 'leaves.employee_id']);
-        $halfLength = count($dataHalf);
-
-        $dataFull = Leave::join('employees', 'employee_external_id', '=', 'leaves.employee_id')
-            ->where("employee_id",'=', $employeeExId)
-            ->where('status', '=', 'Full')
-            ->whereYear('date', '=', $year)
-            ->whereMonth('date', '=', $month_number)
-            ->get(['employees.name', 'leaves.id', 'leaves.status', 'leaves.employee_id']);
-        $fullLenght = count($dataFull);
-        $x = (object) [
-            'EmplName' => $empName,
-            'EmpId' => $employeeExId,
-            'half' => $halfLength,
-            'full' => $fullLenght
-        ];
-        return $x;
+        foreach($Employee as $key => $value ){
+            $dataHalf = Leave::join('employees', 'employee_external_id', '=', 'leaves.employee_id')
+                ->where("employee_id",'=', $value->employee_external_id)
+                ->where('status', '=', 'Half')
+                ->whereYear('date', '=', $year)
+                ->whereMonth('date', '=', $month_number)
+                ->get(['employees.name', 'leaves.id', 'leaves.status', 'leaves.employee_id']);
+            $halfLength = count($dataHalf);
+    
+            $dataFull = Leave::join('employees', 'employee_external_id', '=', 'leaves.employee_id')
+                ->where("employee_id",'=', $value->employee_external_id)
+                ->where('status', '=', 'Full')
+                ->whereYear('date', '=', $year)
+                ->whereMonth('date', '=', $month_number)
+                ->get(['employees.name', 'leaves.id', 'leaves.status', 'leaves.employee_id']);
+            $fullLenght = count($dataFull);
+            array_push($finalData, [
+                'EmplName' => $value->name,
+                'EmpId' => $value->employee_external_id,
+                'half' => $halfLength,
+                'full' => $fullLenght
+            ]);
+        }
+        return $finalData;
     }
 
     /**
@@ -120,12 +126,18 @@ class WelcomeController extends Controller
      * @param  \App\Models\Welcome  $welcome
      * @return \Illuminate\Http\Response
      */
-    public function hoursInformation($startDate, $endDate, $employeeExId, $emplName)
+    public function hoursInformation($startDate, $endDate)
     {
-        $totalHoursSpend = 0;
-        $totalMinSpend = 0;
+        $Employee= DB :: table('employees')
+          ->Where('active','=','1')
+          ->get();
+        $finalData = array();
+
+        foreach($Employee as $key => $emp ){
+          $totalHoursSpend = 0;
+          $totalMinSpend = 0;
         $data = Attendance::join('employees', 'employee_external_id', '=', 'attendances.employee_id')
-        ->where("employee_id",'=', $employeeExId)
+        ->where("employee_id",'=', $emp->employee_external_id)
         ->whereBetween('date', [$startDate, $endDate])
         ->get(['employees.name', 'attendances.checkin', 'attendances.checkout',]);
         foreach($data as $key => $value ){
@@ -138,30 +150,42 @@ class WelcomeController extends Controller
             $value->minutes = $totalMinSpend;
         }
         if(count($data) > 0){
-            $arrayIndex = count($data) - 1;
-            if($data[$arrayIndex]->minutes > 60){
-                $min = $data[$arrayIndex]->minutes / 60;
-                $hours = $data[$arrayIndex]->hours + $min;
+            $minutsArr = $data[count($data) - 1];
+            if($minutsArr->minutes > 60){
+                $min = $minutsArr->minutes / 60;
+                $hours = $minutsArr->hours + $min;
                 $totalHours = explode('.', $hours);
                 if(count($totalHours) > 1){
-                    $data[$arrayIndex]->hours = $totalHours[0];
-                    $data[$arrayIndex]->minutes = $totalHours[1][0];
+                    array_push($finalData, [
+                        'name' => $emp->name,
+                        'hours' => $totalHours[0],
+                        'minutes' => $totalHours[1][0],
+                    ]);
                 }
                 else{
-                    $data[$arrayIndex]->hours = $totalHours[0];
-                    $data[$arrayIndex]->minutes = 0;
+                  array_push($finalData, [
+                    'name' => $emp->name,
+                    'hours' => $totalHours[0],
+                    'minutes' => $totalHours[1][0],
+                  ]);
                 }
             }
-            return $data[$arrayIndex];
+            else{
+                array_push($finalData, [
+                    'name' => $emp->name,
+                    'hours' => $minutsArr->hours,
+                    'minutes' => 0,
+                ]);
+            }
         }
         else{
-            $x = (object) [
-                'name' => $emplName,
+            array_push($finalData, [
+                'name' => $emp->name,
                 'hours' => 0,
                 'minutes' => 0,
-            ];
-            return $x;
+            ]);
         }
-        return $data;
+    }
+    return $finalData;
     }
 }
