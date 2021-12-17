@@ -117,7 +117,7 @@ export default function ApplyLeaves() {
                           >
                               <FormControl fullWidth>
                                   <TextField
-                                      id="leaveType"
+                                      id="Apply_For_Leave_leaveType"
                                       fullWidth
                                       size="small"
                                       label="Select Leave Type"
@@ -154,7 +154,7 @@ export default function ApplyLeaves() {
                                       <Grid item xs={12} sm={5}>
                                           <FormControl fullWidth>
                                               <TextField
-                                                  id="fDate"
+                                                  id="Apply_For_Leave_fDate"
                                                   label="From"
                                                   type="date"
                                                   variant="outlined"
@@ -180,7 +180,7 @@ export default function ApplyLeaves() {
                                       >
                                           <FormControl fullWidth>
                                               <TextField
-                                                  id="tDate"
+                                                  id="Apply_For_Leave_tDate"
                                                   label="To"
                                                   type="date"
                                                   variant="outlined"
@@ -210,7 +210,7 @@ export default function ApplyLeaves() {
                           >
                               <FormControl fullWidth>
                                   <TextField
-                                      id="subject"
+                                      id="Apply_For_Leave_subject"
                                       label="Subject"
                                       type="text"
                                       value={subject}
@@ -230,7 +230,7 @@ export default function ApplyLeaves() {
                           >
                               <FormControl fullWidth>
                                   <TextField
-                                      id="message"
+                                      id="Apply_For_Leave_message"
                                       label="Message"
                                       multiline
                                       rows={4}
@@ -250,7 +250,7 @@ export default function ApplyLeaves() {
                               className={styles.fieldGrid}
                           >
                               <Button
-                                id="apply"  
+                                id="Apply_For_Leave_apply"  
                                 variant="contained"
                                 color="primary"
                                 className={styles.applyButton}
@@ -259,7 +259,7 @@ export default function ApplyLeaves() {
                                   Apply
                               </Button>
                               <Button 
-                                id="cancel"
+                                id="Apply_For_Leave_cancel"
                                 variant="contained" 
                                 color="default"
                                 onClick={(e) => history.push('/leaves')}

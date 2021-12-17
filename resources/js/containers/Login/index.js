@@ -104,7 +104,7 @@ export default function Login() {
             <p className={styles.textP}> User name </p>
             <TextField
               className={styles.fieldsWidth}
-              id="outlined-basic-email"
+              id="login_outlined-basic-email"
               label="Email"
               type="text"
               variant="outlined"
@@ -116,7 +116,7 @@ export default function Login() {
             <FormControl variant="outlined" className={styles.fieldsWidth}>
               <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
               <OutlinedInput
-                id="outlined-adornment-password"
+                id="login_outlined-adornment-password"
                 type={values.showPassword ? 'text' : 'password'}
                 value={values.password}
                 onChange={handleChange('password')}
@@ -137,7 +137,7 @@ export default function Login() {
               />
             </FormControl>
             <Button
-              id="login"
+              id="Login_login"
               className={styles.loginButton}
               onClick={loginUser}
               variant="contained"

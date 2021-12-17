@@ -96,7 +96,7 @@ export default function UploadLeaves() {
                         <Grid item xs={12} sm={3} className={styles.fieldGrid}>
                             <FormControl fullWidth>
                                 <input
-                                    id="hero1"
+                                    id="UploadLeaves_hero1"
                                     accept={".csv"}
                                     className={styles.heroInput}
                                     type={"file"}
@@ -112,7 +112,7 @@ export default function UploadLeaves() {
                     <Grid container spacing={1} className={styles.gridSubItems}>
                         <Grid item xs={12} sm={3} className={styles.fieldGrid}>
                             <Button
-                                id="upload"
+                                id="UploadLeaves_upload"
                                 size="small"
                                 variant="contained"
                                 color="primary"
@@ -122,7 +122,7 @@ export default function UploadLeaves() {
                                 Upload
                             </Button>
                             <Button
-                                id="cancel"
+                                id="UploadLeaves_cancel"
                                 size="small"
                                 variant="contained"
                                 color="default"

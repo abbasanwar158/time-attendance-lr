@@ -106,7 +106,7 @@ export default function NewLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="employees"
+                    id="AddNewLeave_employees"
                     fullWidth
                     size="small"
                     label="Employee"
@@ -133,7 +133,7 @@ export default function NewLeave() {
                 <FormControl fullWidth>
                   <TextField
                     className={styles.fieldDiv}
-                    id="date"
+                    id="AddNewLeave_date"
                     label="Date"
                     type="date"
                     variant="outlined"
@@ -154,7 +154,7 @@ export default function NewLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="status"
+                    id="AddNewLeave_status"
                     fullWidth
                     size="small"
                     label="Status"
@@ -182,7 +182,7 @@ export default function NewLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="note"
+                    id="AddNewLeave_note"
                     fullWidth
                     size="small"
                     label="Note"
@@ -199,11 +199,11 @@ export default function NewLeave() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button id="save" variant="contained" color="primary" onClick={newattendance} className={styles.saveButton}>
+                <Button id="AddNewLeave_save" variant="contained" color="primary" onClick={newattendance} className={styles.saveButton}>
                   Save
                 </Button>
                 <Button
-                  id="cancel"
+                  id="AddNewLeave_cancel"
                   onClick={(e) => history.push('/leaves')} 
                   variant="contained" 
                   color="default"

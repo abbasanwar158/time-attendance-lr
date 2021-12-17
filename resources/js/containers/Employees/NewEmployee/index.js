@@ -130,7 +130,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="externalId"
+                    id="Add_New_Employee_externalId"
                     fullWidth
                     size="small"
                     label="Employee external"
@@ -150,7 +150,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="name"
+                    id="Add_New_Employee_name"
                     fullWidth
                     size="small"
                     label="Name"
@@ -170,7 +170,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="designation"
+                    id="Add_New_Employee_designation"
                     fullWidth
                     size="small"
                     label="Designation"
@@ -190,7 +190,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="cnic"
+                    id="Add_New_Employee_cnic"
                     fullWidth
                     size="small"
                     label="CNIC"
@@ -210,7 +210,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="email"
+                    id="Add_New_Employee_email"
                     fullWidth
                     size="small"
                     label="Email"
@@ -230,7 +230,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth>
                   <TextField
                     className={styles.fieldDiv}
-                    id="jDate"
+                    id="Add_New_Employee_jDate"
                     label="Joining Date"
                     type="date"
                     variant="outlined"
@@ -252,7 +252,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="description"
+                    id="Add_New_Employee_description"
                     fullWidth
                     size="small"
                     label="Description"
@@ -272,7 +272,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="category"
+                    id="Add_New_Employee_category"
                     fullWidth
                     size="small"
                     label="Category"
@@ -303,7 +303,7 @@ export default function NewEmployee() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="status"
+                    id="Add_New_Employee_status"
                     fullWidth
                     size="small"
                     label="Status"
@@ -328,10 +328,10 @@ export default function NewEmployee() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button id="save" onClick={newEmployee} variant="contained" color="primary" className={styles.saveButton}>
+                <Button id="Add_New_Employee_save" onClick={newEmployee} variant="contained" color="primary" className={styles.saveButton}>
                   Save
                 </Button>
-                <Button id="cancel" onClick={(e) => history.push('/employees')} variant="contained" color="default">
+                <Button id="Add_New_Employee_cancel" onClick={(e) => history.push('/employees')} variant="contained" color="default">
                   Cancel
                 </Button>
               </Grid>

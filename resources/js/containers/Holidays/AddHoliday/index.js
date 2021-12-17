@@ -80,7 +80,7 @@ export default function AddHoliday() {
                 <FormControl fullWidth>
                   <TextField
                     className={styles.fieldDiv}
-                    id="date"
+                    id="New_Holiday_date"
                     label="Date"
                     type="date"
                     variant="outlined"
@@ -98,7 +98,7 @@ export default function AddHoliday() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <a id="national" target="_blank" href="https://www.officeholidays.com/countries/pakistan/">
+                <a id="New_Holiday_national" target="_blank" href="https://www.officeholidays.com/countries/pakistan/">
                   <Button variant="contained" color="primary" className={styles.holidaysBtn} >
                     National Holidays
                   </Button>
@@ -112,7 +112,7 @@ export default function AddHoliday() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="occassion"
+                    id="New_Holiday_occassion"
                     fullWidth
                     size="small"
                     label="Occasion"
@@ -129,10 +129,10 @@ export default function AddHoliday() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button id="save" onClick={newHoliday} size="small" variant="contained" color="primary" className={styles.uploadButton}>
+                <Button id="New_Holiday_save" onClick={newHoliday} size="small" variant="contained" color="primary" className={styles.uploadButton}>
                   Save
                 </Button>
-                <Button id="cancel" onClick={() => {history.push('/holidays')}} size="small" variant="contained" color="default">
+                <Button id="New_Holiday_cancel" onClick={() => {history.push('/holidays')}} size="small" variant="contained" color="default">
                   Cancel
                 </Button>
               </Grid>

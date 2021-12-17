@@ -85,7 +85,7 @@ export default function EditEmployeeStatus() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="employee"
+                    id="edit_status_employee"
                     fullWidth
                     size="small"
                     label="Employee"
@@ -112,7 +112,7 @@ export default function EditEmployeeStatus() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="status"
+                    id="edit_status"
                     fullWidth
                     size="small"
                     label="Status"
@@ -137,11 +137,11 @@ export default function EditEmployeeStatus() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button id="update" onClick={statusUpdate} variant="contained" color="primary" className={styles.saveButton}>
+                <Button id="edit_status_update" onClick={statusUpdate} variant="contained" color="primary" className={styles.saveButton}>
                   Update
                 </Button>
                 <Button
-                  id="cancel"
+                  id="edit_status_cancel"
                  variant="contained" 
                  color="default"
                  onClick={(e) => history.push('/employees')}

@@ -298,7 +298,7 @@ export default function ManageAttendance() {
                                     <FormControl fullWidth>
                                         <TextField
                                             className={styles.fieldDiv}
-                                            id="employees"
+                                            id="Report_employees"
                                             fullWidth
                                             size="small"
                                             label="Employee"
@@ -331,7 +331,7 @@ export default function ManageAttendance() {
                                     <FormControl fullWidth>
                                         <TextField
                                             className={styles.fieldDiv}
-                                            id="fDate"
+                                            id="Report_fDate"
                                             label="From"
                                             type="date"
                                             variant="outlined"
@@ -352,7 +352,7 @@ export default function ManageAttendance() {
                                     <FormControl fullWidth>
                                         <TextField
                                             className={styles.fieldDiv}
-                                            id="tDate"
+                                            id="Report_tDate"
                                             label="To"
                                             type="date"
                                             variant="outlined"
@@ -375,7 +375,7 @@ export default function ManageAttendance() {
                                 <Grid item xs={12} sm={4} className={styles.fieldGrid}>
                                     <FormControl>
                                         <FormControlLabel
-                                            id="allCheckbox"
+                                            id="Report_allCheckbox"
                                             className={styles.allCheckbox}
                                             value="start"
                                             onChange={allCheckboxFun}
@@ -392,7 +392,7 @@ export default function ManageAttendance() {
                                 <Grid item xs={12} sm={4} className={styles.fieldGrid}>
                                     <FormControl>
                                         <FormControlLabel
-                                            id="saturday"
+                                            id="Report_saturday"
                                             className={styles.satSunCheckbox}
                                             value="start"
                                             onChange={saturdayFun}
@@ -409,7 +409,7 @@ export default function ManageAttendance() {
                                 <Grid item xs={12} sm={4} className={styles.fieldGrid}>
                                     <FormControl>
                                         <FormControlLabel
-                                            id="sunday"
+                                            id="Report_sunday"
                                             className={styles.satSunCheckbox}
                                             value="start"
                                             onChange={sundayFun}
@@ -425,7 +425,7 @@ export default function ManageAttendance() {
                             <Grid container spacing={1} className={styles.gridSubItems}>
                                 <Grid item xs={12} sm={4} className={styles.fieldGrid}>
                                     <Button
-                                        id="search"
+                                        id="Report_search"
                                         variant="contained"
                                         color="primary"
                                         onClick={attendanceSearch}

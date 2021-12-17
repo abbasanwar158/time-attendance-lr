@@ -37,7 +37,7 @@ export default function EditMail() {
                 <Grid item xs={12} sm={12} className={styles.fieldGrid} >
                   <FormControl fullWidth>
                     <TextField
-                      id="subject"
+                      id="edit_email-subject"
                       label="Subject"
                       type="text"
                       value={subject}
@@ -52,7 +52,7 @@ export default function EditMail() {
                 <Grid item xs={12} sm={12} className={styles.fieldGrid} >
                   <FormControl fullWidth>
                     <TextField
-                      id="message"
+                      id="edit_email-message"
                       label="Message"
                       multiline
                       rows={4}
@@ -67,14 +67,14 @@ export default function EditMail() {
                 </Grid>
                 <Grid item xs={12} sm={12} className={styles.fieldGrid} >
                   <Button
-                    id="save"
+                    id="edit_email-save"
                     variant="contained"
                     color="primary"
                     className={styles.applyButton}
                   >
                     Send
                   </Button>
-                  <Button id="cancel" onClick={() => {history.push('/employees/mail')}} variant="contained" color="default">
+                  <Button id="edit_email-cancel" onClick={() => {history.push('/employees/mail')}} variant="contained" color="default">
                     Cancel
                   </Button>
                 </Grid>

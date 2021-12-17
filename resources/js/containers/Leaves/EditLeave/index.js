@@ -114,7 +114,7 @@ export default function EditLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="employees"
+                    id="editleave_employees"
                     fullWidth
                     size="small"
                     label="Employee"
@@ -141,7 +141,7 @@ export default function EditLeave() {
                 <FormControl fullWidth>
                   <TextField
                     className={styles.fieldDiv}
-                    id="date"
+                    id="editleave_date"
                     label="Date"
                     type="date"
                     variant="outlined"
@@ -162,7 +162,7 @@ export default function EditLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="status"
+                    id="editleave_status"
                     fullWidth
                     size="small"
                     label="Status"
@@ -190,7 +190,7 @@ export default function EditLeave() {
                 <FormControl fullWidth >
                   <TextField
                     className={styles.fieldDiv}
-                    id="note"
+                    id="editleave_note"
                     fullWidth
                     size="small"
                     label="Note"
@@ -207,11 +207,11 @@ export default function EditLeave() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button id="update" onClick={updateLeave} variant="contained" color="primary" className={styles.saveButton}>
+                <Button id="editleave_update" onClick={updateLeave} variant="contained" color="primary" className={styles.saveButton}>
                   Update
                 </Button>
                 <Button
-                  id="cancel"
+                  id="editleave_cancel"
                   variant="contained"
                   color="default"
                   onClick={(e) => history.push('/leaves')}

@@ -252,7 +252,7 @@ export default function ManageAttendance() {
               <FormControl fullWidth >
                 <TextField
                   className={styles.fieldDiv}
-                  id="date"
+                  id="manag_attendance_date"
                   label="DATE"
                   type="date"
                   variant="outlined"
@@ -274,7 +274,7 @@ export default function ManageAttendance() {
               <FormControl fullWidth>
                 <TextField
                   className={styles.fieldDiv}
-                  id="checkin"
+                  id="manag_attendance_checkin"
                   label="CHECKIN"
                   type="time"
                   variant="outlined"
@@ -296,7 +296,7 @@ export default function ManageAttendance() {
               <FormControl fullWidth>
                 <TextField
                   className={styles.fieldDiv}
-                  id="checkout"
+                  id="manag_attendance_checkout"
                   label="CHECKOUT"
                   type="time"
                   variant="outlined"
@@ -319,12 +319,12 @@ export default function ManageAttendance() {
                 <InputLabel >Select employees</InputLabel>
                 <Select
                   className={styles.fieldDiv}
-                  id="demo-mutiple-checkbox"
+                  id="manag_attendance_mutiple-checkbox"
                   multiple
                   value={personName}
                   variant="outlined"
                   onChange={handleChange}
-                  input={<Input id="select-multiple-chip" />}
+                  input={<Input id="manag_attendance_select-multiple-chip" />}
                   renderValue={(selected) => (
                     <div className={styles.overFlow}>
                       {selected.map((value) => (
@@ -349,7 +349,7 @@ export default function ManageAttendance() {
           <Grid container spacing={1} className={styles.gridSubItems} >
             <Grid item xs={12} sm={4} className={styles.fieldGrid}>
               <Button
-                id="add"
+                id="manag_attendance_add"
                 variant="contained"
                 color="primary"
                 className={styles.saveButton}
@@ -357,7 +357,7 @@ export default function ManageAttendance() {
               >
                 Add
               </Button>
-              <Button id="cancel" variant="contained" color="default">
+              <Button id="manag_attendance_cancel" variant="contained" color="default">
                 Cancel
               </Button>
             </Grid>

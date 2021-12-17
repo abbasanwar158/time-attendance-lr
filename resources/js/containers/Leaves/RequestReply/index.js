@@ -64,98 +64,139 @@ export default function RequestReply() {
   }
 
   return (
-    <>
-      <div className={styles.backDropZindex}>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
-        >
-          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
-        </Backdrop>
-      </div>
-      <div className={styles.breadCrumbsContainer}>
-        <div className={styles.breadCrumbsSubContainer}>
-          <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />
-          <span className={styles.breadCrumbsSlash}>/</span>
-          <span className={styles.breadCrumbsSpan}>Leave</span>
-          <span className={styles.breadCrumbsSlash}>/</span>
-          <span className={styles.breadCrumbsSpan}>Request </span>
-          <span className={styles.breadCrumbsSlash}>/</span>
-          <span className={styles.breadCrumbsSpan}>Reply </span>
-        </div>
-        <h1 className={styles.breadCrumbSpan2}>Leave Request Reply </h1>
-      </div>
-      <div className={styles.mainCard}>
-        <div className={styles.gridContainer}>
-
-          <Grid item xs={12}>
-            <Grid container spacing={1} className={styles.gridSubItems} >
-              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <FormControl fullWidth >
-                  <TextField
-                    className={styles.fieldDiv}
-                    id="status"
-                    fullWidth
-                    size="small"
-                    label="Status"
-                    variant="outlined"
-                    value={status}
-                    onChange={handleChangeStatus}
-                    menuprops={{ variant: "menu" }}
-                    select
-                    SelectProps={{ IconComponent: () => <Chevron /> }}
-                  >
-                    <MenuItem value="Approved">
-                      Approved
-                    </MenuItem>
-                    <MenuItem value="Not Approved">
-                      Not Approved
-                    </MenuItem>
-                  </TextField>
-                </FormControl>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container spacing={1} className={styles.gridSubItems} >
-              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <FormControl fullWidth >
-                  <TextField
-                    className={styles.fieldDiv}
-                    id="message"
-                    fullWidth
-                    size="small"
-                    label="Message"
-                    type="text"
-                    variant="outlined"
-                    onChange={handleChangeNote}
-                    value={note}
-                  >
-                  </TextField>
-                </FormControl>
-              </Grid>
-            </Grid>
-          </Grid>
-          <Grid item xs={12}>
-            <Grid container spacing={1} className={styles.gridSubItems} >
-              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button id="save" onClick={updateLeave} variant="contained" color="primary" className={styles.saveButton}>
-                  Save
-                </Button>
-                <Button
-                  id="cancel"
-                  variant="contained"
-                  color="default"
-                  onClick={(e) => history.push('/leaves/requests')}
-                >
-                  Cancel
-                </Button>
-              </Grid>
-            </Grid>
-          </Grid>
-        </div>
-      </div>
-
-    </>
+      <>
+          <div className={styles.backDropZindex}>
+              <Backdrop
+                  sx={{
+                      color: "#fff",
+                      zIndex: (theme) => theme.zIndex.drawer + 1,
+                  }}
+                  open={open}
+              >
+                  <CircularProgress color="primary" />
+                  <span className={styles.loadingText}>Loading....</span>
+              </Backdrop>
+          </div>
+          <div className={styles.breadCrumbsContainer}>
+              <div className={styles.breadCrumbsSubContainer}>
+                  <SVG
+                      className={styles.dashboardSvg}
+                      src={`/images/holidays.svg`}
+                  />
+                  <span className={styles.breadCrumbsSlash}>/</span>
+                  <span className={styles.breadCrumbsSpan}>Leave</span>
+                  <span className={styles.breadCrumbsSlash}>/</span>
+                  <span className={styles.breadCrumbsSpan}>Request </span>
+                  <span className={styles.breadCrumbsSlash}>/</span>
+                  <span className={styles.breadCrumbsSpan}>Reply </span>
+              </div>
+              <h1 className={styles.breadCrumbSpan2}>Leave Request Reply </h1>
+          </div>
+          <div className={styles.mainCard}>
+              <div className={styles.gridContainer}>
+                  <Grid item xs={12}>
+                      <Grid
+                          container
+                          spacing={1}
+                          className={styles.gridSubItems}
+                      >
+                          <Grid
+                              item
+                              xs={12}
+                              sm={4}
+                              className={styles.fieldGrid}
+                          >
+                              <FormControl fullWidth>
+                                  <TextField
+                                      className={styles.fieldDiv}
+                                      id="LeaveRequestReply_status"
+                                      fullWidth
+                                      size="small"
+                                      label="Status"
+                                      variant="outlined"
+                                      value={status}
+                                      onChange={handleChangeStatus}
+                                      menuprops={{ variant: "menu" }}
+                                      select
+                                      SelectProps={{
+                                          IconComponent: () => <Chevron />,
+                                      }}
+                                  >
+                                      <MenuItem value="Approved">
+                                          Approved
+                                      </MenuItem>
+                                      <MenuItem value="Not Approved">
+                                          Not Approved
+                                      </MenuItem>
+                                  </TextField>
+                              </FormControl>
+                          </Grid>
+                      </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                      <Grid
+                          container
+                          spacing={1}
+                          className={styles.gridSubItems}
+                      >
+                          <Grid
+                              item
+                              xs={12}
+                              sm={4}
+                              className={styles.fieldGrid}
+                          >
+                              <FormControl fullWidth>
+                                  <TextField
+                                      className={styles.fieldDiv}
+                                      id="LeaveRequestReply_message"
+                                      fullWidth
+                                      size="small"
+                                      label="Message"
+                                      type="text"
+                                      variant="outlined"
+                                      onChange={handleChangeNote}
+                                      value={note}
+                                  ></TextField>
+                              </FormControl>
+                          </Grid>
+                      </Grid>
+                  </Grid>
+                  <Grid item xs={12}>
+                      <Grid
+                          container
+                          spacing={1}
+                          className={styles.gridSubItems}
+                      >
+                          <Grid
+                              item
+                              xs={12}
+                              sm={4}
+                              className={styles.fieldGrid}
+                          >
+                              <Button
+                                  id="LeaveRequestReply_save"
+                                  onClick={updateLeave}
+                                  variant="contained"
+                                  color="primary"
+                                  className={styles.saveButton}
+                              >
+                                  Save
+                              </Button>
+                              <Button
+                                  id="LeaveRequestReply_cancel"
+                                  variant="contained"
+                                  color="default"
+                                  onClick={(e) =>
+                                      history.push("/leaves/requests")
+                                  }
+                              >
+                                  Cancel
+                              </Button>
+                          </Grid>
+                      </Grid>
+                  </Grid>
+              </div>
+          </div>
+      </>
   );
 }

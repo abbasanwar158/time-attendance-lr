@@ -88,131 +88,133 @@ export default function ManageAttendance() {
   }, []);
 
   return (
-    <>
-      <div className={styles.backDropZindex}>
-        <Backdrop
-          sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-          open={open}
-        >
-          <CircularProgress color="primary" /><span className={styles.loadingText}>Loading....</span>
-        </Backdrop>
-      </div>
-      <div className={styles.breadCrumbsContainer}>
-        <div className={styles.breadCrumbsSubContainer}>
-          <SVG className={styles.dashboardSvg} src={`/images/holidays.svg`} />
-          <span className={styles.breadCrumbsSlash}>/</span>
-          <span className={styles.breadCrumbsSpan}>Attendance</span>
-          <span className={styles.breadCrumbsSlash}>/</span>
-          <span className={styles.breadCrumbsSpan}>edit</span>
-        </div>
-        <h1 className={styles.breadCrumbSpan2}>Edit Attendance</h1>
-      </div>
-      <div className={styles.mainCard}>
-
-
-
-        <Grid item xs={12}>
-          <Grid container spacing={1} className={styles.gridSubItems} >
-            <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-              <h3 className={styles.employeeInfo}>{employeeName} ({employeeId})</h3>
-            </Grid>
-          </Grid>
-        </Grid>
-
-
-
-
-        <Grid item xs={12}>
-          <Grid container spacing={1} className={styles.gridSubItems} >
-            <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-              <FormControl fullWidth >
-                <TextField
-                  className={styles.fieldDiv}
-                  id="date"
-                  label="DATE"
-                  type="date"
-                  variant="outlined"
-                  defaultValue="2021-07-29"
-                  size="small"
-                  value={date}
-                  onChange={dateFun}
-                  InputLabelProps={{
-                    shrink: true,
+      <>
+          <div className={styles.backDropZindex}>
+              <Backdrop
+                  sx={{
+                      color: "#fff",
+                      zIndex: (theme) => theme.zIndex.drawer + 1,
                   }}
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container spacing={1} className={styles.gridSubItems} >
-            <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-              <FormControl fullWidth>
-                <TextField
-                  className={styles.fieldDiv}
-                  id="checkin"
-                  label="CHECKIN"
-                  type="time"
-                  variant="outlined"
-                  size="small"
-                  defaultValue={checkin}
-                  value={checkin}
-                  onChange={checkinFun}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container spacing={1} className={styles.gridSubItems} >
-            <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-              <FormControl fullWidth>
-                <TextField
-                  className={styles.fieldDiv}
-                  id="checkout"
-                  label="CHECKOUT"
-                  type="time"
-                  variant="outlined"
-                  defaultValue={checkout}
-                  size="small"
-                  value={checkout}
-                  onChange={checkoutFun}
-                  InputLabelProps={{
-                    shrink: true,
-                  }}
-                />
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Grid>
-        <Grid item xs={12}>
-          <Grid container spacing={1} className={styles.gridSubItems} >
-            <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-              <Button
-                id="update"
-                variant="contained"
-                color="primary"
-                className={styles.saveButton}
-                onClick={EditAttendance}
+                  open={open}
               >
-                Update
-              </Button>
-              <Button
-                id="cancel"
-                variant="contained"
-                color="default"
-                onClick={() => history.push('/attendance/new')}
-              >
-                Cancel
-              </Button>
-            </Grid>
-          </Grid>
-        </Grid>
-      </div>
+                  <CircularProgress color="primary" />
+                  <span className={styles.loadingText}>Loading....</span>
+              </Backdrop>
+          </div>
+          <div className={styles.breadCrumbsContainer}>
+              <div className={styles.breadCrumbsSubContainer}>
+                  <SVG
+                      className={styles.dashboardSvg}
+                      src={`/images/holidays.svg`}
+                  />
+                  <span className={styles.breadCrumbsSlash}>/</span>
+                  <span className={styles.breadCrumbsSpan}>Attendance</span>
+                  <span className={styles.breadCrumbsSlash}>/</span>
+                  <span className={styles.breadCrumbsSpan}>edit</span>
+              </div>
+              <h1 className={styles.breadCrumbSpan2}>Edit Attendance</h1>
+          </div>
+          <div className={styles.mainCard}>
+              <Grid item xs={12}>
+                  <Grid container spacing={1} className={styles.gridSubItems}>
+                      <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                          <h3 className={styles.employeeInfo}>
+                              {employeeName} ({employeeId})
+                          </h3>
+                      </Grid>
+                  </Grid>
+              </Grid>
 
-    </>
+              <Grid item xs={12}>
+                  <Grid container spacing={1} className={styles.gridSubItems}>
+                      <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                          <FormControl fullWidth>
+                              <TextField
+                                  className={styles.fieldDiv}
+                                  id="edit_attendance_date"
+                                  label="DATE"
+                                  type="date"
+                                  variant="outlined"
+                                  defaultValue="2021-07-29"
+                                  size="small"
+                                  value={date}
+                                  onChange={dateFun}
+                                  InputLabelProps={{
+                                      shrink: true,
+                                  }}
+                              />
+                          </FormControl>
+                      </Grid>
+                  </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                  <Grid container spacing={1} className={styles.gridSubItems}>
+                      <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                          <FormControl fullWidth>
+                              <TextField
+                                  className={styles.fieldDiv}
+                                  id="edit_attendance_checkin"
+                                  label="CHECKIN"
+                                  type="time"
+                                  variant="outlined"
+                                  size="small"
+                                  defaultValue={checkin}
+                                  value={checkin}
+                                  onChange={checkinFun}
+                                  InputLabelProps={{
+                                      shrink: true,
+                                  }}
+                              />
+                          </FormControl>
+                      </Grid>
+                  </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                  <Grid container spacing={1} className={styles.gridSubItems}>
+                      <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                          <FormControl fullWidth>
+                              <TextField
+                                  className={styles.fieldDiv}
+                                  id="edit_attendance_checkout"
+                                  label="CHECKOUT"
+                                  type="time"
+                                  variant="outlined"
+                                  defaultValue={checkout}
+                                  size="small"
+                                  value={checkout}
+                                  onChange={checkoutFun}
+                                  InputLabelProps={{
+                                      shrink: true,
+                                  }}
+                              />
+                          </FormControl>
+                      </Grid>
+                  </Grid>
+              </Grid>
+              <Grid item xs={12}>
+                  <Grid container spacing={1} className={styles.gridSubItems}>
+                      <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                          <Button
+                              id="edit_attendance_update"
+                              variant="contained"
+                              color="primary"
+                              className={styles.saveButton}
+                              onClick={EditAttendance}
+                          >
+                              Update
+                          </Button>
+                          <Button
+                              id="edit_attendance_cancel"
+                              variant="contained"
+                              color="default"
+                              onClick={() => history.push("/attendance/new")}
+                          >
+                              Cancel
+                          </Button>
+                      </Grid>
+                  </Grid>
+              </Grid>
+          </div>
+      </>
   );
 }

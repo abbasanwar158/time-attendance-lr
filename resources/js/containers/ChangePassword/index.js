@@ -133,7 +133,7 @@ export default function ChangePassword() {
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <OutlinedInput
                   className={styles.fieldDiv}
-                  id="password"
+                  id="change_password"
                   type={values.showPassword ? 'text' : 'password'}
                   value={values.password}
                   onChange={handleChange('password')}
@@ -164,7 +164,7 @@ export default function ChangePassword() {
                 <InputLabel htmlFor="confirmPassword">Confirm Password</InputLabel>
                 <OutlinedInput
                   className={styles.fieldDiv}
-                  id="confirmPassword"
+                  id="change_confirmPassword"
                   type={valuesConfirm.showPasswordConfirm ? 'text' : 'password'}
                   value={valuesConfirm.password}
                   onChange={handleChangeConfirm('password')}
@@ -190,10 +190,10 @@ export default function ChangePassword() {
         <Grid item xs={12}>
           <Grid container spacing={1} className={styles.gridSubItems} >
             <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-              <Button id="update" onClick={editUser} variant="contained" color="primary" className={styles.saveButton}>
+              <Button id="change_update" onClick={editUser} variant="contained" color="primary" className={styles.saveButton}>
                 Update
               </Button>
-              <Button id="cancel" onClick={() => {history.push('/dashboard')}} size="small" variant="contained" color="default">
+              <Button id="change_cancel" onClick={() => {history.push('/dashboard')}} size="small" variant="contained" color="default">
                 Cancel
               </Button>
             </Grid>
