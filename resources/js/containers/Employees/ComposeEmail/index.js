@@ -17,19 +17,31 @@ export default function ComposeEmail() {
   const history = useHistory();
 
   const mailToAll = () => {
-    setOpen(true);
-    fetch(`https://time-attendance-lr.herokuapp.com/api/send_Email/${subject}/${message}`)
-      .then(res => res.json())
-      .then(
-        (response) => {
-          history.push('/employees/mail');
-          setOpen(false);
-        },
-        (error) => {
-          console.log("error", error)
-        }
-      )
-  }
+      setOpen(true);
+      fetch(`https://time-attendance-lr.herokuapp.com/api/employees/mail/new`, {
+          method: "POST",
+          // mode: "no-cors",
+          headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "*",
+          },
+          body: JSON.stringify({
+              subject: subject,
+              message: message,
+          }),
+      })
+          .then((response) => response.text())
+          .then((data) => {
+              setOpen(false);
+              console.log("Success:", data);
+              history.push("/employees/mail");
+          })
+          .catch((error) => {
+              setOpen(false);
+              console.error("Error:", error);
+          });
+  };
 
   return (
       <>
