@@ -23,7 +23,7 @@ const useStyles2 = makeStyles({
 
 export default function LeavesRequests() {
   const classes = useStyles2();
-  const { setIndex, newLeave, setNewLeave, replyLeave, setReplyLeave } = useContext(RootContext);
+  const { setIndex, newLeave, setNewLeave, replyLeave, setReplyLeave, setNoOfLeaves } = useContext(RootContext);
   const history = useHistory();
   const [open, setOpen] = useState(false);
   
@@ -32,7 +32,7 @@ export default function LeavesRequests() {
   }, []);
   
   const leavesReqFun = () => {
-    setOpen(true);
+  setOpen(true);
   var newLeavesArr = [];
   var replyLeavesArr = [];
   fetch("https://time-attendance-lr.herokuapp.com/api/leave/requests")
@@ -46,6 +46,9 @@ export default function LeavesRequests() {
         else{
           replyLeavesArr.push(response[i]);
         }
+      }
+      if(newLeavesArr.length < 1){
+        setNoOfLeaves(0);
       }
       setReplyLeave(replyLeavesArr);
       setNewLeave(newLeavesArr);

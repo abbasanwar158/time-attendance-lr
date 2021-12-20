@@ -54,7 +54,7 @@ Route::post('/leave/new', [App\Http\Controllers\api\LeavesController::class, 'st
 Route::post('/leave/update/{id}', [App\Http\Controllers\api\LeavesController::class, 'update']);
 Route::post('/leave/new/request', [App\Http\Controllers\api\LeaveRequestsController::class, 'store']);
 Route::get('/leave/requests', [App\Http\Controllers\api\LeaveRequestsController::class, 'index']);
-Route::post('/leave/requests/reply/{id}', [App\Http\Controllers\api\LeaveRequestsController::class, 'reply']);
+Route::post('/leave/requests/reply/{id}/{email}/{name}', [App\Http\Controllers\api\LeaveRequestsController::class, 'reply']);
 Route::get('/leaves/{empId}', [App\Http\Controllers\api\LeavesController::class, 'leavesByEmployee']);
 Route::post('/leaves/upload',[App\Http\Controllers\api\LeavesController::class, 'uploadCSV']);
 Route::get('/leaves/report/{id}/{from}/{to}/{allEmployee}', [App\Http\Controllers\api\LeavesController::class, 'leavesReport']);

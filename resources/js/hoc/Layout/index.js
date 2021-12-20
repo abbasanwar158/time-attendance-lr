@@ -8,10 +8,26 @@ import { RootContext } from "../../context/RootContext";
 
 export default function Layout(props) {
 
-  const { setActiveEmployeeNames } = useContext(RootContext);
+  const { setActiveEmployeeNames, setNoOfLeaves } = useContext(RootContext);
   const [modalOpen, setModalOpen] = useState(false)
 
   useEffect(() => {
+    var newLeavesArr = [];
+    fetch("https://time-attendance-lr.herokuapp.com/api/leave/requests")
+    .then(res => res.json())
+    .then(
+      (response) => {
+        for (var i = 0; i < response.length; i++) {
+          if(response[i].reply_status == null){
+            newLeavesArr.push(response[i]);
+          }
+        }
+        setNoOfLeaves(newLeavesArr.length);
+      },
+      (error) => {
+        console.log("error", error)
+      }
+    )
     employeeNamesFun();
   }, []);
 

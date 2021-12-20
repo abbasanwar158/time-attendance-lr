@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Models\LeaveRequests;
 use Illuminate\Http\Request;
+use Mail;
 
 class LeaveRequestsController extends Controller
 {
@@ -16,7 +17,7 @@ class LeaveRequestsController extends Controller
     public function index()
     {
         $data = LeaveRequests::join('users', 'users.id', '=', 'leave_requests.user_id')
-        ->get(['leave_requests.id', 'users.name', 'leave_requests.subject', 'leave_requests.message', 'leave_requests.leave_type', 'leave_requests.date_from', 'leave_requests.date_to', 'leave_requests.reply_status', 'leave_requests.reply',]);
+        ->get(['leave_requests.id', 'users.username', 'users.name', 'leave_requests.subject', 'leave_requests.message', 'leave_requests.leave_type', 'leave_requests.date_from', 'leave_requests.date_to', 'leave_requests.reply_status', 'leave_requests.reply',]);
         return $data;
     }
 
@@ -25,7 +26,7 @@ class LeaveRequestsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function reply($id, Request $request)
+    public function reply($id, $email, $name, Request $request)
     {
         $data = LeaveRequests::find($id);
         $data->update([
@@ -45,7 +46,13 @@ class LeaveRequestsController extends Controller
             'msg'=>'fail'
           ];
         }
-          return response()->json($res);
+        return response()->json($res);
+        $data = ['body' => $request->reply, 'name' => $name, 'status' =>$request->replyStatus];
+        Mail::send('replyReques',$data, function($message)  use ($email,)
+        {
+          $message->to($email);   
+          $message->subject('Reply of you leave request'); 
+        });
     }
 
     /**

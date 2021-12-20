@@ -36,7 +36,7 @@ export default function Navbar() {
   const [modalOpen, setModalOpen] = useState(false)
   const [anchorEl, setMenu] = useState(null);
   const history = useHistory();
-  const { loginNavbar } = useContext(RootContext)
+  const { loginNavbar, noOfLeaves } = useContext(RootContext);
 
   const handleClickOpen = () => {
     setModalOpen(true);
@@ -66,7 +66,12 @@ export default function Navbar() {
             onClick={() => {history.push('/dashboard')}}
           />
         </div>
-        {localStorage.getItem('username') != null ? <SVG className={styles.userMenuBtn} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} src={`/images/profile.svg`} /> : null}
+        {localStorage.getItem('username') != null ?
+        <div className={styles.mlAuto}>
+          <SVG className={styles.userMenuBtn} aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick} src={`/images/profile.svg`} /> 
+          {localStorage.isAdmin == 'true' ? <span>{noOfLeaves > 0 ? <span className={styles.blink_me}></span> : null}</span>: null}
+        </div>
+        : null}
         <Menu
           id="simple-menu"
           anchorEl={anchorEl}
@@ -111,14 +116,17 @@ export default function Navbar() {
           : null}
 
           {localStorage.isAdmin == 'true' ?
-            <MenuItem
-              onClick={() => {
-                handleCloseMenu()
-                history.push('/leaves/requests')
-              }}>
-              <SVG className={styles.subMenuIcons} src={`/images/assignment.svg`} />
-              <span className={styles.subMenuSpan}>Leave Requests</span>
-            </MenuItem>
+            <div className={styles.relative}>
+                <MenuItem
+                  onClick={() => {
+                    handleCloseMenu()
+                    history.push('/leaves/requests')
+                  }}>
+                  <SVG className={styles.subMenuIcons} src={`/images/assignment.svg`} />
+                  <span className={styles.subMenuSpan}>Leave Requests</span>
+                </MenuItem>
+                {noOfLeaves > 0 ? <span className={styles.noOfleaves}>{noOfLeaves}</span> : null}
+            </div>
           : null}
 
           {/* <MenuItem
