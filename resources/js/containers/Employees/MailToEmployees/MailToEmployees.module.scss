@@ -90,3 +90,14 @@
 .mt1 {
     margin-top: 10px;
 }
+.backDropZindex {
+    position: relative;
+    z-index: 9 !important;
+}
+
+.loadingText {
+    color: white;
+    font-size: 25px;
+    font-weight: initial;
+    margin-left: 20px;
+}

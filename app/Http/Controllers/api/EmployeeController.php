@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use DateTime;
 use Mail;
+use Carbon\Carbon;
 
 class EmployeeController extends Controller
 {
@@ -310,9 +311,19 @@ class EmployeeController extends Controller
      * @param  \App\Models\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function mailToAll($subject, $message)
+    public function mailToAll(Request $request)
     {
+      $today = Carbon::today();
       $allEmployees = Employee::where('active', '=', 1)->get();
+      
+      $Employee= DB :: table('email_employees')->insert([
+        'subject' => $request->subject, 
+        'body' => $request->message,
+        'created_at' => $today, 
+        'updated_at' => $today, 
+        
+      ]);
+     
       foreach($allEmployees as $key => $value ){
         $data = ['body' => $message, 'employeeName' => $value->name];
         $emails = $value->email;
@@ -328,4 +339,20 @@ class EmployeeController extends Controller
       ];
       return response()->json($res);
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Employee  $employee
+     * @return \Illuminate\Http\Response
+     */
+    public function EmployeeMail()
+    {
+      
+      $Employee= DB :: table('email_employees')->get();
+
+      return $Employee;
+     
+    }
+    
 }

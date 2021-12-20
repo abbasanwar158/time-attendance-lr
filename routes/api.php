@@ -37,7 +37,8 @@ Route::post('/employees/upload',[App\Http\Controllers\api\EmployeeController::cl
 Route::get('/employees/review_date/{id}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeRecord']);
 Route::post('/employees/review_date/edit/{id}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeEditStatus']);
 Route::get('/employees/report/{id}/{year}',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeReport']);
-Route::get('/send_Email/{subject}/{message}', [App\Http\Controllers\api\EmployeeController::class, 'mailToAll']);
+Route::post('/employees/mail/new', [App\Http\Controllers\api\EmployeeController::class, 'mailToAll']);
+Route::get('/employees/mail',[App\Http\Controllers\api\EmployeeController::class, 'EmployeeMail']);
 
 Route::get('/attendance/alert', [App\Http\Controllers\api\AttendanceController::class, 'AttendanceAlert']);
 
