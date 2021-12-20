@@ -50,6 +50,9 @@ export default function LeavesRequests() {
       if(newLeavesArr.length < 1){
         setNoOfLeaves(0);
       }
+      else{
+        setNoOfLeaves(newLeavesArr.length);
+      }
       setReplyLeave(replyLeavesArr);
       setNewLeave(newLeavesArr);
       setOpen(false);

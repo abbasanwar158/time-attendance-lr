@@ -46,13 +46,13 @@ class LeaveRequestsController extends Controller
             'msg'=>'fail'
           ];
         }
-        return response()->json($res);
         $data = ['body' => $request->reply, 'name' => $name, 'status' =>$request->replyStatus];
         Mail::send('replyReques',$data, function($message)  use ($email,)
         {
-          $message->to($email);   
+          $message->to($email);
           $message->subject('Reply of you leave request'); 
         });
+        return response()->json($res);
     }
 
     /**
