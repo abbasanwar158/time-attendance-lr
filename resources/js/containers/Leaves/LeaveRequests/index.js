@@ -150,7 +150,7 @@ export default function LeavesRequests() {
                     <TableCell className={styles.TableCell}>Reply Status</TableCell>
                     <TableCell className={styles.TableCell}>Date from</TableCell>
                     <TableCell className={styles.TableCell}>Date to</TableCell>
-                    <TableCell className={styles.TableCell}>Action</TableCell>
+                    {/* <TableCell className={styles.TableCell}>Action</TableCell> */}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -163,7 +163,7 @@ export default function LeavesRequests() {
                       <TableCell className={styles.subCells}>{row.reply_status}</TableCell>
                       <TableCell className={styles.subCells}>{row.date_to}</TableCell>
                       <TableCell className={styles.subCells}>{row.date_from}</TableCell>
-                      <TableCell className={styles.subCells}>
+                      {/* <TableCell className={styles.subCells}>
                         <button
                           value={row.id}
                           onClick={(e) => {
@@ -177,7 +177,7 @@ export default function LeavesRequests() {
                             history.push('/leaves/requests/edit')
                           }}
                         >Edit</button>
-                      </TableCell>
+                      </TableCell> */}
                     </TableRow>
                   ))}
                 </TableBody>
