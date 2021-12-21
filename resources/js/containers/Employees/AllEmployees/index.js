@@ -164,6 +164,7 @@ export default function AllEmployees() {
                 <TableCell className={styles.TableCell} >CNIC</TableCell>
                 <TableCell className={styles.TableCell} >Name</TableCell>
                 <TableCell className={styles.TableCell} >Email</TableCell>
+                <TableCell className={styles.TableCell} >Designation</TableCell>
                 <TableCell className={styles.TableCell} >Joining Date</TableCell>
                 <TableCell className={styles.TableCell} >Employees Category</TableCell>
                 {localStorage.isAdmin == 'true' ?
@@ -182,6 +183,7 @@ export default function AllEmployees() {
                   <TableCell className={styles.subCells}>{row.cnic}</TableCell>
                   <TableCell className={styles.subCells}>{row.name}</TableCell>
                   <TableCell className={styles.subCells}>{row.email}</TableCell>
+                  <TableCell className={styles.subCells}>{row.designation}</TableCell>
                   <TableCell className={styles.subCells}>{row.joining_date}</TableCell>
                   <TableCell className={styles.subCells}>{row.employees_category}</TableCell>
                   {localStorage.isAdmin == 'true' ?

@@ -82,3 +82,5 @@ Route::get('/welcome/attendances', [App\Http\Controllers\api\WelcomeController::
 Route::get('/welcome/holidays', [App\Http\Controllers\api\WelcomeController::class, 'upComeHolidays']);
 Route::get('/welcome/leaves/info/{month}/{year}', [App\Http\Controllers\api\WelcomeController::class, 'leavesInformation']);
 Route::get('/welcome/hours/info/{from}/{to}', [App\Http\Controllers\api\WelcomeController::class, 'hoursInformation']);
+Route::get('/single/employee/leaves/{name}', [App\Http\Controllers\api\WelcomeController::class, 'singleLeave']);
+Route::get('/single/employee/hours/{name}', [App\Http\Controllers\api\WelcomeController::class, 'singleHour']);
