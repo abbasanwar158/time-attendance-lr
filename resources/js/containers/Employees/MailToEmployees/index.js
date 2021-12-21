@@ -38,7 +38,7 @@ export default function MailToEmployees() {
                     setOpen(false);
                 },
                 (error) => {
-                  setOpen(false);
+                    setOpen(false);
                     console.log("error", error);
                 }
             );
@@ -99,7 +99,7 @@ export default function MailToEmployees() {
                                     Date
                                 </TableCell>
                                 <TableCell className={styles.TableCell}>
-                                  
+
                                     Subject
                                 </TableCell>
                                 <TableCell className={styles.TableCell}>
@@ -118,7 +118,7 @@ export default function MailToEmployees() {
                                           <TableCell
                                               className={styles.subCells}
                                           >
-                                              {row.created_at}
+                                              {row.created_at.slice(0, 10)}
                                           </TableCell>
                                           <TableCell
                                               className={styles.subCells}

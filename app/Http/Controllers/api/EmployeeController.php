@@ -323,14 +323,14 @@ class EmployeeController extends Controller
         'updated_at' => $today, 
         
       ]);
-     
+      $Subject=$request->subject;
       foreach($allEmployees as $key => $value ){
-        $data = ['body' => $message, 'employeeName' => $value->name];
+        $data = ['body' =>$request->message, 'employeeName' => $value->name,'subject'=>$request->subject];
         $emails = $value->email;
-        Mail::send('mail',$data, function($message)  use ($subject,$emails)
+        Mail::send('mail',$data, function($message)  use ($Subject,$emails)
         {
           $message->to($emails);   
-          $message->subject($subject); 
+          $message->subject($Subject); 
         });   
       }
       $res=[
@@ -350,7 +350,7 @@ class EmployeeController extends Controller
     {
       
       $Employee= DB :: table('email_employees')->get();
-
+        
       return $Employee;
      
     }
