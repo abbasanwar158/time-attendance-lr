@@ -35,6 +35,9 @@ export default function Dashboard() {
   const [noOfEmplPresent, setNoOfEmplPresent] = useState('');
   const { ActiveEmployeeNames } = useContext(RootContext);
   const [open, setOpen] = useState(true);
+  const [designation ,setDesignation] = useState('');
+  const [singleEmpHours, setSingleEmpHours] = useState([]);
+  const [singleEmpLeaves, setSingleEmpLeaves] = useState([]);
   const [optionsMonths, setOptionsMonths] = useState([
     'January',
     'February',
@@ -75,11 +78,40 @@ export default function Dashboard() {
     );
   };
 
-  useEffect(() => {
+  useEffect(() => {      
     OnleavesInfo();
     presetEmployeeInfo();
     upComingHolidays();
+    employeeNamesFun();
+    singleLeaves();
+    singleHours();
   }, []);
+
+  const singleLeaves = () => {
+    fetch(`https://time-attendance-lr.herokuapp.com/api/single/employee/leaves/${localStorage.name}`)
+      .then(res => res.json())
+      .then(
+        (response) => {
+          setSingleEmpLeaves(response);
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
+  }
+
+  const singleHours = () => {
+    fetch(`https://time-attendance-lr.herokuapp.com/api/single/employee/hours/${localStorage.name}`)
+      .then(res => res.json())
+      .then(
+        (response) => {
+          setSingleEmpHours(response);
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
+  }
 
   const leavesInfo = () => {
     var dataArr = []
@@ -134,6 +166,21 @@ export default function Dashboard() {
       .then(
         (response) => {
           setNoOfEmplPresent(response.todayAttendances);
+        },
+        (error) => {
+          console.log("error", error)
+        }
+      )
+  }
+
+  const employeeNamesFun = () => {
+    fetch("https://time-attendance-lr.herokuapp.com/api/employees")
+      .then(res => res.json())
+      .then(
+        (response) => {
+          var activeEmp = response.filter((x) => x.active)
+          var data = activeEmp.filter((x) => x.name == localStorage.name)
+          setDesignation(data[0].designation);
         },
         (error) => {
           console.log("error", error)
@@ -200,38 +247,60 @@ export default function Dashboard() {
       </div>
       <div>
       </div>
+      {localStorage.isAdmin == 'true' ? null :
+        <div className={styles.cardContainer}>
+          <img
+            className={styles.cardImg}
+            height="120px"
+            width="120px"
+            src={`/images/devbox.png`}
+          />
+          <div>
+            <h2>{localStorage.name}</h2>
+            <h6>{designation}</h6>
+          </div>
+        </div>
+      }
       <Grid item xs={12}>
         <Grid container spacing={3} className={styles.gridSubItems} >
           <Grid item xs={12} sm={12} md={4}>
-            <div className={`${styles.card}`} onClick={() => history.push('/leaves')}>
+            <div className={`${styles.card}`} onClick={() => { if (localStorage.isAdmin == 'true'){history.push('/leaves')}}}>
               <div className={`${styles.cardLeaves}`}>
                 <div className={styles.cardHeaderText}>
-                  On Leave
+                  {localStorage.isAdmin == 'true' ? 'On Leave': 'Current month leaves'}
                   <SVG className={`${styles.cardSvg}`} src={`/images/leaves.svg`} />
                 </div>
                 <div className={` ${styles.cardBody}`}>
+                {localStorage.isAdmin == 'true' ?                   
                   <span className={styles.cardBodyText}>{currentDay == 0 ? <span>{noOfLeaves}/{noOfEmployees}</span> : <span>{currentDay}</span>}</span>
-                  <SVG className={`${styles.cardSvg}`} src={`/images/rightArrow.svg`} />
+                  : 
+                  <span className={styles.cardBodyTextSingle}>Half: {singleEmpLeaves.half} / Full: {singleEmpLeaves.full}</span>
+                }
+                  {localStorage.isAdmin == 'true' ? <SVG className={`${styles.cardSvg}`} src={`/images/rightArrow.svg`} /> : null}
                 </div>
               </div>
             </div>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
-            <div className={styles.card} onClick={() => history.push('/attendance/report')}>
+            <div className={styles.card} onClick={() => { if (localStorage.isAdmin == 'true'){history.push('/attendance/report')}}}>
               <div className={`${styles.cardEmployees}`}>
                 <div className={styles.cardHeaderText}>
-                  Present Employees
+                  {localStorage.isAdmin == 'true' ? 'Present Employees': 'Current month hours'}
                   <SVG className={`${styles.cardSvg}`} src={`/images/people.svg`} />
                 </div>
                 <div className={` ${styles.cardBody}`}>
+                {localStorage.isAdmin == 'true' ?                   
                   <span className={styles.cardBodyText}>{currentDay == 0 ? <span>{noOfEmplPresent}/{noOfEmployees}</span> : <span>{currentDay}</span>}</span>
-                  <SVG className={`${styles.cardSvg}`} src={`/images/rightArrow.svg`} />
+                  : 
+                  <span className={styles.cardBodyTextSingle}>{singleEmpHours.hours} Hours and {singleEmpHours.minutes} Minutes</span>
+                }
+                {localStorage.isAdmin == 'true' ? <SVG className={`${styles.cardSvg}`} src={`/images/rightArrow.svg`} /> : null}
                 </div>
               </div>
             </div>
           </Grid>
           <Grid item xs={12} sm={12} md={4}>
-            <div className={`${styles.card}`} onClick={() => history.push('/holidays')}>
+            <div className={`${styles.card}`} onClick={() => { if (localStorage.isAdmin == 'true'){history.push('/holidays')}}}>
               <div className={`${styles.cardHolidays}`}>
                 <div className={styles.cardHeaderText}>
                   Up Comming Holiday
@@ -246,7 +315,7 @@ export default function Dashboard() {
                       <p className={styles.holidaysInfo}>{holidayDate}</p>
                     </div>
                   }
-                  <SVG className={`${styles.cardSvg}`} src={`/images/rightArrow.svg`} />
+                {localStorage.isAdmin == 'true' ? <SVG className={`${styles.cardSvg}`} src={`/images/rightArrow.svg`} /> : null}
                 </div>
               </div>
             </div>
@@ -254,212 +323,214 @@ export default function Dashboard() {
         </Grid>
       </Grid>
 
-      <Grid item xs={12}>
-        <Grid container spacing={3} className={styles.gridSubItems} >
-          <Grid item xs={12} sm={6}>
-            <div className={styles.leaveInfoCard}>
-              <div className={`${styles.cardHeader}`}>
-                <h2 className="text-muted fw-normal">Leaves Information</h2>
-              </div>
-              <Grid item xs={12}>
-                <Grid container spacing={1} className={styles.gridSubItems} >
-                  <Grid item xs={12} sm={5}>
-                    <div>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="dashboard-months"
-                          fullWidth
-                          size="small"
-                          label="Months"
-                          variant="outlined"
-                          value={months}
-                          className={styles.placeholderColor}
-                          onChange={handleChangeMonths}
-                          menuprops={{ variant: "menu" }}
-                          select
-                          SelectProps={{ IconComponent: () => <Chevron /> }}
-                        >
-                          {optionsMonths.map((option, i) => (
-                            <MenuItem key={option} value={option}>
-                              {option}
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                      </FormControl>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} sm={5}>
-                    <div>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="dashboard-years"
-                          fullWidth
-                          size="small"
-                          label="Years"
-                          variant="outlined"
-                          onChange={handleChangeYears}
-                          value={years}
-                          className={styles.placeholderColor}
-                          menuprops={{ variant: "menu" }}
-                          select
-                          SelectProps={{ IconComponent: () => <Chevron /> }}
-                        >
-                          {optionsYears.map((option) => (
-                            <MenuItem key={option} value={option}>
-                              {option}
-                            </MenuItem>
-                          ))}
-                        </TextField>
-                      </FormControl>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} sm={2}>
-                    <Button
-                      id="dashboard-leavesInfoBtn"
-                      variant="contained"
-                      color="primary"
-                      className={styles.cardButtons}
-                      onClick={leavesInfo}
-                    >
-                      Search
-                    </Button>
-                  </Grid>
-                </Grid>
-              </Grid>
-              <TableContainer component={Paper} className={styles.table}>
-                <Table aria-label="simple table">
-                  <TableHead className={styles.tableHeader}>
-                    <TableRow>
-                      <TableCell className={styles.TableCell}>Employee Name</TableCell>
-                      <TableCell className={styles.TableCell} >Full Leaves</TableCell>
-                      <TableCell className={styles.TableCell} >Half Leaves</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  {leavesInformation.length < 1 ? 
-                    <TableBody>
-                      {ActiveEmployeeNames.map((row) => (
-                        <TableRow key={row.id}>
-                          <TableCell component="th" scope="row" className={styles.nameCells}>
-                            {row.name}
-                          </TableCell>
-                          <TableCell className={styles.subCells}>0</TableCell>
-                          <TableCell className={styles.subCells}>0</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                    : 
-                    <TableBody>
-                      {leavesInformation.map((row, i) => (
-                        <TableRow key={i}>
-                          <TableCell component="th" scope="row" className={styles.nameCells}>
-                            {row.EmplName}
-                          </TableCell>
-                          <TableCell className={styles.subCells}>{row.full}</TableCell>
-                          <TableCell className={styles.subCells}>{row.half}</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  }
-                </Table>
-              </TableContainer>
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <div className={styles.leaveInfoCard}>
-              <div className={`${styles.cardHeader}`}>
-                <h2>Hours Information</h2>
-              </div>
-              <Grid item xs={12}>
-                <Grid container spacing={1} className={styles.gridSubItems} >
-                  <Grid item xs={12} sm={5}>
-                    <div>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="dashboard-sDate"
-                          label="Start Date"
-                          type="date"
-                          variant="outlined"
-                          size="small"
-                          value={startDate}
-                          onChange={handleChangeStartDate}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        />
-                      </FormControl>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} sm={5}>
-                    <div>
-                      <FormControl fullWidth>
-                        <TextField
-                          id="dashboard-eDate"
-                          label="End Date"
-                          type="date"
-                          variant="outlined"
-                          size="small"
-                          inputProps={{
-                            min:startDate ? startDate :"0000-00-00" ,
-                          }}
-                          value={endDate}
-                          onChange={handleChangeEndDate}
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                        />
-                      </FormControl>
-                    </div>
-                  </Grid>
-                  <Grid item xs={12} sm={2}>
-                    <Button
-                      id="hoursInfoBtn"
-                      variant="contained"
-                      color="primary"
-                      className={styles.cardButtons}
-                      onClick={hoursInfo}
-                    >
-                      Search
-                    </Button>
+      {localStorage.isAdmin == 'true' ? 
+        <Grid item xs={12}>
+          <Grid container spacing={3} className={styles.gridSubItems} >
+            <Grid item xs={12} sm={6}>
+              <div className={styles.leaveInfoCard}>
+                <div className={`${styles.cardHeader}`}>
+                  <h2 className="text-muted fw-normal">Leaves Information</h2>
+                </div>
+                <Grid item xs={12}>
+                  <Grid container spacing={1} className={styles.gridSubItems} >
+                    <Grid item xs={12} sm={5}>
+                      <div>
+                        <FormControl fullWidth>
+                          <TextField
+                            id="dashboard-months"
+                            fullWidth
+                            size="small"
+                            label="Months"
+                            variant="outlined"
+                            value={months}
+                            className={styles.placeholderColor}
+                            onChange={handleChangeMonths}
+                            menuprops={{ variant: "menu" }}
+                            select
+                            SelectProps={{ IconComponent: () => <Chevron /> }}
+                          >
+                            {optionsMonths.map((option, i) => (
+                              <MenuItem key={option} value={option}>
+                                {option}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={5}>
+                      <div>
+                        <FormControl fullWidth>
+                          <TextField
+                            id="dashboard-years"
+                            fullWidth
+                            size="small"
+                            label="Years"
+                            variant="outlined"
+                            onChange={handleChangeYears}
+                            value={years}
+                            className={styles.placeholderColor}
+                            menuprops={{ variant: "menu" }}
+                            select
+                            SelectProps={{ IconComponent: () => <Chevron /> }}
+                          >
+                            {optionsYears.map((option) => (
+                              <MenuItem key={option} value={option}>
+                                {option}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={2}>
+                      <Button
+                        id="dashboard-leavesInfoBtn"
+                        variant="contained"
+                        color="primary"
+                        className={styles.cardButtons}
+                        onClick={leavesInfo}
+                      >
+                        Search
+                      </Button>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-              <TableContainer component={Paper} className={styles.table}>
-                <Table aria-label="simple table">
-                  <TableHead className={styles.tableHeader}>
-                    <TableRow>
-                      <TableCell className={styles.TableCell} >Employee Name</TableCell>
-                      <TableCell className={styles.TableCell} >Time Spend</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  {hoursInformation.length < 1 ? 
-                    <TableBody>
-                      {ActiveEmployeeNames.map((row) => (
-                        <TableRow key={row.id}>
-                          <TableCell component="th" scope="row" className={styles.nameCells}>
-                            {row.name}
-                          </TableCell>
-                          <TableCell className={styles.subCells}>0 hours and 0 minutes</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                    : 
-                    <TableBody>
-                      {hoursInformation.map((row, i) => (
-                        <TableRow key={i}>
-                          <TableCell component="th" scope="row" className={styles.nameCells}>
-                            {row.name}
-                          </TableCell>
-                          <TableCell className={styles.subCells}>{row.hours} hours and {row.minutes} minutes</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  }
-                </Table>
-              </TableContainer>
-            </div>
+                <TableContainer component={Paper} className={styles.table}>
+                  <Table aria-label="simple table">
+                    <TableHead className={styles.tableHeader}>
+                      <TableRow>
+                        <TableCell className={styles.TableCell}>Employee Name</TableCell>
+                        <TableCell className={styles.TableCell} >Full Leaves</TableCell>
+                        <TableCell className={styles.TableCell} >Half Leaves</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    {leavesInformation.length < 1 ? 
+                      <TableBody>
+                        {ActiveEmployeeNames.map((row) => (
+                          <TableRow key={row.id}>
+                            <TableCell component="th" scope="row" className={styles.nameCells}>
+                              {row.name}
+                            </TableCell>
+                            <TableCell className={styles.subCells}>0</TableCell>
+                            <TableCell className={styles.subCells}>0</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                      : 
+                      <TableBody>
+                        {leavesInformation.map((row, i) => (
+                          <TableRow key={i}>
+                            <TableCell component="th" scope="row" className={styles.nameCells}>
+                              {row.EmplName}
+                            </TableCell>
+                            <TableCell className={styles.subCells}>{row.full}</TableCell>
+                            <TableCell className={styles.subCells}>{row.half}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    }
+                  </Table>
+                </TableContainer>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <div className={styles.leaveInfoCard}>
+                <div className={`${styles.cardHeader}`}>
+                  <h2>Hours Information</h2>
+                </div>
+                <Grid item xs={12}>
+                  <Grid container spacing={1} className={styles.gridSubItems} >
+                    <Grid item xs={12} sm={5}>
+                      <div>
+                        <FormControl fullWidth>
+                          <TextField
+                            id="dashboard-sDate"
+                            label="Start Date"
+                            type="date"
+                            variant="outlined"
+                            size="small"
+                            value={startDate}
+                            onChange={handleChangeStartDate}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          />
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={5}>
+                      <div>
+                        <FormControl fullWidth>
+                          <TextField
+                            id="dashboard-eDate"
+                            label="End Date"
+                            type="date"
+                            variant="outlined"
+                            size="small"
+                            inputProps={{
+                              min:startDate ? startDate :"0000-00-00" ,
+                            }}
+                            value={endDate}
+                            onChange={handleChangeEndDate}
+                            InputLabelProps={{
+                              shrink: true,
+                            }}
+                          />
+                        </FormControl>
+                      </div>
+                    </Grid>
+                    <Grid item xs={12} sm={2}>
+                      <Button
+                        id="hoursInfoBtn"
+                        variant="contained"
+                        color="primary"
+                        className={styles.cardButtons}
+                        onClick={hoursInfo}
+                      >
+                        Search
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
+                <TableContainer component={Paper} className={styles.table}>
+                  <Table aria-label="simple table">
+                    <TableHead className={styles.tableHeader}>
+                      <TableRow>
+                        <TableCell className={styles.TableCell} >Employee Name</TableCell>
+                        <TableCell className={styles.TableCell} >Time Spend</TableCell>
+                      </TableRow>
+                    </TableHead>
+                    {hoursInformation.length < 1 ? 
+                      <TableBody>
+                        {ActiveEmployeeNames.map((row) => (
+                          <TableRow key={row.id}>
+                            <TableCell component="th" scope="row" className={styles.nameCells}>
+                              {row.name}
+                            </TableCell>
+                            <TableCell className={styles.subCells}>0 hours and 0 minutes</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                      : 
+                      <TableBody>
+                        {hoursInformation.map((row, i) => (
+                          <TableRow key={i}>
+                            <TableCell component="th" scope="row" className={styles.nameCells}>
+                              {row.name}
+                            </TableCell>
+                            <TableCell className={styles.subCells}>{row.hours} hours and {row.minutes} minutes</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    }
+                  </Table>
+                </TableContainer>
+              </div>
+            </Grid >
           </Grid >
         </Grid >
-      </Grid >
+      : null}
     </div>
   )
 }

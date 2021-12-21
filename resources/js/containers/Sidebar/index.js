@@ -218,98 +218,102 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
           </div>
         </Collapse>
         {/* Leaves Expandabel Section End */}
-        <div
-          className={styles.dashboardDiv2}
-          onClick={(e)=>collapseFun(e)}>
-          <SVG
-            className={styles.dashboardSvg}
-            src={`/images/employees.svg`}
-          />
-          <span className={styles.dashboardText}>Employees</span>
-          {
-            colExpEmployees ?
+        {localStorage.isAdmin == 'true' ? 
+          <div>
+            <div
+              className={styles.dashboardDiv2}
+              onClick={(e)=>collapseFun(e)}>
               <SVG
-                className={styles.collapseSvg}
-                src={`/images/minus_circle.svg`}
-              /> :
-              <SVG
-                className={styles.collapseSvg}
-                src={`/images/plus_circle.svg`}
+                className={styles.dashboardSvg}
+                src={`/images/employees.svg`}
               />
-          }
-        </div>
-        {/* Employees Expandabel Section Start */}
-        <Collapse in={checkedEmp}>
-          <div className={styles.SubMenusContainer}>
-            {
-              employeesSubMenu.map((x, i) => {
-                return (
-                  <div 
-                  className={styles.dashboardSubMenuDiv}
-                  key={x}
-                  onClick={() => {
-                    history.push(`${employeesUrl[i]}`)
-                    setModalOpen(false)
-                  }}
-                  >
-                    <SVG
-                      className={styles.dashboardSvgSubMenu}
-                      src={`/images/${employeesSubMenuSVG[i]}.svg`}
-                    />
-                    <span className={styles.dashboardTextSubMenu}>{x}</span>
-                  </div>
-                )
-              })
-            }
-          </div>
-        </Collapse>
-        {/* Employees Expandabel Section End */}
-        <div
-          className={styles.dashboardDiv2}
-          onClick={(e)=>collapseFun(e)}>
-          <SVG
-            className={styles.dashboardSvg}
-            src={`/images/holidays.svg`}
-          />
-          <span className={styles.dashboardText}>Holidays</span>
-          {
-            colExpHolidays ?
+              <span className={styles.dashboardText}>Employees</span>
+              {
+                colExpEmployees ?
+                  <SVG
+                    className={styles.collapseSvg}
+                    src={`/images/minus_circle.svg`}
+                  /> :
+                  <SVG
+                    className={styles.collapseSvg}
+                    src={`/images/plus_circle.svg`}
+                  />
+              }
+            </div>
+            {/* Employees Expandabel Section Start */}
+            <Collapse in={checkedEmp}>
+              <div className={styles.SubMenusContainer}>
+                {
+                  employeesSubMenu.map((x, i) => {
+                    return (
+                      <div 
+                      className={styles.dashboardSubMenuDiv}
+                      key={x}
+                      onClick={() => {
+                        history.push(`${employeesUrl[i]}`)
+                        setModalOpen(false)
+                      }}
+                      >
+                        <SVG
+                          className={styles.dashboardSvgSubMenu}
+                          src={`/images/${employeesSubMenuSVG[i]}.svg`}
+                        />
+                        <span className={styles.dashboardTextSubMenu}>{x}</span>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            </Collapse>
+            {/* Employees Expandabel Section End */}
+            <div
+              className={styles.dashboardDiv2}
+              onClick={(e)=>collapseFun(e)}>
               <SVG
-                className={styles.collapseSvg}
-                src={`/images/minus_circle.svg`}
-              /> :
-              <SVG
-                className={styles.collapseSvg}
-                src={`/images/plus_circle.svg`}
+                className={styles.dashboardSvg}
+                src={`/images/holidays.svg`}
               />
-          }
-        </div>
-        {/* Holidays Expandabel Section Start */}
-        <Collapse in={checkedHol}>
-          <div className={styles.SubMenusContainer}>
-            {
-              holidaysSubMenu.map((x, i) => {
-                return (
-                  <div 
-                  className={styles.dashboardSubMenuDiv}
-                  key={x}
-                  onClick={() => {
-                      history.push(`${holidaysUrl[i]}`)
-                      setModalOpen(false)
-                    }}
-                  >
-                    <SVG
-                      className={styles.dashboardSvgSubMenu}
-                      src={`/images/${holidaysSubMenuSVG[i]}.svg`}
-                    />
-                    <span className={styles.dashboardTextSubMenu}>{x}</span>
-                  </div>
-                )
-              })
-            }
+              <span className={styles.dashboardText}>Holidays</span>
+              {
+                colExpHolidays ?
+                  <SVG
+                    className={styles.collapseSvg}
+                    src={`/images/minus_circle.svg`}
+                  /> :
+                  <SVG
+                    className={styles.collapseSvg}
+                    src={`/images/plus_circle.svg`}
+                  />
+              }
+            </div>
+            {/* Holidays Expandabel Section Start */}
+            <Collapse in={checkedHol}>
+              <div className={styles.SubMenusContainer}>
+                {
+                  holidaysSubMenu.map((x, i) => {
+                    return (
+                      <div 
+                      className={styles.dashboardSubMenuDiv}
+                      key={x}
+                      onClick={() => {
+                          history.push(`${holidaysUrl[i]}`)
+                          setModalOpen(false)
+                        }}
+                      >
+                        <SVG
+                          className={styles.dashboardSvgSubMenu}
+                          src={`/images/${holidaysSubMenuSVG[i]}.svg`}
+                        />
+                        <span className={styles.dashboardTextSubMenu}>{x}</span>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+            </Collapse>
+            {/* Holidays Expandabel Section End */}
           </div>
-        </Collapse>
-        {/* Holidays Expandabel Section End */}
+        : null }
       </div>
     </div >
   );

@@ -188,4 +188,102 @@ class WelcomeController extends Controller
     }
     return $finalData;
     }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Welcome  $welcome
+     * @return \Illuminate\Http\Response
+     */
+    public function singleLeave($name)
+    {
+        $year = Carbon::now()->year;
+        $month_number = Carbon::now()->month;
+        $dataHalf = Leave::join('employees', 'employee_external_id', '=', 'leaves.employee_id')
+            ->where("name",'=', $name)
+            ->where('status', '=', 'Half')
+            ->whereYear('date', '=', $year)
+            ->whereMonth('date', '=', $month_number)
+            ->get(['employees.name', 'leaves.id', 'leaves.status', 'leaves.employee_id']);
+            $halfLength = count($dataHalf);
+    
+        $dataFull = Leave::join('employees', 'employee_external_id', '=', 'leaves.employee_id')
+            ->where("name",'=', $name)
+            ->where('status', '=', 'Full')
+            ->whereYear('date', '=', $year)
+            ->whereMonth('date', '=', $month_number)
+            ->get(['employees.name', 'leaves.id', 'leaves.status', 'leaves.employee_id']);
+            $fullLenght = count($dataFull);
+        return [
+            'EmplName' => $name,
+            'half' => $halfLength,
+            'full' => $fullLenght
+        ];
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Welcome  $welcome
+     * @return \Illuminate\Http\Response
+     */
+    public function singleHour($name)
+    {
+        $year = Carbon::now()->year;
+        $month_number = Carbon::now()->month;
+        $startDate = $year.'/'.$month_number.'/'.'01';  
+        $endDate = date('Y-m-d');
+        $data = Attendance::join('employees', 'employee_external_id', '=', 'attendances.employee_id')
+        ->where("name",'=', $name)
+        ->whereBetween('date', [$startDate, $endDate])
+        ->get(['employees.name', 'attendances.checkin', 'attendances.checkout',]);
+        $totalHoursSpend = 0;
+        $totalMinSpend = 0;
+        foreach($data as $key => $value ){
+            $date1 = new DateTime($value->checkin);
+            $date2 = new DateTime($value->checkout);
+            $difference = $date1->diff($date2);
+            $totalHoursSpend = $totalHoursSpend + sprintf("%02d", $difference->h);
+            $totalMinSpend = $totalMinSpend + sprintf("%02d", $difference->i);
+            $value->hours = $totalHoursSpend;
+            $value->minutes = $totalMinSpend;
+        }
+        if(count($data) > 0){
+            $minutsArr = $data[count($data) - 1];
+            if($minutsArr->minutes > 60){
+                $min = $minutsArr->minutes / 60;
+                $hours = $minutsArr->hours + $min;
+                $totalHours = explode('.', $hours);
+                if(count($totalHours) > 1){
+                    return [
+                        'name' => $name,
+                        'hours' => $totalHours[0],
+                        'minutes' => $totalHours[1][0],
+                    ];
+                }
+                else{
+                    return [
+                        'name' => $name,
+                        'hours' => $totalHours[0],
+                        'minutes' => $totalHours[1][0],
+                    ];
+                }
+            }
+            else{
+                return [
+                    'name' => $name,
+                    'hours' =>  $minutsArr->hours,
+                    'minutes' => 0,
+                ];
+            }
+        }
+        else{
+            return [
+                'name' => $name,
+                'hours' => 0,
+                'minutes' => 0,
+            ];
+        }
+    }
+
 }

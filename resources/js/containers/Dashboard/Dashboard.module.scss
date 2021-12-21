@@ -98,6 +98,14 @@
     display: flex;
     margin-top: 5px;
 }
+.cardBodyTextSingle {
+    height: 40px;
+    font-size: large;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    margin-top: 5px;
+}
 .cardBodyTextHoliday {
     font-size: large;
     color: white;
@@ -160,4 +168,16 @@ td {
     font-size: 25px;
     font-weight: initial;
     margin-left: 20px;
+}
+.cardImg {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid green;
+    margin: 20px 20px;
+}
+.cardContainer {
+    display: flex;
+    align-items: center;
 }
