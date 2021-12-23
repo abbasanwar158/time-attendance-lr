@@ -31,7 +31,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         
-        $schedule->call('App\Http\Controllers\api\AttendanceController@index')->dailyAt('16:30')->timezone('Asia/Karachi');
+        $schedule->call('App\Http\Controllers\api\AttendanceController@index')->dailyAt('16:45')->timezone('Asia/Karachi');
 
        
         // $schedule->call('App\Http\Controllers\api\AttendanceController@AttendanceAlert')->dailyAt('16:20')->timezone('Asia/Karachi');
