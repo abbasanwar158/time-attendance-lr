@@ -1,1 +1,1 @@
-Today yor are absent
+Today you are absent
