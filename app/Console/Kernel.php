@@ -30,11 +30,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        
-        $schedule->call('App\Http\Controllers\api\AttendanceController@index')->dailyAt('22:10')->timezone('Asia/Karachi');
-
        
-        // $schedule->call('App\Http\Controllers\api\AttendanceController@AttendanceAlert')->dailyAt('16:20')->timezone('Asia/Karachi');
+        $schedule->call('App\Http\Controllers\api\AttendanceController@AttendanceAlert')->dailyAt('23:33')->timezone('Asia/Karachi');
     }
 
     /**
