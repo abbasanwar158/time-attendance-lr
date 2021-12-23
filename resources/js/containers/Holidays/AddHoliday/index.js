@@ -27,7 +27,7 @@ export default function AddHoliday() {
   const newHoliday = () => {
     setOpen(true);
     var today = new Date()
-    fetch(`https://time-attendance-lr.herokuapp.com/api/holiday/new`, {
+    fetch(`https://devbox-attendance.herokuapp.com/api/holiday/new`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

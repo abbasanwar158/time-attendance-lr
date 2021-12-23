@@ -88,7 +88,7 @@ export default function Dashboard() {
   }, []);
 
   const singleLeaves = () => {
-    fetch(`https://time-attendance-lr.herokuapp.com/api/single/employee/leaves/${localStorage.name}`)
+    fetch(`https://devbox-attendance.herokuapp.com/api/single/employee/leaves/${localStorage.name}`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -101,7 +101,7 @@ export default function Dashboard() {
   }
 
   const singleHours = () => {
-    fetch(`https://time-attendance-lr.herokuapp.com/api/single/employee/hours/${localStorage.name}`)
+    fetch(`https://devbox-attendance.herokuapp.com/api/single/employee/hours/${localStorage.name}`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -127,7 +127,7 @@ export default function Dashboard() {
       yearSend = new Date().getFullYear();
       setYears(yearSend);
     }
-      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/leaves/info/${monthSend}/${yearSend}`)
+      fetch(`https://devbox-attendance.herokuapp.com/api/welcome/leaves/info/${monthSend}/${yearSend}`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -145,7 +145,7 @@ export default function Dashboard() {
   }
 
   const OnleavesInfo = () => {
-    fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/leaves`)
+    fetch(`https://devbox-attendance.herokuapp.com/api/welcome/leaves`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -161,7 +161,7 @@ export default function Dashboard() {
   }
 
   const presetEmployeeInfo = () => {
-    fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/attendances`)
+    fetch(`https://devbox-attendance.herokuapp.com/api/welcome/attendances`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -174,7 +174,7 @@ export default function Dashboard() {
   }
 
   const employeeNamesFun = () => {
-    fetch("https://time-attendance-lr.herokuapp.com/api/employees")
+    fetch("https://devbox-attendance.herokuapp.com/api/employees")
       .then(res => res.json())
       .then(
         (response) => {
@@ -189,7 +189,7 @@ export default function Dashboard() {
   }
 
   const upComingHolidays = () => {
-    fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/holidays`)
+    fetch(`https://devbox-attendance.herokuapp.com/api/welcome/holidays`)
       .then(res => res.json())
       .then(
         (response) => {
@@ -210,7 +210,7 @@ export default function Dashboard() {
   const hoursInfo = () => {
     var hoursInfoArr = [];
     setOpen(true);
-      fetch(`https://time-attendance-lr.herokuapp.com/api/welcome/hours/info/${startDate}/${endDate}`)
+      fetch(`https://devbox-attendance.herokuapp.com/api/welcome/hours/info/${startDate}/${endDate}`)
       .then(res => res.json())
       .then(
         (response) => {

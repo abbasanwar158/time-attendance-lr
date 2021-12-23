@@ -31,7 +31,7 @@ export default function UploadLeaves() {
             for (var i = 0; i < result.length; i++) {
                 if (result[i].employee_id != "") {
                     fetch(
-                        `https://time-attendance-lr.herokuapp.com/api/leaves/upload`,
+                        `https://devbox-attendance.herokuapp.com/api/leaves/upload`,
                         {
                             method: "POST",
 

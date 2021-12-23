@@ -38,7 +38,7 @@ export default function RequestReply() {
   const updateLeave = () => {
     setOpen(true);
     var today = new Date()
-    fetch(`https://time-attendance-lr.herokuapp.com/api/leave/requests/reply/${newLeave[index].id}/${newLeave[index].username}/${newLeave[index].name}`, {
+    fetch(`https://devbox-attendance.herokuapp.com/api/leave/requests/reply/${newLeave[index].id}/${newLeave[index].username}/${newLeave[index].name}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

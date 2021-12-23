@@ -221,7 +221,7 @@ export default function LeavesReport() {
         }
         var leavesArr = [];
         fetch(
-            `https://time-attendance-lr.herokuapp.com/api/leaves/report/${id}/${from}/${to}/${empLeaves}`
+            `https://devbox-attendance.herokuapp.com/api/leaves/report/${id}/${from}/${to}/${empLeaves}`
         )
             .then((res) => res.json())
             .then(

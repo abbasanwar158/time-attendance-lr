@@ -58,7 +58,7 @@ export default function EditLeave() {
   const updateLeave = () => {
     setOpen(true);
     var today = new Date()
-    fetch(`https://time-attendance-lr.herokuapp.com/api/leave/update/${leavesData[index].id}`, {
+    fetch(`https://devbox-attendance.herokuapp.com/api/leave/update/${leavesData[index].id}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

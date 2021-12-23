@@ -174,7 +174,7 @@ export default function ManageAttendance() {
     var checkoutFinal = date + ' ' + checkout;
     for (var i = 0; i < epmolyeeExIDArr.length; i++) {
       var today = new Date()
-      fetch('https://time-attendance-lr.herokuapp.com/api/attendance/new', {
+      fetch('https://devbox-attendance.herokuapp.com/api/attendance/new', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -207,7 +207,7 @@ export default function ManageAttendance() {
 
   const attendanceFun = () => {
     var attendanceArr = [];
-    fetch("https://time-attendance-lr.herokuapp.com/api/attendances")
+    fetch("https://devbox-attendance.herokuapp.com/api/attendances")
       .then(res => res.json())
       .then(
         (response) => {

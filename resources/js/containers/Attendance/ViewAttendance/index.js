@@ -122,7 +122,7 @@ export default function ViewAttendance() {
     setOpen(true);
     if(localStorage.isAdmin == 'true'){
       var attendanceArr = [];
-      fetch("https://time-attendance-lr.herokuapp.com/api/today/attendance")
+      fetch("https://devbox-attendance.herokuapp.com/api/today/attendance")
         .then(res => res.json())
         .then(
           (response) => {
@@ -140,7 +140,7 @@ export default function ViewAttendance() {
     }
     else{
       var attendanceArr = [];
-      fetch("https://time-attendance-lr.herokuapp.com/api/today/attendance")
+      fetch("https://devbox-attendance.herokuapp.com/api/today/attendance")
         .then(res => res.json())
         .then(
           (response) => {

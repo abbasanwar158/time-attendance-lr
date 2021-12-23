@@ -104,7 +104,7 @@ export default function EmployeesReport() {
                 setTotalLeaves(0);
             }
             fetch(
-                `https://time-attendance-lr.herokuapp.com/api/leaves/schedule/${personName}/${selectedYear}`
+                `https://devbox-attendance.herokuapp.com/api/leaves/schedule/${personName}/${selectedYear}`
             )
                 .then((res) => res.json())
                 .then(
@@ -159,7 +159,7 @@ export default function EmployeesReport() {
         }
         var attendanceArr = [];
         fetch(
-            `https://time-attendance-lr.herokuapp.com/api/employees/report/${personName}/${selectedYear}`
+            `https://devbox-attendance.herokuapp.com/api/employees/report/${personName}/${selectedYear}`
         )
             .then((res) => res.json())
             .then(

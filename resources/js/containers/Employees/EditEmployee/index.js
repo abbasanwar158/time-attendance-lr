@@ -92,7 +92,7 @@ export default function NewEmployee() {
   const editEmployee = () => {
     setOpen(true);
     var today = new Date()
-    fetch(`https://time-attendance-lr.herokuapp.com/api/employee/update/${employeesData[index].id}`, {
+    fetch(`https://devbox-attendance.herokuapp.com/api/employee/update/${employeesData[index].id}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

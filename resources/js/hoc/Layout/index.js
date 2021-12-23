@@ -13,7 +13,7 @@ export default function Layout(props) {
 
   useEffect(() => {
     var newLeavesArr = [];
-    fetch("https://time-attendance-lr.herokuapp.com/api/leave/requests")
+    fetch("https://devbox-attendance.herokuapp.com/api/leave/requests")
     .then(res => res.json())
     .then(
       (response) => {
@@ -33,7 +33,7 @@ export default function Layout(props) {
 
   const employeeNamesFun = () => {
     var employeeNamesArr = [];
-    fetch("https://time-attendance-lr.herokuapp.com/api/employees")
+    fetch("https://devbox-attendance.herokuapp.com/api/employees")
       .then(res => res.json())
       .then(
         (response) => {

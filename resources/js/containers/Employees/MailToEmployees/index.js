@@ -30,7 +30,7 @@ export default function MailToEmployees() {
 
     const mailMessage = () => {
         setOpen(true);
-        fetch(`https://time-attendance-lr.herokuapp.com/api/employees/mail`)
+        fetch(`https://devbox-attendance.herokuapp.com/api/employees/mail`)
             .then((res) => res.json())
             .then(
                 (response) => {
