@@ -67,7 +67,7 @@ export default function ChangePassword() {
     var password = values.password;
     var confirmPass = valuesConfirm.password;
     if(password == confirmPass){
-      fetch(`https://time-attendance-lr.herokuapp.com/api/user/update/${localStorage.userId}}`, {
+      fetch(`https://devbox-attendance.herokuapp.com/api/user/update/${localStorage.userId}}`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

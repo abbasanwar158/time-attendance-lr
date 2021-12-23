@@ -51,7 +51,7 @@ export default function NewLeave() {
   const newattendance = () => {
     setOpen(true);
     var today = new Date()
-    fetch('https://time-attendance-lr.herokuapp.com/api/leave/new', {
+    fetch('https://devbox-attendance.herokuapp.com/api/leave/new', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',

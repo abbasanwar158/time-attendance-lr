@@ -44,7 +44,7 @@ export default function ApplyLeaves() {
       setOpen(true);
       var flagdate = new Date();
       try {
-          fetch("https://time-attendance-lr.herokuapp.com/api/leave/new/request", {
+          fetch("https://devbox-attendance.herokuapp.com/api/leave/new/request", {
               method: "POST",
               headers: {
                   Accept: "application/json",
