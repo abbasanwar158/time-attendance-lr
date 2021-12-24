@@ -174,18 +174,21 @@ export default function Dashboard() {
   }
 
   const employeeNamesFun = () => {
-    fetch("https://devbox-attendance.herokuapp.com/api/employees")
-      .then(res => res.json())
-      .then(
-        (response) => {
-          var activeEmp = response.filter((x) => x.active)
-          var data = activeEmp.filter((x) => x.name == localStorage.name)
-          setDesignation(data[0].designation);
-        },
-        (error) => {
-          console.log("error", error)
-        }
-      )
+    if(localStorage.isAdmin != 'true')
+    {
+      fetch("https://devbox-attendance.herokuapp.com/api/employees")
+        .then(res => res.json())
+        .then(
+          (response) => {
+            var activeEmp = response.filter((x) => x.active)
+            var data = activeEmp.filter((x) => x.name == localStorage.name)
+            setDesignation(data[0].designation);
+          },
+          (error) => {
+            console.log("error", error)
+          }
+        )
+    }
   }
 
   const upComingHolidays = () => {
@@ -214,6 +217,7 @@ export default function Dashboard() {
       .then(res => res.json())
       .then(
         (response) => {
+          debugger;
           for (var i = 0; i < response.length; i++) {
             hoursInfoArr.push(response[i])
           }
