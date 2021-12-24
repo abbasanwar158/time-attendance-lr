@@ -166,7 +166,7 @@ class WelcomeController extends Controller
                   array_push($finalData, [
                     'name' => $emp->name,
                     'hours' => $totalHours[0],
-                    'minutes' => $totalHours[1][0],
+                    'minutes' => 0,
                   ]);
                 }
             }
