@@ -1,6 +1,12 @@
-.flex{
+.flex {
     display: flex;
 }
-.layoutContainer{
+.layoutContainer {
     width: 78%;
+}
+.sidebar {
+    display: none !important;
+}
+.MuiBackdrop-root {
+    z-index: 9999 !important;
 }
