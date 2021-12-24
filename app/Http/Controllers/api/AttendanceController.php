@@ -465,6 +465,8 @@ class AttendanceController extends Controller
             array_push($EmployeeName,$employee->email);
           }
         $today = Carbon::today();
+        $ldate = date('d/m/Y');
+        $day = Carbon::createFromFormat('d/m/Y', $ldate)->format('l');
         $data = Attendance::where('date', '=', $today)->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
         ->get(['employees.name', 'employees.active', 'employees.email','employees.employee_external_id', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
         foreach($data as $key => $value ){
@@ -485,14 +487,20 @@ class AttendanceController extends Controller
                 array_push($presentEmployee,$value->email);
                   if($value->timeSpend < '08:00:00'){
                     
-                    $data = ['employeeName' => $value->name,"Time" => $value->timeSpend];
-                    $emails = $value->email;
-                    Mail::send('attendanceAlert',$data, function($message)  use ($emails)
+                    if($day == 'Saturday' or $day == 'Sunday')
                     {
-                      $message->to($emails)
-                          ->cc('aamir.mughal@devbox.co');
-                      $message->subject('Short Attendance' );
-                    });  
+                      return $day;
+                    }
+                    else{
+                      $data = ['employeeName' => $value->name,"Time" => $value->timeSpend];
+                      $emails = $value->email;
+                      Mail::send('attendanceAlert',$data, function($message)  use ($emails)
+                      {
+                        $message->to($emails)
+                            ->cc('aamir.mughal@devbox.co');
+                        $message->subject('Short Attendance' );
+                      });  
+                    }
                   }
               }
             }
@@ -501,13 +509,19 @@ class AttendanceController extends Controller
       $result = array_diff($EmployeeName, $presentEmployee);
       foreach($result as $value){
 
-        $emails = $value;
-        Mail::send('Absent',[], function($message)  use ($emails)
+        if($day == 'Saturday' or $day == 'Sunday')
         {
-          $message->to($emails)
-              ->cc('aamir.mughal@devbox.co');
-          $message->subject('Absent' );
-        });  
+          return $day;
+        }
+        else{
+          $emails = $value;
+          Mail::send('Absent',[], function($message)  use ($emails)
+          {
+            $message->to($emails)
+                ->cc('aamir.mughal@devbox.co');
+            $message->subject('Absent' );
+          });  
+        }
       }
     }
 }
