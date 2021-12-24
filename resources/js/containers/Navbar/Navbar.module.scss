@@ -5,7 +5,7 @@
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.05);
     position: sticky;
     top: 0px;
-    z-index: 10;
+    z-index: 2;
     display: flex;
 }
 .logo {
@@ -98,16 +98,16 @@
 }
 
 //************************IPAD***********************//
-@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+@media only screen and (min-device-width: 300px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
     .sidebarToggleBtn {
-        display: block;
+        display: block !important;
     }
 }
 
 //************************Phone***********************//
 
-@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+@media only screen and (min-device-width: 300px) and (max-device-width: 768px) and (-webkit-min-device-pixel-ratio: 2) {
     .sidebarToggleBtn {
-        display: block;
+        display: block !important;
     }
 }

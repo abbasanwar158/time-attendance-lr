@@ -114,9 +114,13 @@ export default function Sidebar({ fromNavbar, setModalOpen }) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className={clsx(
+      fromNavbar ? styles.fromNavContainer : styles.container
+    )}>
 
-      <div className={styles.positionSidebar}>
+      <div className={clsx(
+        fromNavbar ? styles.positionSidebarFromNav : styles.positionSidebar
+      )}>
         <div className={styles.dashboardDiv}
           onClick={() => {
             history.push('/dashboard')
