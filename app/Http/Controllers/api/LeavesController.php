@@ -19,8 +19,9 @@ class LeavesController extends Controller
     public function index()
     {
         $data=Leave::join("employees","employee_external_id","=","leaves.employee_id")
+            ->orderBy('leaves.date', 'DESC')
             ->get(['employees.name', 'employees.employee_external_id', 'employees.active','leaves.time','leaves.status','leaves.date','leaves.note', 'leaves.id']);
-        return $data;
+            return $data;
     }
 
     /**
