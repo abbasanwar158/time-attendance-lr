@@ -48,9 +48,10 @@ export default function NewLeave() {
     );
   };
 
-  const newattendance = () => {
+  const newLeave = () => {
     setOpen(true);
-    var today = new Date()
+    var today = new Date();
+    var data = ActiveEmployeeNames.filter((x) => x.employee_external_id == selected)
     fetch('https://devbox-attendance.herokuapp.com/api/leave/new', {
         method: 'POST',
         headers: {
@@ -59,6 +60,7 @@ export default function NewLeave() {
         },
         body: JSON.stringify({
           employee_id: selected,
+          name: data[0].name,
           date: selectedDate,
           status: selectedStatus,
           created_at: today,
@@ -70,6 +72,7 @@ export default function NewLeave() {
       .then(response => response.json())
       .then(data => {
         setOpen(false);
+        history.push('/leaves');
         console.log('Success:', data);
       })
       .catch((error) => {
@@ -199,7 +202,7 @@ export default function NewLeave() {
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
-                <Button id="AddNewLeave_save" variant="contained" color="primary" onClick={newattendance} className={styles.saveButton}>
+                <Button id="AddNewLeave_save" variant="contained" color="primary" onClick={newLeave} className={styles.saveButton}>
                   Save
                 </Button>
                 <Button

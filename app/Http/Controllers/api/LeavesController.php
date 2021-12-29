@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Leave;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Http\Request;
+use Mail;
 
 class LeavesController extends Controller
 {
@@ -44,8 +44,6 @@ class LeavesController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
-
         $data =  Leave::create([
             'employee_id'=>$request->employee_id,
             'date' => $request->date,
@@ -66,6 +64,16 @@ class LeavesController extends Controller
             'msg'=>'fail'
           ];
         }
+        $employee = DB::table('employees')
+            ->where('name', $request->name)->get();
+            $data = ['name' => $request->name, 'date' => $request->date, 'status' => $request->status];
+            $emails = $employee[0]->email;
+            Mail::send('leavesAlert',$data, function($message)  use ($emails)
+            {
+              $message->to($emails)
+                ->cc('aamir.mughal@devbox.co');
+              $message->subject('Leave Alert'); 
+            }); 
           return response()->json($res);
     }
 
