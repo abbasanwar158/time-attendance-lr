@@ -202,7 +202,7 @@ export default function ViewAttendance() {
                   <TableCell
                     className=
                     {clsx(
-                      row.timeSpend >= '08:00'
+                      row.timeSpend >= '09:00'
                         ? styles.time_spend_up
                         :
                         styles.time_spend_down

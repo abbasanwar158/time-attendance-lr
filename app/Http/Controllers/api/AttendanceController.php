@@ -485,7 +485,7 @@ class AttendanceController extends Controller
               if($employee->employee_external_id == $value->employee_external_id ) {
               
                 array_push($presentEmployee,$value->email);
-                  if($value->timeSpend < '08:00:00'){
+                  if($value->timeSpend < '09:00:00'){
                     
                     if($day == 'Saturday' or $day == 'Sunday')
                     {
