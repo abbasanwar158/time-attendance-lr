@@ -1,0 +1,69 @@
+.mainCard {
+    margin: 30px;
+    background-color: #f3f5f6;
+    box-shadow: 0 3px 3px 2px rgba(0, 0, 0, 0.2);
+    // display: flex;
+}
+.table {
+    margin: 20px 10px;
+}
+.tableHeader {
+    background-color: #343a40;
+}
+.TableCell {
+    color: white !important;
+    border: 1px solid #efefef !important;
+}
+.nameCells {
+    background-color: #b8bbbf !important;
+    border: 2px solid #efefef !important;
+    border-left: 1px solid #efefef !important;
+    border-right: 1px solid #efefef !important;
+}
+.subCells {
+    background-color: #d3d3d3 !important;
+    border: 2px solid #efefef !important;
+    border-left: 1px solid #efefef !important;
+    border-right: 1px solid #efefef !important;
+    color: #308af3 !important;
+}
+.subCellsAbsent {
+    background-color: #d3d3d3 !important;
+    border: 2px solid #efefef !important;
+    border-left: 1px solid #efefef !important;
+    border-right: 1px solid #efefef !important;
+    color: #dc3545 !important;
+}
+.pagginationContainer div {
+    min-height: 30px !important;
+}
+.time_spend_up {
+    background-color: #d3d3d3 !important;
+    border: 2px solid #efefef !important;
+    border-left: 1px solid #efefef !important;
+    border-right: 1px solid #efefef !important;
+    color: #48ba16 !important;
+}
+.time_spend_down {
+    background-color: #d3d3d3 !important;
+    border: 2px solid #efefef !important;
+    border-left: 1px solid #efefef !important;
+    border-right: 1px solid #efefef !important;
+    color: #dc3545 !important;
+}
+
+.backDropZindex {
+    position: relative;
+    z-index: 9 !important;
+}
+
+.loadingText {
+    color: white;
+    font-size: 25px;
+    font-weight: initial;
+    margin-left: 20px;
+}
+h2 {
+    color: #777 !important;
+    margin-left: 10px;
+}

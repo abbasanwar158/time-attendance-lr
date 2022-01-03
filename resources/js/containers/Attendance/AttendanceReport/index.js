@@ -29,7 +29,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import clsx from "clsx";
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
+import AbsentTable from '../AbsentTable'
 
 const useStyles1 = makeStyles((theme) => ({
     root: {
@@ -134,6 +134,7 @@ export default function ManageAttendance() {
     const [open, setOpen] = useState(false);
     const history = useHistory();
     const [flag, setflag] = useState(false);
+    const [absentData, setAbsentData] = useState([])
 
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -192,34 +193,11 @@ export default function ManageAttendance() {
         );
     };
 
-    useEffect(() => {
-        if(localStorage.isAdmin == 'true'){
-        }
-        else{
-            setOpen(true);
-            var attendanceArr = [];
-            fetch("https://devbox-attendance.herokuapp.com/api/attendances")
-                .then(res => res.json())
-                .then(
-                (response) => {
-                    var data = response.filter((x) => x.name == localStorage.name)
-                    for (var i = 0; i < data.length; i++) {
-                    attendanceArr.push(data[i])
-                    }
-                    setAttendanceData(attendanceArr);
-                    setOpen(false);
-                },
-                (error) => {
-                    console.log("error", error)
-                }
-                )
-        }
-      }, [])
-
     const attendanceSearch = () => {
         setflag(false);
         setOpen(true);
         var attendanceArr = [];
+        var absentArr = [];
         var id = selected;
         if (allData == true) {
             id = null;
@@ -235,26 +213,31 @@ export default function ManageAttendance() {
 
                     var data = response.filter((x) => x.active);
                     for (var i = 0; i < data.length; i++) {
-                        if (saturday || sunday) {
-                            var currentday = new Date(data[i].date);
-                            var sunDay = currentday.getDay();
-                            if (sunday && !saturday && sunDay == 0) {
-                                attendanceArr.push(data[i]);
-                            } else if (saturday && !sunday && sunDay == 6) {
-                                attendanceArr.push(data[i]);
-                            } else if (sunday && saturday) {
-                                if (sunDay == 0 || sunDay == 6) {
+                        if(data[i].absent_status != 1){
+                            if (saturday || sunday) {
+                                var currentday = new Date(data[i].date);
+                                var sunDay = currentday.getDay();
+                                if (sunday && !saturday && sunDay == 0) {
                                     attendanceArr.push(data[i]);
+                                } else if (saturday && !sunday && sunDay == 6) {
+                                    attendanceArr.push(data[i]);
+                                } else if (sunday && saturday) {
+                                    if (sunDay == 0 || sunDay == 6) {
+                                        attendanceArr.push(data[i]);
+                                    }
+                                } else {
+                                    console.log("null");
                                 }
                             } else {
-                                console.log("null");
+                                attendanceArr.push(data[i]);
                             }
-                        } else {
-                            attendanceArr.push(data[i]);
-                        }
-                        setflag(true);
+                            setflag(true);
+                          }
+                          else{
+                            absentArr.push(data[i]);
+                          }
                     }
-
+                    setAbsentData(absentArr);
                     setAttendanceData(attendanceArr);
                     setOpen(false);
                 },
@@ -550,6 +533,7 @@ export default function ManageAttendance() {
                     </TableContainer>
                 </div>
             </div>
+            <AbsentTable setAbsentData={setAbsentData} absentData={absentData}  />
         </>
     );
 }

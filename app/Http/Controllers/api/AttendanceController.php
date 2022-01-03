@@ -22,7 +22,7 @@ class AttendanceController extends Controller
     {
         $data = Attendance::join('employees', 'employee_external_id', '=', 'attendances.employee_id')
         ->orderBy('date', 'DESC')
-        ->get(['employees.name', 'employees.active', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout', 'attendances.created_at']);
+        ->get(['employees.name', 'employees.active', 'attendances.id', 'attendances.absent_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout', 'attendances.created_at']);
         foreach($data as $key => $value ){
             $date1 = new DateTime($value->checkin);
             $date2 = new DateTime($value->checkout);
@@ -48,7 +48,7 @@ class AttendanceController extends Controller
     {
         $today = Carbon::today();
         $data = Attendance::where('date', '=', $today)->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
-        ->get(['employees.name', 'employees.active', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
+        ->get(['employees.name', 'employees.active', 'attendances.id', 'attendances.absent_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
         foreach($data as $key => $value ){
             $date1 = new DateTime($value->checkin);
             $date2 = new DateTime($value->checkout);
@@ -203,7 +203,7 @@ class AttendanceController extends Controller
               ['date','<=', $to],
           ])
           ->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
-          ->get(['employees.name',  'employees.active', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
+          ->get(['employees.name',  'employees.active', 'attendances.id', 'attendances.absent_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
           foreach($data as $key => $value ){
               $date1 = new DateTime($value->checkin);
               $date2 = new DateTime($value->checkout);
@@ -350,8 +350,6 @@ class AttendanceController extends Controller
                     ->subject($request->Month.' Attendance Sheet');
                   $message->attachData(stream_get_contents($file), $filename);
               });
-
-            //echo print_r(stream_get_contents($file))."\n";
             fclose($file);
           }
           
@@ -439,8 +437,6 @@ class AttendanceController extends Controller
                               ->subject($request->Month.' Attendance Sheet');
                             $message->attachData(stream_get_contents($file), $filename);
                         });
-
-                     // echo print_r(stream_get_contents($file))."\n";
                       fclose($file);
 
                       }
@@ -458,11 +454,15 @@ class AttendanceController extends Controller
         $Employee= DB :: table('employees')
           ->Where('active','=','1')
           ->get(['email','employee_external_id','name']);
-        
           $presentEmployee=[];
           $EmployeeName=[];
+          $employeeId = [];
+          $presentEmpId =[];
           foreach($Employee as $employee){
             array_push($EmployeeName,$employee->email);
+          }
+          foreach($Employee as $employee){
+            array_push($employeeId,$employee->employee_external_id);
           }
         $today = Carbon::today();
         $ldate = date('d/m/Y');
@@ -485,6 +485,7 @@ class AttendanceController extends Controller
               if($employee->employee_external_id == $value->employee_external_id ) {
               
                 array_push($presentEmployee,$value->email);
+                array_push($presentEmpId,$value->employee_external_id);
                   if($value->timeSpend < '09:00:00'){
                     
                     if($day == 'Saturday' or $day == 'Sunday')
@@ -505,8 +506,33 @@ class AttendanceController extends Controller
               }
             }
         }
-    
       $result = array_diff($EmployeeName, $presentEmployee);
+      $resultId = array_diff($employeeId, $presentEmpId); 
+
+      foreach($resultId as $valueId){
+        $leave= DB :: table('leaves')
+          ->Where('employee_id','=',$valueId)
+          ->Where('date', '=', date('Y/m/d'))
+          ->get();
+        if($day == 'Saturday' or $day == 'Sunday')
+        {
+          return $day;
+        }
+        else{
+          if(count($leave) < 1){
+            $data = Attendance::create([
+              'employee_id' => $valueId,
+              'date' => date('Y/m/d'),
+              'checkin' => date('Y/m/d').' '.'00:00',
+              'checkout' => date('Y/m/d').' '.'00:00',
+              'created_at' => Carbon::now(),
+              'updated_at' => Carbon::now(),
+              'absent_status' => 1,
+          ]);
+          }
+        }
+      }
+
       foreach($result as $value){
 
         if($day == 'Saturday' or $day == 'Sunday')
@@ -524,4 +550,5 @@ class AttendanceController extends Controller
         }
       }
     }
+
 }

@@ -1,4 +1,4 @@
 Dear {{"$employeeName"}}
 <br>
 Today you spent {{"$Time"}}<br>
-Please complete 8 hours daily
+Please complete 9 hours daily
