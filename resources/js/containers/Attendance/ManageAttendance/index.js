@@ -32,6 +32,7 @@ import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import AbsentTable from '../AbsentTable'
 
 const useStyles1 = makeStyles((theme) => ({
   root: {
@@ -116,6 +117,7 @@ export default function ManageAttendance() {
   const [date, setDate] = useState('')
   const history = useHistory();
   const [open, setOpen] = useState(true);
+  const [absentData, setAbsentData] = useState([])
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -207,14 +209,21 @@ export default function ManageAttendance() {
 
   const attendanceFun = () => {
     var attendanceArr = [];
+    var absentArr = [];
     fetch("https://devbox-attendance.herokuapp.com/api/attendances")
       .then(res => res.json())
       .then(
         (response) => {
           var data = response.filter((x) => x.active)
           for (var i = 0; i < data.length; i++) {
-            attendanceArr.push(data[i])
+            if(data[i].absent_status != 1){
+              attendanceArr.push(data[i])
+            }
+            else{
+              absentArr.push(data[i])
+            }
           }
+          setAbsentData(absentArr);
           setAttendanceData(attendanceArr);
           setOpen(false);
         },
@@ -434,7 +443,7 @@ export default function ManageAttendance() {
           </TableContainer>
         </div>
       </div>
-
+      <AbsentTable setAbsentData={setAbsentData} absentData={absentData}  />
     </>
   );
 }

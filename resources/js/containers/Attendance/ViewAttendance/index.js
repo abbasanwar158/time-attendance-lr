@@ -128,7 +128,9 @@ export default function ViewAttendance() {
           (response) => {
             var data = response.filter((x) => x.active)
             for (var i = 0; i < data.length; i++) {
-              attendanceArr.push(data[i])
+              if(data[i].absent_status != 1){
+                attendanceArr.push(data[i])
+              }
             }
               setAttendanceData(attendanceArr);
               setOpen(false);
