@@ -118,6 +118,7 @@ export default function ManageAttendance() {
   const history = useHistory();
   const [open, setOpen] = useState(true);
   const [absentData, setAbsentData] = useState([])
+  const [selectedStatus, setSelectedStatus] = useState('')
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -169,6 +170,18 @@ export default function ManageAttendance() {
     setCheckout(event.target.value)
   }
 
+  const handleChangeStatus = (event) => {
+    setSelectedStatus(event.target.value);
+  };
+
+  const Chevron = () => {
+    return (
+      <span className={styles.dropDownCustomizeSvg}>
+        <SVG src={`/images/downArrow.svg`} />
+      </span>
+    );
+  };
+
   const addAttendance = () => {
     setOpen(true);
     var epmolyeeExIDArr = employeesExId;
@@ -187,12 +200,14 @@ export default function ManageAttendance() {
           Date: date,
           CheckIn: checkinFinal,
           CheckOut: checkoutFinal,
+          category: selectedStatus,
           CreatedDate: today,
           ModifyDate: today
         })
       })
       .then(response => response.json())
       .then(data => {
+        attendanceFun();
         console.log('Success:', data);
         setOpen(false);
       })
@@ -200,7 +215,6 @@ export default function ManageAttendance() {
         console.error('Error:', error);
       });
     }
-    attendanceFun();
   }
 
   useEffect(() => {
@@ -324,6 +338,34 @@ export default function ManageAttendance() {
         <Grid item xs={12}>
           <Grid container spacing={1} className={styles.gridSubItems} >
             <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+              <FormControl fullWidth >
+                <TextField
+                  className={styles.fieldDiv}
+                  id="AddNewAttendance_status"
+                  fullWidth
+                  size="small"
+                  label="Work From"
+                  variant="outlined"
+                  value={selectedStatus}
+                  onChange={handleChangeStatus}
+                  menuprops={{ variant: "menu" }}
+                  select
+                  SelectProps={{ IconComponent: () => <Chevron /> }}
+                >
+                  <MenuItem value="At Office">
+                    At Office
+                  </MenuItem>
+                  <MenuItem value="Work From Home">
+                    Work From Home
+                  </MenuItem>
+                </TextField>
+              </FormControl>
+            </Grid>
+          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Grid container spacing={1} className={styles.gridSubItems} >
+            <Grid item xs={12} sm={4} className={styles.fieldGrid}>
               <FormControl fullWidth variant="outlined">
                 <InputLabel >Select employees</InputLabel>
                 <Select
@@ -381,6 +423,7 @@ export default function ManageAttendance() {
                   <TableCell className={styles.TableCell} >Date</TableCell>
                   <TableCell className={styles.TableCell} >Checkin</TableCell>
                   <TableCell className={styles.TableCell} >Checkout</TableCell>
+                  <TableCell className={styles.TableCell} >Work From</TableCell>
                   <TableCell className={styles.TableCell} >Time Spend</TableCell>
                   <TableCell className={styles.TableCell} >Action</TableCell>
                 </TableRow>
@@ -395,6 +438,9 @@ export default function ManageAttendance() {
                     <TableCell className={styles.subCells}>{row.date}</TableCell>
                     <TableCell className={styles.subCells}>{row.checkin}</TableCell>
                     <TableCell className={styles.subCells}>{row.checkout}</TableCell>
+                    <TableCell className={styles.subCells}>
+                      {row.category_status == 'Work From Home' ? 'Work From Home' : 'At Office'}
+                    </TableCell>
                     <TableCell
                       className=
                       {clsx(

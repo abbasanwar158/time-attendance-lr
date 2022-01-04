@@ -446,6 +446,9 @@ export default function ManageAttendance() {
                                         Checkout
                                     </TableCell>
                                     <TableCell className={styles.TableCell}>
+                                        Work From
+                                    </TableCell>
+                                    <TableCell className={styles.TableCell}>
                                         Time Spend
                                     </TableCell>
                                 </TableRow>
@@ -484,6 +487,11 @@ export default function ManageAttendance() {
                                                   className={styles.subCells}
                                               >
                                                   {row.checkout}
+                                              </TableCell>
+                                              <TableCell
+                                                  className={styles.subCells}
+                                              >
+                                                  {row.category_status == 'Work From Home' ? 'Work From Home' : 'At Office'}
                                               </TableCell>
                                               <TableCell
                                                   className={clsx(

@@ -20,9 +20,11 @@ class AttendanceController extends Controller
      */
     public function index()
     {
+        // DB::select('ALTER TABLE attendances
+        // ADD category_status varchar(225) default null');
         $data = Attendance::join('employees', 'employee_external_id', '=', 'attendances.employee_id')
         ->orderBy('date', 'DESC')
-        ->get(['employees.name', 'employees.active', 'attendances.id', 'attendances.absent_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout', 'attendances.created_at']);
+        ->get(['employees.name', 'employees.active', 'attendances.id', 'attendances.category_status', 'attendances.absent_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout', 'attendances.created_at']);
         foreach($data as $key => $value ){
             $date1 = new DateTime($value->checkin);
             $date2 = new DateTime($value->checkout);
@@ -48,7 +50,7 @@ class AttendanceController extends Controller
     {
         $today = Carbon::today();
         $data = Attendance::where('date', '=', $today)->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
-        ->get(['employees.name', 'employees.active', 'attendances.id', 'attendances.absent_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
+        ->get(['employees.name', 'employees.active', 'attendances.id', 'attendances.category_status', 'attendances.absent_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
         foreach($data as $key => $value ){
             $date1 = new DateTime($value->checkin);
             $date2 = new DateTime($value->checkout);
@@ -76,6 +78,7 @@ class AttendanceController extends Controller
             'date' => $request->Date,
             'checkin' => $request->CheckIn,
             'checkout' => $request->CheckOut,
+            'category_status' => $request->category,
             'created_at' => $request->CreatedDate,
             'updated_at' => $request->ModifyDate
         ]);
@@ -105,7 +108,7 @@ class AttendanceController extends Controller
         return DB::table('attendances')
             ->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
             ->where('attendances.id', $id)
-            ->get(['employees.name', 'employees.active', 'employees.employee_external_id', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout', 'attendances.created_at']);
+            ->get(['employees.name', 'employees.active', 'attendances.category_status', 'employees.employee_external_id', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout', 'attendances.created_at']);
     }
 
     /**
@@ -134,6 +137,7 @@ class AttendanceController extends Controller
             'date' => $request->Date,
             'checkin' => $request->CheckIn,
             'checkout' => $request->CheckOut,
+            'category_status' => $request->category,
             'created_at' => $request->CreatedDate,
             'updated_at' => $request->ModifyDate
         ]);
@@ -203,7 +207,7 @@ class AttendanceController extends Controller
               ['date','<=', $to],
           ])
           ->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
-          ->get(['employees.name',  'employees.active', 'attendances.id', 'attendances.absent_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
+          ->get(['employees.name',  'employees.active', 'attendances.id', 'attendances.category_status', 'attendances.absent_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
           foreach($data as $key => $value ){
               $date1 = new DateTime($value->checkin);
               $date2 = new DateTime($value->checkout);
@@ -254,6 +258,7 @@ class AttendanceController extends Controller
                     'date' => $request->Date,
                     'checkin' => $request->CheckIn,
                     'checkout' => $request->CheckOut,
+                    'category_status' => $request->category,
                     'created_at' => $request->CreatedDate,
                     'updated_at' => $request->ModifyDate,
                 ]);
@@ -275,6 +280,7 @@ class AttendanceController extends Controller
                 'date' => $request->Date,
                 'checkin' => $request->CheckIn,
                 'checkout' => $request->CheckOut,
+                'category_status' => $request->category,
                 'created_at' => $request->CreatedDate,
                 'updated_at' => $request->ModifyDate,
             ]);
@@ -326,7 +332,7 @@ class AttendanceController extends Controller
                   ->whereMonth('date', '=', $month_number)
                   ->Where("employee_id",'=',$employee->employee_external_id)
                   
-                  ->get(['employees.name',  'employees.active', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
+                  ->get(['employees.name',  'employees.active', 'attendances.id', 'attendances.category_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
            
             $filename =  'Attendance.csv';
             $file = fopen('php://temp', 'w+');
@@ -372,7 +378,7 @@ class AttendanceController extends Controller
                               ->whereYear('date', '=',  $request->Year)
                               ->whereMonth('date', '=', $month_number)
                               ->Where("employee_id",'=',$employee->employee_external_id)
-                              ->get(['employees.name',  'employees.active', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
+                              ->get(['employees.name',  'employees.active', 'attendances.id', 'attendances.category_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
                             $temp=count($Employee);
                             $length=count($users);
                             $row = array();
@@ -468,7 +474,7 @@ class AttendanceController extends Controller
         $ldate = date('d/m/Y');
         $day = Carbon::createFromFormat('d/m/Y', $ldate)->format('l');
         $data = Attendance::where('date', '=', $today)->join('employees', 'employee_external_id', '=', 'attendances.employee_id')
-        ->get(['employees.name', 'employees.active', 'employees.email','employees.employee_external_id', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
+        ->get(['employees.name', 'employees.active', 'employees.email','employees.employee_external_id', 'attendances.category_status', 'attendances.id', 'attendances.date', 'attendances.checkin', 'attendances.checkout']);
         foreach($data as $key => $value ){
             $date1 = new DateTime($value->checkin);
             $date2 = new DateTime($value->checkout);
