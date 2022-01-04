@@ -9,6 +9,7 @@ import { RootContext } from "../../../context/RootContext";
 import { useHistory } from "react-router-dom";
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import MenuItem from "@material-ui/core/MenuItem";
 
 export default function ManageAttendance() {
 
@@ -22,6 +23,7 @@ export default function ManageAttendance() {
   const [createdAt, setCreatedAt] = useState('')
   const [open, setOpen] = useState(false);
   const history = useHistory();
+  const [selectedStatus, setSelectedStatus] = useState('')
 
   const dateFun = (event) => {
     setDate(event.target.value)
@@ -34,6 +36,18 @@ export default function ManageAttendance() {
   const checkoutFun = (event) => {
     setCheckout(event.target.value)
   }
+
+  const handleChangeStatus = (event) => {
+    setSelectedStatus(event.target.value);
+  };
+
+  const Chevron = () => {
+    return (
+      <span className={styles.dropDownCustomizeSvg}>
+        <SVG src={`/images/downArrow.svg`} />
+      </span>
+    );
+  };
 
   const EditAttendance = () => {
     setOpen(true);
@@ -51,6 +65,7 @@ export default function ManageAttendance() {
           Date: date,
           CheckIn: checkinFinal,
           CheckOut: checkoutFinal,
+          category: selectedStatus,
           CreatedDate: createdAt,
           ModifyDate: today
         })
@@ -79,6 +94,7 @@ export default function ManageAttendance() {
           setDate(response[0].date)
           setCheckin(response[0].checkin.split(' ')[1])
           setCheckout(response[0].checkout.split(' ')[1])
+          setSelectedStatus(response[0].category_status)
           setCreatedAt(response[0].created_at)
         },
         (error) => {
@@ -191,6 +207,34 @@ export default function ManageAttendance() {
                       </Grid>
                   </Grid>
               </Grid>
+            <Grid item xs={12}>
+                <Grid container spacing={1} className={styles.gridSubItems} >
+                    <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                    <FormControl fullWidth >
+                        <TextField
+                        className={styles.fieldDiv}
+                        id="AddNewAttendance_status"
+                        fullWidth
+                        size="small"
+                        label="Work From"
+                        variant="outlined"
+                        value={selectedStatus}
+                        onChange={handleChangeStatus}
+                        menuprops={{ variant: "menu" }}
+                        select
+                        SelectProps={{ IconComponent: () => <Chevron /> }}
+                        >
+                        <MenuItem value="At Office">
+                            At Office
+                        </MenuItem>
+                        <MenuItem value="Work From Home">
+                            Work From Home
+                        </MenuItem>
+                        </TextField>
+                    </FormControl>
+                    </Grid>
+                </Grid>
+            </Grid>
               <Grid item xs={12}>
                   <Grid container spacing={1} className={styles.gridSubItems}>
                       <Grid item xs={12} sm={4} className={styles.fieldGrid}>

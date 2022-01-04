@@ -189,6 +189,7 @@ export default function ViewAttendance() {
                 <TableCell className={styles.TableCell} >Name</TableCell>
                 <TableCell className={styles.TableCell} >Checkin</TableCell>
                 <TableCell className={styles.TableCell} >Checkout</TableCell>
+                <TableCell className={styles.TableCell} >Work From</TableCell>
                 <TableCell className={styles.TableCell} >Time Spend</TableCell>
               </TableRow>
             </TableHead>
@@ -201,6 +202,9 @@ export default function ViewAttendance() {
                   <TableCell className={styles.nameCells}>{row.name}</TableCell>
                   <TableCell className={styles.subCells}>{row.checkin}</TableCell>
                   <TableCell className={styles.subCells}>{row.checkout}</TableCell>
+                  <TableCell className={styles.subCells}>
+                    {row.category_status == 'Work From Home' ? 'Work From Home' : 'At Office'}
+                  </TableCell>
                   <TableCell
                     className=
                     {clsx(
