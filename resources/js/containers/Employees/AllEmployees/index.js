@@ -98,7 +98,7 @@ export default function AllEmployees() {
   const history = useHistory();
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(25);
   const { employeesData, setEmployeesData, setIndex } = useContext(RootContext);
   const [open, setOpen] = useState(true);
 

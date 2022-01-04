@@ -122,7 +122,7 @@ export default function ViewLeaves() {
     const classes = useStyles2();
     const { ActiveEmployeeNames, leavesData, setLeavesData, setIndex } = useContext(RootContext);
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
     const [personName, setPersonName] = useState("");
     const [open, setOpen] = useState(true);
     const history = useHistory();

@@ -111,7 +111,7 @@ export default function ManageUsers() {
 
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(25);
   const [values, setValues] = useState({ showPassword: false, });
   const [valuesConfirm, setValuesConfirm] = useState({ showPasswordConfirm: false, });
   const { usersData, setUsersData, setIndex } = useContext(RootContext);
