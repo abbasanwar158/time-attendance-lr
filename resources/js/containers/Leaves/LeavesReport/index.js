@@ -128,7 +128,7 @@ export default function LeavesReport() {
     const [to, setTo] = useState(null);
     const [empLeaves, setEmpLeaves] = useState(false);
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(25);
     const [selected, setSelected] = useState(null);
     const [flag, setflag] = useState(false);
     const [open, setOpen] = useState(false);

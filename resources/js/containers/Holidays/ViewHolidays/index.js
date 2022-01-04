@@ -107,7 +107,7 @@ export default function ViewHolidays() {
   const [date, setDate] = useState('');
   const [allCheckbox, setAllCheckbox] = useState('');
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(25);
   const [open, setOpen] = useState(false);
   const { holidaysData, setHolidaysData, setIndex } = useContext(RootContext);
 
