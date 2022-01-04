@@ -20,8 +20,6 @@ class AttendanceController extends Controller
      */
     public function index()
     {
-        // DB::select('ALTER TABLE attendances
-        // ADD category_status varchar(225) default null');
         $data = Attendance::join('employees', 'employee_external_id', '=', 'attendances.employee_id')
         ->orderBy('date', 'DESC')
         ->get(['employees.name', 'employees.active', 'attendances.id', 'attendances.category_status', 'attendances.absent_status', 'attendances.date', 'attendances.checkin', 'attendances.checkout', 'attendances.created_at']);
