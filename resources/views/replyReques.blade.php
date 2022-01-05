@@ -1,4 +1,4 @@
-Dear {{"$name"}}!
+Dear <b>{{"$name"}}</b>!
 <br>
 <br>
 Your leave request is <b>{{"$status"}}</b>

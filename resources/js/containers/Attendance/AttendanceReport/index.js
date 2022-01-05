@@ -193,6 +193,12 @@ export default function ManageAttendance() {
         );
     };
 
+    useEffect(() => {
+        if(localStorage.isAdmin != 'true'){
+            attendanceSearch();
+        }
+    }, [])
+
     const attendanceSearch = () => {
         setflag(false);
         setOpen(true);
@@ -541,7 +547,7 @@ export default function ManageAttendance() {
                     </TableContainer>
                 </div>
             </div>
-            <AbsentTable setAbsentData={setAbsentData} absentData={absentData}  />
+            {localStorage.isAdmin == 'true' ? <AbsentTable setAbsentData={setAbsentData} absentData={absentData} /> : null}  
         </>
     );
 }
