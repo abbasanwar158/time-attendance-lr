@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\LeaveRequests;
 use Illuminate\Http\Request;
 use Mail;
+use Illuminate\Support\Facades\DB;
 
 class LeaveRequestsController extends Controller
 {
@@ -47,10 +48,11 @@ class LeaveRequestsController extends Controller
           ];
         }
         $data = ['body' => $request->reply, 'name' => $name, 'status' =>$request->replyStatus];
-        Mail::send('replyReques',$data, function($message)  use ($email,)
+        Mail::send('replyReques',$data, function($message)  use ($email)
         {
-          $message->to($email);
-          $message->subject('Reply of you leave request'); 
+          $message->to($email)
+            ->cc('aamir.mughal@devbox.co');
+          $message->subject('Reply of your leave request'); 
         });
         return response()->json($res);
     }
@@ -63,7 +65,6 @@ class LeaveRequestsController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $data = LeaveRequests::create([
             'user_id' => $request->userId,
             'leave_type' => $request->leave,
@@ -85,7 +86,21 @@ class LeaveRequestsController extends Controller
             'msg'=>'fail'
           ];
         }
-          return response()->json($res);
+        $adminData =  DB::table('users')
+        ->where('is_admin', '=', 1)
+        ->get();
+        foreach($adminData as $key => $value ){
+          $email = $value->username;
+          $data = ['body' => 'An employee requested for leave'];
+          Mail::send('userRequest',$data, function($message) use ($email)
+          {
+            $message->to($email)
+            ->cc('aamir.mughal@devbox.co');
+            $message->subject('Testing Leave Request'); 
+          });
+        }
+
+        return response()->json($res);
     }
 
     /**
