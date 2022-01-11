@@ -85,7 +85,14 @@ class EmployeeController extends Controller
             'joining_date' => $request->joining_date,
             'employees_category' => $request->employee_cat,
             'created_at' => $request->created_at,
-            'updated_at' => $request->updated_at
+            'updated_at' => $request->updated_at,
+            'personal_mail' => $request->personalEmail,
+            'dob' => $request->dob,
+            'qualification' =>$request->qualification,
+            'home_address' =>$request->address,
+            'contact_no' =>$request->contactNo,
+            'employee_no' =>$request->employeeNo
+
         ]);
         if ($data){
             $res=[
@@ -144,7 +151,13 @@ class EmployeeController extends Controller
             'joining_date' => $request->joining_date,
             'employees_category' => $request->employee_cat,
             'created_at' => $request->created_at,
-            'updated_at' => $request->updated_at
+            'updated_at' => $request->updated_at,
+            'personal_mail' => $request->personalEmail,
+            'dob' => $request->dob,
+            'qualification' =>$request->qualification,
+            'home_address' =>$request->address,
+            'contact_no' =>$request->contactNo,
+            'employee_no' =>$request->employeeNo
         ]);
         if ($data){
             $res=[
@@ -236,7 +249,13 @@ class EmployeeController extends Controller
                   'description' => $request->description,
                   'joining_date' => $request->joining_date,
                   'created_at' => $request->created_at,
-                  'updated_at' => $request->updated_at
+                  'updated_at' => $request->updated_at,
+                  'personal_mail' => $request->personalEmail,
+                  'dob' => $request->dob,
+                  'qualification' =>$request->qualification,
+                  'home_address' =>$request->address,
+                  'contact_no' =>$request->contactNo,
+                  'employee_no' =>$request->employeeNo
               ]);
                 if ($data){
                     $res=[
@@ -262,7 +281,13 @@ class EmployeeController extends Controller
           'description' => $request->description,
           'joining_date' => $request->joining_date,
           'created_at' => $request->created_at,
-          'updated_at' => $request->updated_at
+          'updated_at' => $request->updated_at,
+          'personal_mail' => $request->personalEmail,
+          'dob' => $request->dob,
+          'qualification' =>$request->qualification,
+          'home_address' =>$request->address,
+          'contact_no' =>$request->contactNo,
+          'employee_no' =>$request->employeeNo
         ]);
         if ($data){
             $res=[

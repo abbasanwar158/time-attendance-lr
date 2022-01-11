@@ -21,8 +21,39 @@ export default function NewEmployee() {
   const [joiningDate, setJoiningDate] = useState('');
   const [description, setDescription] = useState('');
   const [employeeCat, setEmployeeCat] = useState('');
+  const [personalEmail, setPersonalEmail] = useState('');
+  const [dob, setDob] = useState('');
+  const [qualification, setQualification] = useState('');
+  const [address, setAddress] = useState('');
+  const [contactNo, setContactNo] = useState('');
+  const [employeeNo, setEmployeeNo] = useState('');
   const [open, setOpen] = useState(false);
   const history = useHistory();
+
+
+  const handleChangeAddress = (event) => {
+    setAddress(event.target.value);
+  };
+
+  const handleChangeContactNo = (event) => {
+    setContactNo(event.target.value);
+  };
+
+  const handleChangeEmployeeNo= (event) => {
+    setEmployeeNo(event.target.value);
+  };
+
+  const handleChangePersonalMail = (event) => {
+    setPersonalEmail(event.target.value);
+  };
+
+  const handleChangeDob = (event) => {
+    setDob(event.target.value);
+  };
+
+  const handleChangeQualification = (event) => {
+    setQualification(event.target.value);
+  };
 
   const handleChangeStatus = (event) => {
     setSelectedStatus(event.target.value);
@@ -89,6 +120,12 @@ export default function NewEmployee() {
           designation: designation,
           joining_date: joiningDate,
           description: description,
+          personalEmail: personalEmail,
+          dob: dob,
+          qualification: qualification,
+          address: address,
+          contactNo: contactNo,
+          employeeNo: employeeNo
         })
       })
       .then(response => response.json())
@@ -164,6 +201,7 @@ export default function NewEmployee() {
               </Grid>
             </Grid>
           </Grid>
+
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
@@ -184,6 +222,135 @@ export default function NewEmployee() {
               </Grid>
             </Grid>
           </Grid>
+
+          <Grid item xs={12}>
+            <Grid container spacing={1} className={styles.gridSubItems} >
+              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                <FormControl fullWidth >
+                  <TextField
+                    className={styles.fieldDiv}
+                    id="Add_New_Employee_number"
+                    fullWidth
+                    size="small"
+                    label="Employee Number"
+                    type="text"
+                    variant="outlined"
+                    value={employeeNo}
+                    onChange={handleChangeEmployeeNo}
+                  >
+                  </TextField>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid container spacing={1} className={styles.gridSubItems} >
+              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                <FormControl fullWidth >
+                  <TextField
+                    className={styles.fieldDiv}
+                    id="Add_New_Employee_contact_number"
+                    fullWidth
+                    size="small"
+                    label="Contact Number"
+                    type="text"
+                    variant="outlined"
+                    value={contactNo}
+                    onChange={handleChangeContactNo}
+                  >
+                  </TextField>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid container spacing={1} className={styles.gridSubItems} >
+              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                <FormControl fullWidth >
+                  <TextField
+                    className={styles.fieldDiv}
+                    id="Add_New_Employee_personal_mail"
+                    fullWidth
+                    size="small"
+                    label="Personal Mail"
+                    type="text"
+                    variant="outlined"
+                    value={personalEmail}
+                    onChange={handleChangePersonalMail}
+                  >
+                  </TextField>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid container spacing={1} className={styles.gridSubItems} >
+              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                <FormControl fullWidth>
+                  <TextField
+                    className={styles.fieldDiv}
+                    id="Add_New_Employee_name"
+                    label="Date Of Birth"
+                    type="date"
+                    variant="outlined"
+                    defaultValue="2021-01-01"
+                    size="small"
+                    value={dob}
+                    onChange={handleChangeDob}
+                    InputLabelProps={{
+                      shrink: true,
+                    }}
+                  />
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid container spacing={1} className={styles.gridSubItems} >
+              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                <FormControl fullWidth >
+                  <TextField
+                    className={styles.fieldDiv}
+                    id="Add_New_Employee_address"
+                    fullWidth
+                    size="small"
+                    label="Address"
+                    type="text"
+                    variant="outlined"
+                    value={address}
+                    onChange={handleChangeAddress}
+                  >
+                  </TextField>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Grid container spacing={1} className={styles.gridSubItems} >
+              <Grid item xs={12} sm={4} className={styles.fieldGrid}>
+                <FormControl fullWidth >
+                  <TextField
+                    className={styles.fieldDiv}
+                    id="Add_New_Employee_qualification"
+                    fullWidth
+                    size="small"
+                    label="Qualification"
+                    type="text"
+                    variant="outlined"
+                    value={qualification}
+                    onChange={handleChangeQualification}
+                  >
+                  </TextField>
+                </FormControl>
+              </Grid>
+            </Grid>
+          </Grid>
+
           <Grid item xs={12}>
             <Grid container spacing={1} className={styles.gridSubItems} >
               <Grid item xs={12} sm={4} className={styles.fieldGrid}>
@@ -213,7 +380,7 @@ export default function NewEmployee() {
                     id="Add_New_Employee_email"
                     fullWidth
                     size="small"
-                    label="Email"
+                    label="Official Email"
                     type="email"
                     variant="outlined"
                     value={email}
